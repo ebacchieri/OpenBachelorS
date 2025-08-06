@@ -23,7 +23,7 @@ bp_assetbundle = Blueprint("bp_assetbundle", __name__)
 
 
 HOT_UPDATE_LIST_JSON = "hot_update_list.json"
-ORIG_ASSET_URL_PREFIX = "https://ak.hycdn.cn/assetbundle/official/Android/assets"
+ORIG_ASSET_URL_PREFIX = "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets"
 
 
 @bp_assetbundle.route(

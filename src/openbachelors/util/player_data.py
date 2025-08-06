@@ -407,7 +407,7 @@ def build_player_data_template():
 
     # ----------
 
-    april_fool_activity_id = "act6fun"
+    april_fool_activity_id = "act5fun"
 
     for activity_id, activity_obj in activity_table["basicInfo"]:
         if activity_obj["type"] == "APRIL_FOOL":

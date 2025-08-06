@@ -7,7 +7,7 @@ from ..const.filepath import CONFIG_JSON
 from .const_json_loader import const_json_loader
 
 
-DATABASE_NAME = "openbachelor"
+DATABASE_NAME = "openbachelor_en"
 DATABASE_TIMEOUT = 3
 
 
