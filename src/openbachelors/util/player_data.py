@@ -2,6 +2,7 @@ from copy import deepcopy
 from functools import wraps
 import os
 import json
+from enum import Enum
 
 import flask
 from flask import request
@@ -43,7 +44,7 @@ from ..const.filepath import (
     MULTI_EXTRA_SAVE_DIRPATH,
     ROGUELIKE_TOPIC_TABLE,
 )
-from .const_json_loader import const_json_loader, ConstJson
+from .const_json_loader import const_json_loader, ConstJson, ConstJsonLike, SavableThing
 from .battle_replay_manager import BattleReplayManager, DBBattleReplayManager
 from .extra_save import ExtraSave, DBExtraSave
 from .helper import (
@@ -639,150 +640,38 @@ def build_player_data_template():
 player_data_template, char_id_lst = build_player_data_template()
 
 
-# always a dict-like object (unless no_dict is true)
+class DeltaJsonBaseState(Enum):
+    DEFAULT = 0
+    DELETED = 1
+
+
+class DeltaJsonOverlayState(Enum):
+    MISSING = 0
+    DICT = 1
+    NON_DICT = 2
+
+
+class _DeltaJsonDeleteOp:
+    pass
+
+
+DeltaJsonDeleteOp = _DeltaJsonDeleteOp()
+
+
 class DeltaJson:
     def __init__(
         self,
         modified_dict=None,
         deleted_dict=None,
-        is_root=True,
-        parent=None,
-        prev_key=None,
-        no_dict=False,
-        no_dict_val=None,
     ):
-        self.is_root = is_root
-        if is_root:
-            if modified_dict is None:
-                self.modified_dict = {}
-            else:
-                self.modified_dict = modified_dict
-            if deleted_dict is None:
-                self.deleted_dict = {}
-            else:
-                self.deleted_dict = deleted_dict
+        if modified_dict is None:
+            self.modified_dict = {}
         else:
             self.modified_dict = modified_dict
+        if deleted_dict is None:
+            self.deleted_dict = {}
+        else:
             self.deleted_dict = deleted_dict
-        self.parent = parent
-        self.prev_key = prev_key
-        self.no_dict = no_dict
-        self.no_dict_val = no_dict_val
-
-    def contains(self, key):
-        if self.modified_dict is not None and key in self.modified_dict:
-            return 1
-        if (
-            self.deleted_dict is not None
-            and key in self.deleted_dict
-            and self.deleted_dict[key] is None
-        ):
-            return -1
-        return 0
-
-    def __contains__(self, key):
-        return self.contains(key) == 1
-
-    def initialize_modified_dict_if_necessary(self):
-        if self.modified_dict is None:
-            self.parent.initialize_modified_dict_if_necessary()
-            if self.modified_dict is None:
-                self.modified_dict = {}
-                self.parent.modified_dict[self.prev_key] = self.modified_dict
-
-    def initialize_deleted_dict_if_necessary(self):
-        if self.deleted_dict is None:
-            self.parent.initialize_deleted_dict_if_necessary()
-            if self.deleted_dict is None:
-                self.deleted_dict = {}
-                self.parent.deleted_dict[self.prev_key] = self.deleted_dict
-
-    # def deinitialize_modified_dict_if_necessary(self):
-    #     if not self.is_root and self.modified_dict == {}:
-    #         self.modified_dict = None
-    #         del self.parent.modified_dict[self.prev_key]
-    #         self.parent.deinitialize_modified_dict_if_necessary()
-
-    def deinitialize_deleted_dict_if_necessary(self):
-        if not self.is_root and self.deleted_dict == {}:
-            self.deleted_dict = None
-            del self.parent.deleted_dict[self.prev_key]
-            self.parent.deinitialize_deleted_dict_if_necessary()
-
-    def __getitem__(self, key):
-        if self.modified_dict is not None and key in self.modified_dict:
-            if isinstance(self.modified_dict[key], dict):
-                child_modified_dict = self.modified_dict[key]
-                child_no_dict = False
-                child_no_dict_val = None
-            else:
-                child_modified_dict = None
-                child_no_dict = True
-                child_no_dict_val = self.modified_dict[key]
-        else:
-            child_modified_dict = None
-            child_no_dict = False
-            child_no_dict_val = None
-
-        if self.deleted_dict is not None and key in self.deleted_dict:
-            child_deleted_dict = self.deleted_dict[key]
-        else:
-            child_deleted_dict = None
-
-        return DeltaJson(
-            modified_dict=child_modified_dict,
-            deleted_dict=child_deleted_dict,
-            is_root=False,
-            parent=self,
-            prev_key=key,
-            no_dict=child_no_dict,
-            no_dict_val=child_no_dict_val,
-        )
-
-    def __setitem__(self, key, value):
-        value = deepcopy(value)
-        self.initialize_modified_dict_if_necessary()
-        if isinstance(value, dict):
-            if value:
-                for i in value:
-                    self[key][i] = value[i]
-            else:
-                if key not in self.modified_dict or not isinstance(
-                    self.modified_dict[key], dict
-                ):
-                    self.modified_dict[key] = value
-            if (
-                self.deleted_dict is not None
-                and key in self.deleted_dict
-                and self.deleted_dict[key] is None
-            ):
-                del self.deleted_dict[key]
-                self.deinitialize_deleted_dict_if_necessary()
-        else:
-            self.modified_dict[key] = value
-            if self.deleted_dict is not None:
-                self.deleted_dict.pop(key, None)
-                self.deinitialize_deleted_dict_if_necessary()
-
-    def __delitem__(self, key):
-        self.initialize_deleted_dict_if_necessary()
-        self.deleted_dict[key] = None
-        if self.modified_dict is not None:
-            self.modified_dict.pop(key, None)
-            # self.deinitialize_modified_dict_if_necessary()
-
-    def copy(self):
-        if self.modified_dict is not None:
-            modified_dict = deepcopy(self.modified_dict)
-        else:
-            modified_dict = {}
-
-        if self.deleted_dict is not None:
-            deleted_dict = deepcopy(self.deleted_dict)
-        else:
-            deleted_dict = {}
-
-        return modified_dict, deleted_dict
 
     def reset(self):
         self.modified_dict = {}
@@ -795,190 +684,154 @@ class DeltaJson:
         if key in self.deleted_dict:
             del self.deleted_dict[key]
 
+    def get_child_delta_json(self, key):
+        if key not in self.modified_dict:
+            self.modified_dict[key] = {}
 
-def delta_json_is_dict(delta_json):
-    return isinstance(delta_json.modified_dict, dict)
+        if key not in self.deleted_dict:
+            self.deleted_dict[key] = {}
 
+        return DeltaJson(self.modified_dict[key], self.deleted_dict[key])
 
-def base_json_is_dict(base_json):
-    return (
-        isinstance(base_json, ConstJson) and isinstance(base_json.json_obj, dict)
-    ) or isinstance(base_json, JsonWithDelta)
-
-
-def apply_delta_json_on_base_obj(base_obj, delta_json):
-    modified_dict, deleted_dict = delta_json.copy()
-
-    stk = []
-    stk.append((base_obj, modified_dict))
-    while len(stk):
-        cur_obj, cur_modified = stk.pop()
-        for key in cur_modified:
-            value = cur_modified[key]
-            if isinstance(value, dict):
-                if key not in cur_obj or not isinstance(cur_obj[key], dict):
-                    cur_obj[key] = {}
-                stk.append((cur_obj[key], value))
-            else:
-                cur_obj[key] = value
-
-    stk = []
-    stk.append((base_obj, deleted_dict))
-    while len(stk):
-        cur_obj, cur_deleted = stk.pop()
-        for key in cur_deleted:
-            value = cur_deleted[key]
-            if isinstance(value, dict):
-                stk.append((cur_obj[key], value))
-            else:
-                if key in cur_obj:
-                    del cur_obj[key]
-
-    return modified_dict, deleted_dict
-
-
-def convert_deleted_dict_to_hg_format(deleted_dict):
-    hg_deleted_dict = {}
-
-    stk = []
-    stk.append((deleted_dict, hg_deleted_dict))
-    while len(stk):
-        cur_deleted, cur_hg_deleted = stk.pop()
-        for key in cur_deleted:
-            value = cur_deleted[key]
-
-            deleted_keys = []
-            for i in value:
-                if value[i] is None:
-                    deleted_keys.append(i)
-
-            if deleted_keys:
-                cur_hg_deleted[key] = deleted_keys
-                for i in deleted_keys:
-                    del value[i]
-            else:
-                cur_hg_deleted[key] = {}
-                stk.append((value, cur_hg_deleted[key]))
-
-    stk = []
-    for key in deleted_dict:
-        stk.append((deleted_dict, key, 1))
-    while len(stk):
-        cur_deleted, cur_key, flag = stk.pop()
-        if flag:
-            stk.append((cur_deleted, cur_key, 0))
-            value = cur_deleted[cur_key]
-            if value is not None:
-                for key in value:
-                    stk.append((value, key, 1))
+    def get_key_status(self, key):
+        if key in self.deleted_dict:
+            base_state = DeltaJsonBaseState.DELETED
         else:
-            if cur_deleted[cur_key] == {}:
-                del cur_deleted[cur_key]
+            base_state = DeltaJsonBaseState.DEFAULT
 
-    return hg_deleted_dict
+        if key in self.modified_dict:
+            if isinstance(self.modified_dict[key], dict):
+                overlay_state = DeltaJsonOverlayState.DICT
+            else:
+                overlay_state = DeltaJsonOverlayState.NON_DICT
+        else:
+            overlay_state = DeltaJsonOverlayState.MISSING
 
+        return base_state, overlay_state
 
-# always a dict-like object
-class JsonWithDeltaIter:
-    def __init__(self, json_with_delta):
-        self.json_with_delta = json_with_delta
+    def get_key_value(self, key):
+        return self.modified_dict[key]
 
-        self.iter_lst_idx = 0
+    def set_key_primitive_value(self, key, primitive_value):
+        if isinstance(primitive_value, dict) and primitive_value:
+            raise ValueError(
+                f"DeltaJson: internal err, non empty dict primitive_value {primitive_value}"
+            )
 
-        self.iter_set = set()
+        if primitive_value == DeltaJsonDeleteOp:
+            self.modified_dict.pop(key, None)
+        else:
+            self.modified_dict[key] = primitive_value
 
-        if base_json_is_dict(json_with_delta.base_json):
-            for i, j in json_with_delta.base_json:
-                self.iter_set.add(i)
-
-        if isinstance(json_with_delta.delta_json.modified_dict, dict):
-            for i in json_with_delta.delta_json.modified_dict:
-                self.iter_set.add(i)
-
-        if isinstance(json_with_delta.delta_json.deleted_dict, dict):
-            for i in json_with_delta.delta_json.deleted_dict:
-                if i in self.iter_set:
-                    self.iter_set.remove(i)
-
-        self.iter_lst = list(self.iter_set)
-
-    def __next__(self):
-        if self.iter_lst_idx >= len(self.iter_lst):
-            raise StopIteration
-        key = self.iter_lst[self.iter_lst_idx]
-        self.iter_lst_idx += 1
-        return key, self.json_with_delta[key]
+        self.deleted_dict[key] = None
 
 
-class JsonWithDelta:
-    def __init__(
-        self,
-        base_json,
-        delta_json,
-    ):
-        # ConstJson or JsonWithDelta or other non-dict object
-        self.base_json = base_json
-        # DeltaJson object
+EmptyConstJson = ConstJson({})
+
+
+def recursive_delete(base_dict: dict, deleted_dict: dict):
+    for key, value in deleted_dict.items():
+        if isinstance(value, dict):
+            recursive_delete(base_dict[key], value)
+        else:
+            if key in base_dict:
+                del base_dict[key]
+
+
+def recursive_update(base_dict: dict, overlay_dict: dict):
+    for key, value in overlay_dict.items():
+        if (
+            key in base_dict
+            and isinstance(base_dict[key], dict)
+            and isinstance(value, dict)
+        ):
+            recursive_update(base_dict[key], value)
+        else:
+            base_dict[key] = value
+
+
+class OverlayJson(ConstJsonLike):
+    def __init__(self, const_json_like: ConstJsonLike, delta_json: DeltaJson):
+        self.const_json_like = const_json_like
         self.delta_json = delta_json
 
+    def _contains(self, key, base_state, overlay_state):
+        if base_state == DeltaJsonBaseState.DEFAULT:
+            return key in self.const_json_like or key in self.delta_json.modified_dict
+        else:
+            if overlay_state == DeltaJsonOverlayState.MISSING:
+                return False
+            return True
+
     def __contains__(self, key):
-        delta_json_status = self.delta_json.contains(key)
-        return (
-            base_json_is_dict(self.base_json)
-            and key in self.base_json
-            and delta_json_status != -1
-        ) or delta_json_status == 1
+        base_state, overlay_state = self.delta_json.get_key_status(key)
+
+        return self._contains(key, base_state, overlay_state)
 
     def __getitem__(self, key):
-        if key not in self:
-            raise KeyError
+        base_state, overlay_state = self.delta_json.get_key_status(key)
 
-        if base_json_is_dict(self.base_json) and key in self.base_json:
-            child_base_json = self.base_json[key]
+        if not self._contains(key, base_state, overlay_state):
+            raise KeyError(f"OverlayJson: key {key} not found")
+
+        if base_state == DeltaJsonBaseState.DEFAULT and key in self.const_json_like:
+            value = self.const_json_like[key]
+            if isinstance(value, ConstJson) and value.is_dict:
+                return OverlayJson(value, self.delta_json.get_child_delta_json(key))
+            return value
+
+        value = self.delta_json.get_key_value(key)
+
+        if isinstance(value, dict):
+            return OverlayJson(
+                EmptyConstJson, self.delta_json.get_child_delta_json(key)
+            )
         else:
-            child_base_json = None
+            if isinstance(value, list):
+                return ConstJson(value)
+            return value
 
-        child_delta_json = self.delta_json[key]
+    def __iter__(self):
+        for key, value in self.const_json_like:
+            if key in self:
+                yield key, self[value]
 
-        if child_delta_json.no_dict:
-            if isinstance(child_delta_json.no_dict_val, list):
-                return ConstJson(child_delta_json.no_dict_val)
-            return child_delta_json.no_dict_val
+        for key in self.delta_json.modified_dict:
+            if key in self:
+                yield key, self[value]
 
-        if not base_json_is_dict(child_base_json) and not delta_json_is_dict(
-            child_delta_json
-        ):
-            return child_base_json
+    def __len__(self):
+        i = 0
+        for key, value in self:
+            i += 1
+        return i
 
-        child_json_with_delta = JsonWithDelta(child_base_json, child_delta_json)
+    def copy(self):
+        json_obj = self.const_json_like.copy()
 
-        return child_json_with_delta
+        recursive_delete(json_obj, self.delta_json.deleted_dict)
+
+        modified_dict = deepcopy(self.delta_json.modified_dict)
+        recursive_update(json_obj, modified_dict)
+        return json_obj
 
     def __setitem__(self, key, value):
-        self.delta_json[key] = value
+        if isinstance(value, dict):
+            if key not in self or not isinstance(self[key], OverlayJson):
+                self.delta_json.set_key_primitive_value(key, {})
+            child_overlay_json = self[key]
+            for k, v in value.items():
+                child_overlay_json[k] = v
+        else:
+            self.delta_json.set_key_primitive_value(key, value)
 
     def __delitem__(self, key):
         if key not in self:
-            raise KeyError
-
-        del self.delta_json[key]
-
-    def __iter__(self):
-        json_with_delta_iter = JsonWithDeltaIter(self)
-        return json_with_delta_iter
-
-    def copy(self):
-        if base_json_is_dict(self.base_json):
-            base_obj = self.base_json.copy()
-        else:
-            base_obj = {}
-
-        apply_delta_json_on_base_obj(base_obj, self.delta_json)
-
-        return base_obj
+            raise KeyError(f"OverlayJson: key {key} not found")
+        self.delta_json.set_key_primitive_value(key, DeltaJsonDeleteOp)
 
 
-class FileBasedDeltaJson(DeltaJson):
+class FileBasedDeltaJson(DeltaJson, SavableThing):
     def __init__(self, path: str):
         self.path = path
         json_obj = load_delta_json_obj(path)
@@ -991,7 +844,7 @@ class FileBasedDeltaJson(DeltaJson):
         save_delta_json_obj(self.path, self.modified_dict, self.deleted_dict)
 
 
-class DBBasedDeltaJson(DeltaJson):
+class DBBasedDeltaJson(DeltaJson, SavableThing):
     def __init__(self, column_name: str, username: str):
         self.column_name = column_name
         self.username = username
@@ -1033,7 +886,7 @@ class DBBasedDeltaJson(DeltaJson):
                 conn.commit()
 
 
-class PlayerData(JsonWithDelta):
+class PlayerData(OverlayJson, SavableThing):
     def __init__(self, player_id=None):
         if flask.has_request_context():
             token = request.headers.get("secret", "")
@@ -1080,7 +933,7 @@ class PlayerData(JsonWithDelta):
             self.battle_replay_manager = BattleReplayManager(REPLAY_DIRPATH)
             self.extra_save = ExtraSave(EXTRA_SAVE_FILEPATH)
 
-        self.json_with_delta = JsonWithDelta(player_data_template, self.sav_delta_json)
+        self.json_with_delta = OverlayJson(player_data_template, self.sav_delta_json)
         super().__init__(self.json_with_delta, self.sav_pending_delta_json)
 
     def save(self):
@@ -1098,13 +951,7 @@ class PlayerData(JsonWithDelta):
         self.sav_pending_delta_json.reset_key(key)
 
     def build_delta_response(self):
-        modified_dict, deleted_dict = apply_delta_json_on_base_obj(
-            self.json_with_delta, self.sav_pending_delta_json
-        )
-        self.sav_pending_delta_json.reset()
-        hg_deleted_dict = convert_deleted_dict_to_hg_format(deleted_dict)
-        self.sav_pending_delta_json.deleted_dict = deleted_dict
-        return {"modified": modified_dict, "deleted": hg_deleted_dict}
+        pass
 
 
 def player_data_decorator(func):

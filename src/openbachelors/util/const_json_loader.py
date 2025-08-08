@@ -2,15 +2,49 @@ import os
 from pathlib import Path
 import json
 from copy import deepcopy
+from abc import ABC, abstractmethod
+
+
+class SavableThing(ABC):
+    @abstractmethod
+    def save(self):
+        pass
+
+    @abstractmethod
+    def reset(self):
+        pass
+
+
+class ConstJsonLike(ABC):
+    @abstractmethod
+    def __contains__(self, key):
+        pass
+
+    @abstractmethod
+    def __getitem__(self, key):
+        pass
+
+    @abstractmethod
+    def __iter__(self):
+        pass
+
+    @abstractmethod
+    def __len__(self):
+        pass
+
+    @abstractmethod
+    def copy(self):
+        pass
 
 
 # always a dict-like/list-like object
-class ConstJson:
+class ConstJson(ConstJsonLike):
     def __init__(self, json_obj):
         self.json_obj = json_obj
+        self.is_dict = isinstance(json_obj, dict)
 
     def __contains__(self, key):
-        if isinstance(self.json_obj, dict):
+        if self.is_dict:
             return key in self.json_obj
         raise TypeError
 
@@ -22,10 +56,10 @@ class ConstJson:
         return child_json_obj
 
     def __iter__(self):
-        if isinstance(self.json_obj, dict):
+        if self.is_dict:
             for key in self.json_obj:
                 yield key, self[key]
-        elif isinstance(self.json_obj, list):
+        else:
             for i in range(len(self.json_obj)):
                 yield i, self[i]
 
@@ -47,6 +81,7 @@ class LazyLoadedConstJson(ConstJson):
 
         self.json_obj = json_obj
         self.loaded = True
+        self.is_dict = isinstance(json_obj, dict)
 
     def __contains__(self, key):
         if not self.loaded:
