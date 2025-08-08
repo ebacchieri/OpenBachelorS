@@ -27,7 +27,7 @@ class ConstJson:
                 yield key, self[key]
         elif isinstance(self.json_obj, list):
             for i in range(len(self.json_obj)):
-                yield i, self[key]
+                yield i, self[i]
 
     def __len__(self):
         return len(self.json_obj)
