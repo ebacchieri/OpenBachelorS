@@ -784,6 +784,17 @@ class DeltaJson:
 
         return modified_dict, deleted_dict
 
+    def reset(self):
+        self.modified_dict = {}
+        self.deleted_dict = {}
+
+    def reset_key(self, key):
+        if key in self.modified_dict:
+            del self.modified_dict[key]
+
+        if key in self.deleted_dict:
+            del self.deleted_dict[key]
+
 
 def delta_json_is_dict(delta_json):
     return isinstance(delta_json.modified_dict, dict)
@@ -967,20 +978,7 @@ class JsonWithDelta:
         return base_obj
 
 
-class ResettableDeltaJson(DeltaJson):
-    def reset(self):
-        self.modified_dict = {}
-        self.deleted_dict = {}
-
-    def reset_key(self, key):
-        if key in self.modified_dict:
-            del self.modified_dict[key]
-
-        if key in self.deleted_dict:
-            del self.deleted_dict[key]
-
-
-class FileBasedDeltaJson(ResettableDeltaJson):
+class FileBasedDeltaJson(DeltaJson):
     def __init__(self, path: str):
         self.path = path
         json_obj = load_delta_json_obj(path)
@@ -993,7 +991,7 @@ class FileBasedDeltaJson(ResettableDeltaJson):
         save_delta_json_obj(self.path, self.modified_dict, self.deleted_dict)
 
 
-class DBBasedDeltaJson(ResettableDeltaJson):
+class DBBasedDeltaJson(DeltaJson):
     def __init__(self, column_name: str, username: str):
         self.column_name = column_name
         self.username = username
