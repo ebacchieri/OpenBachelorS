@@ -4,26 +4,6 @@ import json
 from copy import deepcopy
 
 
-class ConstJsonIter:
-    def __init__(self, const_json):
-        self.const_json = const_json
-
-        self.iter_lst_idx = 0
-        if isinstance(const_json.json_obj, dict):
-            self.iter_lst = list(const_json.json_obj.keys())
-        elif isinstance(const_json.json_obj, list):
-            self.iter_lst = list(range(len(const_json.json_obj)))
-        else:
-            raise TypeError
-
-    def __next__(self):
-        if self.iter_lst_idx >= len(self.iter_lst):
-            raise StopIteration
-        key = self.iter_lst[self.iter_lst_idx]
-        self.iter_lst_idx += 1
-        return key, self.const_json[key]
-
-
 # always a dict-like/list-like object
 class ConstJson:
     def __init__(self, json_obj):
@@ -42,8 +22,12 @@ class ConstJson:
         return child_json_obj
 
     def __iter__(self):
-        const_json_iter = ConstJsonIter(self)
-        return const_json_iter
+        if isinstance(self.json_obj, dict):
+            for key in self.json_obj:
+                yield key, self[key]
+        elif isinstance(self.json_obj, list):
+            for i in range(len(self.json_obj)):
+                yield i, self[key]
 
     def __len__(self):
         return len(self.json_obj)
