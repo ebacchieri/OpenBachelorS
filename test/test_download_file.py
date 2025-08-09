@@ -3,4 +3,8 @@ from openbachelors.util.helper import download_file
 
 
 def test_download_file():
-    download_file("https://7-zip.org/a/7z2409-x64.exe", "7z.exe", ASSET_DIRPATH)
+    download_file(
+        "https://dl.google.com/tag/s/dl/chrome/install/googlechromestandaloneenterprise64.msi",
+        "chrome.exe",
+        ASSET_DIRPATH,
+    )
