@@ -846,10 +846,17 @@ def recursive_flush_deleted_dict(
     parent_key: str,
 ):
     deleted_key_lst = []
+    internal_deleted_key_lst = []
     for key, value in delta_json.deleted_dict.items():
-        if not isinstance(value, dict) and key not in delta_json.modified_dict:
-            deleted_key_lst.append(key)
-            del overlay_json[key]
+        if not isinstance(value, dict):
+            if key not in delta_json.modified_dict:
+                deleted_key_lst.append(key)
+                del overlay_json[key]
+            else:
+                internal_deleted_key_lst.append(key)
+
+    for key in internal_deleted_key_lst:
+        del delta_json.deleted_dict[key]
 
     if deleted_key_lst:
         parent_hg_deleted_dict[parent_key] = deleted_key_lst
@@ -1016,7 +1023,8 @@ class PlayerData(OverlayJson, SavableThing):
         recursive_collapse_hg_deleted_dict(hg_deleted_dict)
 
         hg_modifed_dict = deepcopy(self.sav_pending_delta_json.modified_dict)
-        self.json_with_delta = self.sav_pending_delta_json.modified_dict
+        for key, value in self.sav_pending_delta_json.modified_dict.items():
+            self.json_with_delta[key] = value
         self.sav_pending_delta_json.modified_dict = {}
 
         return {"modified": hg_modifed_dict, "deleted": hg_deleted_dict}
