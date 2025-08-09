@@ -796,11 +796,11 @@ class OverlayJson(ConstJsonLike):
     def __iter__(self):
         for key, value in self.const_json_like:
             if key in self:
-                yield key, self[value]
+                yield key, self[key]
 
         for key in self.delta_json.modified_dict:
             if key in self:
-                yield key, self[value]
+                yield key, self[key]
 
     def __len__(self):
         i = 0
