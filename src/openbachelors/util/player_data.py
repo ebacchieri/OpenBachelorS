@@ -694,7 +694,7 @@ class DeltaJson:
         return DeltaJson(self.modified_dict[key], self.deleted_dict[key])
 
     def get_key_status(self, key):
-        if key in self.deleted_dict:
+        if key in self.deleted_dict and self.deleted_dict[key] is None:
             base_state = DeltaJsonBaseState.DELETED
         else:
             base_state = DeltaJsonBaseState.DEFAULT
