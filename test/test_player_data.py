@@ -8,6 +8,7 @@ from openbachelors.util.player_data import (
     OverlayJson,
     player_data_template,
     player_data_decorator,
+    PlayerData,
 )
 
 
@@ -180,6 +181,11 @@ def test_player_data_template():
 
 
 def test_player_data():
+    player_data = PlayerData()
+
+    player_data.reset()
+    player_data.save()
+
     @player_data_decorator
     def f(player_data):
         player_data["status"]["ap"] = 789
@@ -193,3 +199,11 @@ def test_player_data():
     assert response == {
         "playerDataDelta": {"modified": {"status": {"ap": 789}}, "deleted": {}}
     }
+
+    player_data = PlayerData()
+
+    assert player_data.sav_delta_json.modified_dict == {"status": {"ap": 789}}
+    assert player_data.sav_delta_json.deleted_dict == {"status": {"ap": None}}
+
+    assert player_data.sav_pending_delta_json.modified_dict == {}
+    assert player_data.sav_pending_delta_json.deleted_dict == {"status": {}}
