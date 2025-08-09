@@ -776,7 +776,9 @@ class OverlayJson(ConstJsonLike):
 
         if base_state == DeltaJsonBaseState.DEFAULT and key in self.const_json_like:
             value = self.const_json_like[key]
-            if isinstance(value, ConstJson) and value.is_dict:
+            if (isinstance(value, ConstJson) and value.is_dict) or isinstance(
+                value, OverlayJson
+            ):
                 return OverlayJson(value, self.delta_json.get_child_delta_json(key))
             return value
 
