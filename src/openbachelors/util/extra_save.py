@@ -5,6 +5,7 @@ from psycopg.types.json import Json
 
 from ..const.json_const import true, false, null
 from .db_manager import IS_DB_READY, get_db_conn, create_user_if_necessary
+from .const_json_loader import SavableThing
 
 
 class BasicExtraSave:
@@ -20,7 +21,7 @@ class BasicExtraSave:
         self.save_obj = ExtraSave.get_default_save_obj()
 
 
-class ExtraSave(BasicExtraSave):
+class ExtraSave(BasicExtraSave, SavableThing):
     def __init__(self, filepath: str):
         self.filepath = filepath
 
@@ -38,7 +39,7 @@ class ExtraSave(BasicExtraSave):
             json.dump(self.save_obj, f, ensure_ascii=False, indent=4)
 
 
-class DBExtraSave(BasicExtraSave):
+class DBExtraSave(BasicExtraSave, SavableThing):
     def __init__(self, username: str):
         self.username = username
 

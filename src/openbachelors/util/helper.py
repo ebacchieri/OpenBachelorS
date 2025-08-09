@@ -128,6 +128,9 @@ def download_file(url: str, filename: str, dirpath: str):
         ]
     )
 
+    if proc.returncode:
+        raise ConnectionError(f"download_file: file {filename} failed")
+
     os.makedirs(dirpath, exist_ok=True)
 
     os.replace(os.path.join(TMP_DIRPATH, tmp_filename), os.path.join(dirpath, filename))
