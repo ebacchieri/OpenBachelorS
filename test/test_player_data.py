@@ -108,7 +108,7 @@ def test_writable_overlay_json():
 
     assert overlay_json.copy() == {"k0": {"k3": {"k4": 2}, "k1": {}, "k5": 3}, "k2": 0}
     assert delta_json.modified_dict == {"k0": {"k1": {}, "k5": 3}}
-    assert delta_json.deleted_dict == {"k0": {"k1": None, "k5": None}}
+    assert delta_json.deleted_dict == {"k0": {"k1": None}}
 
     # print(overlay_json.copy(), delta_json.modified_dict, delta_json.deleted_dict)
 

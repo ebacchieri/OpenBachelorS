@@ -712,7 +712,7 @@ class DeltaJson:
     def get_key_value(self, key):
         return self.modified_dict[key]
 
-    def set_key_primitive_value(self, key, primitive_value):
+    def set_key_primitive_value(self, key, primitive_value, is_in_base):
         if isinstance(primitive_value, dict) and primitive_value:
             raise ValueError(
                 f"DeltaJson: internal err, non empty dict primitive_value {primitive_value}"
@@ -723,7 +723,8 @@ class DeltaJson:
         else:
             self.modified_dict[key] = primitive_value
 
-        self.deleted_dict[key] = None
+        if is_in_base:
+            self.deleted_dict[key] = None
 
 
 EmptyConstJson = ConstJson({})
@@ -734,8 +735,7 @@ def recursive_delete(base_dict: dict, deleted_dict: dict):
         if isinstance(value, dict):
             recursive_delete(base_dict[key], value)
         else:
-            if key in base_dict:
-                del base_dict[key]
+            del base_dict[key]
 
 
 def recursive_update(base_dict: dict, overlay_dict: dict):
@@ -818,17 +818,23 @@ class OverlayJson(ConstJsonLike):
     def __setitem__(self, key, value):
         if isinstance(value, dict):
             if key not in self or not isinstance(self[key], OverlayJson):
-                self.delta_json.set_key_primitive_value(key, {})
+                self.delta_json.set_key_primitive_value(
+                    key, {}, key in self.const_json_like
+                )
             child_overlay_json = self[key]
             for k, v in value.items():
                 child_overlay_json[k] = v
         else:
-            self.delta_json.set_key_primitive_value(key, value)
+            self.delta_json.set_key_primitive_value(
+                key, value, key in self.const_json_like
+            )
 
     def __delitem__(self, key):
         if key not in self:
             raise KeyError(f"OverlayJson: key {key} not found")
-        self.delta_json.set_key_primitive_value(key, DeltaJsonDeleteOp)
+        self.delta_json.set_key_primitive_value(
+            key, DeltaJsonDeleteOp, key in self.const_json_like
+        )
 
 
 class FileBasedDeltaJson(DeltaJson, SavableThing):
