@@ -113,6 +113,59 @@ def test_writable_overlay_json():
     # print(overlay_json.copy(), delta_json.modified_dict, delta_json.deleted_dict)
 
 
+def is_empty_dict(target_dict: dict):
+    for key, value in target_dict.items():
+        if isinstance(value, dict):
+            if not is_empty_dict(value):
+                return False
+        else:
+            return False
+
+    return True
+
+
+def test_nested_overlay_json():
+    base_json = ConstJson(
+        {
+            "k0": {"k1": 0},
+            "k2": 1,
+        }
+    )
+
+    delta_json = DeltaJson()
+
+    overlay_json = OverlayJson(base_json, delta_json)
+
+    delta_json_2 = DeltaJson()
+    overlay_json_2 = OverlayJson(overlay_json, delta_json_2)
+
+    overlay_json_2["k3"] = 2
+
+    assert overlay_json_2.copy() == {"k0": {"k1": 0}, "k2": 1, "k3": 2}
+    assert delta_json_2.modified_dict == {"k3": 2}
+    assert delta_json_2.deleted_dict == {}
+    assert is_empty_dict(delta_json.modified_dict)
+    assert is_empty_dict(delta_json.deleted_dict)
+
+    overlay_json_2["k0"]["k4"] = 3
+
+    assert overlay_json_2.copy() == {"k0": {"k1": 0, "k4": 3}, "k2": 1, "k3": 2}
+    assert delta_json_2.modified_dict == {"k3": 2, "k0": {"k4": 3}}
+    assert delta_json_2.deleted_dict == {"k0": {}}
+    assert is_empty_dict(delta_json.modified_dict)
+    assert is_empty_dict(delta_json.deleted_dict)
+
+    del overlay_json_2["k0"]["k1"]
+
+    assert overlay_json_2.copy() == {"k0": {"k4": 3}, "k2": 1, "k3": 2}
+    assert delta_json_2.modified_dict == {"k3": 2, "k0": {"k4": 3}}
+    assert delta_json_2.deleted_dict == {"k0": {"k1": None}}
+    assert is_empty_dict(delta_json.modified_dict)
+    assert is_empty_dict(delta_json.deleted_dict)
+
+    # print(overlay_json_2.copy(), delta_json_2.modified_dict, delta_json_2.deleted_dict)
+
+
 def test_player_data_template():
     os.makedirs(TMP_DIRPATH, exist_ok=True)
     with open(
