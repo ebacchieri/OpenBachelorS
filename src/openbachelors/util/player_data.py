@@ -867,14 +867,15 @@ def recursive_flush_deleted_dict(
         parent_hg_deleted_dict[parent_key] = {}
 
         for key, value in delta_json.deleted_dict.items():
-            child_overlay_json = overlay_json[key]
-            child_delta_json = delta_json.get_child_delta_json(key)
-            recursive_flush_deleted_dict(
-                child_overlay_json,
-                child_delta_json,
-                parent_hg_deleted_dict[parent_key],
-                key,
-            )
+            if key in overlay_json:
+                child_overlay_json = overlay_json[key]
+                child_delta_json = delta_json.get_child_delta_json(key)
+                recursive_flush_deleted_dict(
+                    child_overlay_json,
+                    child_delta_json,
+                    parent_hg_deleted_dict[parent_key],
+                    key,
+                )
 
 
 def recursive_collapse_hg_deleted_dict(hg_deleted_dict: dict):
