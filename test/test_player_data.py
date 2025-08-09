@@ -3,7 +3,12 @@ import json
 
 from openbachelors.util.const_json_loader import ConstJson
 from openbachelors.const.filepath import TMP_DIRPATH
-from openbachelors.util.player_data import DeltaJson, OverlayJson, player_data_template
+from openbachelors.util.player_data import (
+    DeltaJson,
+    OverlayJson,
+    player_data_template,
+    player_data_decorator,
+)
 
 
 def test_writable_overlay_json():
@@ -174,17 +179,17 @@ def test_player_data_template():
         json.dump(player_data_template.copy(), f, ensure_ascii=False, indent=4)
 
 
-# def test_player_data():
-#     @player_data_decorator
-#     def f(player_data):
-#         player_data["status"]["ap"] = 789
-#         response = {}
-#         return response
+def test_player_data():
+    @player_data_decorator
+    def f(player_data):
+        player_data["status"]["ap"] = 789
+        response = {}
+        return response
 
-#     response = f()
+    response = f()
 
-#     response.pop("pushMessage", None)
+    response.pop("pushMessage", None)
 
-#     assert response == {
-#         "playerDataDelta": {"modified": {"status": {"ap": 789}}, "deleted": {}}
-#     }
+    assert response == {
+        "playerDataDelta": {"modified": {"status": {"ap": 789}}, "deleted": {}}
+    }

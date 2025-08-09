@@ -839,6 +839,54 @@ class OverlayJson(ConstJsonLike):
         )
 
 
+def recursive_flush_deleted_dict(
+    overlay_json: OverlayJson,
+    delta_json: DeltaJson,
+    parent_hg_deleted_dict: dict,
+    parent_key: str,
+):
+    deleted_key_lst = []
+    for key, value in delta_json.deleted_dict.items():
+        if not isinstance(value, dict) and key not in delta_json.modified_dict:
+            deleted_key_lst.append(key)
+            del overlay_json[key]
+
+    if deleted_key_lst:
+        parent_hg_deleted_dict[parent_key] = deleted_key_lst
+
+        for key in deleted_key_lst:
+            del delta_json.deleted_dict[key]
+    else:
+        parent_hg_deleted_dict[parent_key] = {}
+
+        for key, value in delta_json.deleted_dict.items():
+            child_overlay_json = overlay_json[key]
+            child_delta_json = delta_json.get_child_delta_json(key)
+            recursive_flush_deleted_dict(
+                child_overlay_json,
+                child_delta_json,
+                parent_hg_deleted_dict[parent_key],
+                key,
+            )
+
+
+def recursive_collapse_hg_deleted_dict(hg_deleted_dict: dict):
+    deleted_key_lst = []
+
+    for key in hg_deleted_dict:
+        value = hg_deleted_dict[key]
+        if isinstance(value, dict):
+            if value:
+                recursive_collapse_hg_deleted_dict(value)
+            value = hg_deleted_dict[key]
+
+            if not value:
+                deleted_key_lst.append(key)
+
+    for key in deleted_key_lst:
+        del hg_deleted_dict[key]
+
+
 class FileBasedDeltaJson(DeltaJson, SavableThing):
     def __init__(self, path: str):
         self.path = path
@@ -959,7 +1007,19 @@ class PlayerData(OverlayJson, SavableThing):
         self.sav_pending_delta_json.reset_key(key)
 
     def build_delta_response(self):
-        pass
+        helper_dict = {}
+        helper_str = "_"
+        recursive_flush_deleted_dict(
+            self.json_with_delta, self.sav_pending_delta_json, helper_dict, helper_str
+        )
+        hg_deleted_dict = helper_dict[helper_str]
+        recursive_collapse_hg_deleted_dict(hg_deleted_dict)
+
+        hg_modifed_dict = deepcopy(self.sav_pending_delta_json.modified_dict)
+        self.json_with_delta = self.sav_pending_delta_json.modified_dict
+        self.sav_pending_delta_json.modified_dict = {}
+
+        return {"modified": hg_modifed_dict, "deleted": hg_deleted_dict}
 
 
 def player_data_decorator(func):
