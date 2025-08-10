@@ -9,8 +9,9 @@ from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, VERSION_JSON, ASSET_DIRPATH
 from ..util.const_json_loader import const_json_loader
 from ..bp.bp_assetbundle import (
-    assetbundle_official_Android_assets,
+    download_asset,
     HOT_UPDATE_LIST_JSON,
+    DownloadAssetResult,
 )
 from ..util.helper import get_asset_filename
 
@@ -22,10 +23,9 @@ def asset_download_worker_func(worker_param):
 
     print(f"info: downloading {asset_filename}")
 
-    with app.test_request_context():
-        ret_val = assetbundle_official_Android_assets(res_version, asset_filename)
+    ret_val = download_asset(res_version, asset_filename)
 
-    if isinstance(ret_val, tuple):
+    if isinstance(ret_val, DownloadAssetResult.HttpStatusCode):
         print(f"err: failed to download {asset_filename}")
         return asset_filename
 
@@ -39,8 +39,7 @@ def main():
     if "--download_all" in sys.argv:
         download_all = True
 
-    with app.test_request_context():
-        assetbundle_official_Android_assets(res_version, HOT_UPDATE_LIST_JSON)
+    download_asset(res_version, HOT_UPDATE_LIST_JSON)
     with open(
         os.path.join(ASSET_DIRPATH, res_version, HOT_UPDATE_LIST_JSON),
         encoding="utf-8",
