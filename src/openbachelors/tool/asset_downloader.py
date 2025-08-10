@@ -23,7 +23,11 @@ def asset_download_worker_func(worker_param):
 
     print(f"info: downloading {asset_filename}")
 
-    ret_val = download_asset(res_version, asset_filename)
+    try:
+        ret_val = download_asset(res_version, asset_filename)
+    except Exception as e:
+        print(f"err: exception during download of {asset_filename}: {e}")
+        return asset_filename
 
     if isinstance(ret_val, DownloadAssetResult.HttpStatusCode):
         print(f"err: failed to download {asset_filename}")
