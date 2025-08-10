@@ -1,6 +1,6 @@
 import os
 import json
-from multiprocessing import Pool
+from concurrent.futures import ProcessPoolExecutor, as_completed
 import sys
 
 
@@ -69,11 +69,23 @@ def main():
 
         asset_filename_lst.append(pack_filename)
 
-    with Pool(NUM_ASSET_DOWNLOAD_WORKER) as pool:
-        ret_val_lst = pool.map(
-            asset_download_worker_func,
-            [(res_version, asset_filename) for asset_filename in asset_filename_lst],
-        )
+    future_lst = []
+    ret_val_lst = []
+
+    try:
+        with ProcessPoolExecutor(NUM_ASSET_DOWNLOAD_WORKER) as pool:
+            for asset_filename in asset_filename_lst:
+                future_lst.append(
+                    pool.submit(
+                        asset_download_worker_func, (res_version, asset_filename)
+                    )
+                )
+
+                for future in as_completed(future_lst):
+                    ret_val_lst.append(future.result())
+    except KeyboardInterrupt:
+        print("warn: keyboard interrupt")
+        sys.exit(1)
 
     print("--- summary ---")
 
