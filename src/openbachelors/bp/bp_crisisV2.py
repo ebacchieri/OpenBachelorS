@@ -1,8 +1,8 @@
 import os
 from pathlib import Path
 
-from flask import Blueprint
-from flask import request
+from fastapi import APIRouter
+from fastapi import Request
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, VERSION_JSON, CRISIS_V2_DATA_DIRPATH
@@ -10,7 +10,7 @@ from ..util.const_json_loader import const_json_loader
 from ..util.player_data import player_data_decorator
 from ..util.battle_log_logger import log_battle_log_if_necessary
 
-bp_crisisV2 = Blueprint("bp_crisisV2", __name__)
+router = APIRouter()
 
 
 def get_crisis_v2_data():
@@ -37,10 +37,10 @@ def get_crisis_v2_data():
     return crisis_v2_data
 
 
-@bp_crisisV2.route("/crisisV2/getInfo", methods=["POST"])
+@router.post("/crisisV2/getInfo")
 @player_data_decorator
-def crisisV2_getInfo(player_data):
-    request_json = request.get_json()
+async def crisisV2_getInfo(player_data, request: Request):
+    request_json = await request.json()
 
     crisis_v2_data = get_crisis_v2_data()
 
@@ -51,10 +51,10 @@ def crisisV2_getInfo(player_data):
     return response
 
 
-@bp_crisisV2.route("/crisisV2/getGoodList", methods=["POST"])
+@router.post("/crisisV2/getGoodList")
 @player_data_decorator
-def crisisV2_getGoodList(player_data):
-    request_json = request.get_json()
+async def crisisV2_getGoodList(player_data, request: Request):
+    request_json = await request.json()
 
     response = {
         "permanent": [],
@@ -64,10 +64,10 @@ def crisisV2_getGoodList(player_data):
     return response
 
 
-@bp_crisisV2.route("/crisisV2/getSnapshot", methods=["POST"])
+@router.post("/crisisV2/getSnapshot")
 @player_data_decorator
-def crisisV2_getSnapshot(player_data):
-    request_json = request.get_json()
+async def crisisV2_getSnapshot(player_data, request: Request):
+    request_json = await request.json()
 
     response = {
         "detail": {},
@@ -76,10 +76,10 @@ def crisisV2_getSnapshot(player_data):
     return response
 
 
-@bp_crisisV2.route("/crisisV2/battleStart", methods=["POST"])
+@router.post("/crisisV2/battleStart")
 @player_data_decorator
-def crisisV2_battleStart(player_data):
-    request_json = request.get_json()
+async def crisisV2_battleStart(player_data, request: Request):
+    request_json = await request.json()
 
     player_data.extra_save.save_obj["crisis_v2_map_id"] = request_json["mapId"]
     player_data.extra_save.save_obj["crisis_v2_node_lst"] = request_json["runeSlots"]
@@ -228,10 +228,10 @@ def get_score_vec(map_id, node_lst, rune_lst):
     return score_vec
 
 
-@bp_crisisV2.route("/crisisV2/battleFinish", methods=["POST"])
+@router.post("/crisisV2/battleFinish")
 @player_data_decorator
-def crisisV2_battleFinish(player_data):
-    request_json = request.get_json()
+async def crisisV2_battleFinish(player_data, request: Request):
+    request_json = await request.json()
 
     log_battle_log_if_necessary(player_data, request_json["data"])
 

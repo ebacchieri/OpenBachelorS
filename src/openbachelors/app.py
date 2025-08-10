@@ -1,84 +1,85 @@
-from flask import Flask
+from fastapi import FastAPI
+import uvicorn
+
+from .bp import (
+    bp_account,
+    bp_api,
+    bp_app,
+    bp_aprilFool,
+    bp_assetbundle,
+    bp_building,
+    bp_businessCard,
+    bp_campaignV2,
+    bp_char,
+    bp_charBuild,
+    bp_charRotation,
+    bp_common,
+    bp_config,
+    bp_crisisV2,
+    bp_gacha,
+    bp_general,
+    bp_mail,
+    bp_pay,
+    bp_quest,
+    bp_rlv2,
+    bp_sandboxPerm,
+    bp_settings,
+    bp_shop,
+    bp_social,
+    bp_storyreview,
+    bp_templateShop,
+    bp_tower,
+    bp_u8,
+    bp_user,
+    bp_yostar,
+    legacy_bp,
+    misc_bp,
+)
 
 
-from .bp.bp_account import bp_account
-from .bp.bp_api import bp_api
-from .bp.bp_app import bp_app
-from .bp.bp_aprilFool import bp_aprilFool
-from .bp.bp_assetbundle import bp_assetbundle
-from .bp.bp_building import bp_building
-from .bp.bp_businessCard import bp_businessCard
-from .bp.bp_campaignV2 import bp_campaignV2
-from .bp.bp_char import bp_char
-from .bp.bp_charBuild import bp_charBuild
-from .bp.bp_charRotation import bp_charRotation
-from .bp.bp_common import bp_common
-from .bp.bp_config import bp_config
-from .bp.bp_crisisV2 import bp_crisisV2
-from .bp.bp_gacha import bp_gacha
-from .bp.bp_general import bp_general
-from .bp.bp_mail import bp_mail
-from .bp.bp_pay import bp_pay
-from .bp.bp_quest import bp_quest
-from .bp.bp_rlv2 import bp_rlv2
-from .bp.bp_sandboxPerm import bp_sandboxPerm
-from .bp.bp_settings import bp_settings
-from .bp.bp_shop import bp_shop
-from .bp.bp_social import bp_social
-from .bp.bp_storyreview import bp_storyreview
-from .bp.bp_templateShop import bp_templateShop
-from .bp.bp_tower import bp_tower
-from .bp.bp_u8 import bp_u8
-from .bp.bp_user import bp_user
-from .bp.bp_yostar import bp_yostar
-from .bp.legacy_bp import legacy_bp
-from .bp.misc_bp import misc_bp
+app = FastAPI()
 
 
-app = Flask(__name__)
-
-
-app.register_blueprint(bp_account)
-app.register_blueprint(bp_api)
-app.register_blueprint(bp_app)
-app.register_blueprint(bp_aprilFool)
-app.register_blueprint(bp_assetbundle)
-app.register_blueprint(bp_building)
-app.register_blueprint(bp_businessCard)
-app.register_blueprint(bp_campaignV2)
-app.register_blueprint(bp_char)
-app.register_blueprint(bp_charBuild)
-app.register_blueprint(bp_charRotation)
-app.register_blueprint(bp_common)
-app.register_blueprint(bp_config)
-app.register_blueprint(bp_crisisV2)
-app.register_blueprint(bp_gacha)
-app.register_blueprint(bp_general)
-app.register_blueprint(bp_mail)
-app.register_blueprint(bp_pay)
-app.register_blueprint(bp_quest)
-app.register_blueprint(bp_rlv2)
-app.register_blueprint(bp_sandboxPerm)
-app.register_blueprint(bp_settings)
-app.register_blueprint(bp_shop)
-app.register_blueprint(bp_social)
-app.register_blueprint(bp_storyreview)
-app.register_blueprint(bp_templateShop)
-app.register_blueprint(bp_tower)
-app.register_blueprint(bp_u8)
-app.register_blueprint(bp_user)
-app.register_blueprint(bp_yostar)
-app.register_blueprint(legacy_bp)
-app.register_blueprint(misc_bp)
-
-app.json.sort_keys = False
+app.include_router(bp_account.router)
+app.include_router(bp_api.router)
+app.include_router(bp_app.router)
+app.include_router(bp_aprilFool.router)
+app.include_router(bp_assetbundle.router)
+app.include_router(bp_building.router)
+app.include_router(bp_businessCard.router)
+app.include_router(bp_campaignV2.router)
+app.include_router(bp_char.router)
+app.include_router(bp_charBuild.router)
+app.include_router(bp_charRotation.router)
+app.include_router(bp_common.router)
+app.include_router(bp_config.router)
+app.include_router(bp_crisisV2.router)
+app.include_router(bp_gacha.router)
+app.include_router(bp_general.router)
+app.include_router(bp_mail.router)
+app.include_router(bp_pay.router)
+app.include_router(bp_quest.router)
+app.include_router(bp_rlv2.router)
+app.include_router(bp_sandboxPerm.router)
+app.include_router(bp_settings.router)
+app.include_router(bp_shop.router)
+app.include_router(bp_social.router)
+app.include_router(bp_storyreview.router)
+app.include_router(bp_templateShop.router)
+app.include_router(bp_tower.router)
+app.include_router(bp_u8.router)
+app.include_router(bp_user.router)
+app.include_router(bp_yostar.router)
+app.include_router(legacy_bp.router)
+app.include_router(misc_bp.router)
 
 
 def main():
-    app.run(
+    uvicorn.run(
+        "openbachelors.app:app",
         host="127.0.0.1",
         port=8443,
-        debug=True,
+        reload=True,
     )
 
 

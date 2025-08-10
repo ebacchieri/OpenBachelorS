@@ -1,6 +1,8 @@
 import os
 import json
 
+import pytest
+
 from openbachelors.util.const_json_loader import ConstJson
 from openbachelors.const.filepath import TMP_DIRPATH
 from openbachelors.util.player_data import (
@@ -180,19 +182,20 @@ def test_player_data_template():
         json.dump(player_data_template.copy(), f, ensure_ascii=False, indent=4)
 
 
-def test_player_data():
+@pytest.mark.asyncio
+async def test_player_data():
     player_data = PlayerData()
 
     player_data.reset()
     player_data.save()
 
     @player_data_decorator
-    def f(player_data):
+    async def f(player_data):
         player_data["status"]["ap"] = 789
         response = {}
         return response
 
-    response = f()
+    response = await f()
 
     response.pop("pushMessage", None)
 
@@ -206,4 +209,4 @@ def test_player_data():
     assert player_data.sav_delta_json.deleted_dict == {"status": {"ap": None}}
 
     assert player_data.sav_pending_delta_json.modified_dict == {}
-    assert player_data.sav_pending_delta_json.deleted_dict == {"status": {}}
+    assert player_data.sav_pending_delta_json.deleted_dict == {}

@@ -2,8 +2,8 @@ from enum import Enum
 import random
 from functools import cmp_to_key
 
-from flask import Blueprint
-from flask import request
+from fastapi import APIRouter
+from fastapi import Request
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, VERSION_JSON, SANDBOX_PERM_TABLE
@@ -11,7 +11,7 @@ from ..util.const_json_loader import const_json_loader, ConstJson
 from ..util.player_data import player_data_decorator
 from ..util.battle_log_logger import log_battle_log_if_necessary
 
-bp_sandboxPerm = Blueprint("bp_sandboxPerm", __name__)
+router = APIRouter()
 
 
 class SandboxBasicManager:
@@ -553,10 +553,10 @@ def get_sandbox_manager(player_data, topic_id, request_json, response):
     return SandboxBasicManager(player_data, topic_id, request_json, response)
 
 
-@bp_sandboxPerm.route("/sandboxPerm/sandboxV2/setSquad", methods=["POST"])
+@router.post("/sandboxPerm/sandboxV2/setSquad")
 @player_data_decorator
-def sandboxPerm_sandboxV2_setSquad(player_data):
-    request_json = request.get_json()
+async def sandboxPerm_sandboxV2_setSquad(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     topic_id = request_json["topicId"]
@@ -568,10 +568,10 @@ def sandboxPerm_sandboxV2_setSquad(player_data):
     return response
 
 
-@bp_sandboxPerm.route("/sandboxPerm/sandboxV2/battleStart", methods=["POST"])
+@router.post("/sandboxPerm/sandboxV2/battleStart")
 @player_data_decorator
-def sandboxPerm_sandboxV2_battleStart(player_data):
-    request_json = request.get_json()
+async def sandboxPerm_sandboxV2_battleStart(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     topic_id = request_json["topicId"]
@@ -583,10 +583,10 @@ def sandboxPerm_sandboxV2_battleStart(player_data):
     return response
 
 
-@bp_sandboxPerm.route("/sandboxPerm/sandboxV2/battleFinish", methods=["POST"])
+@router.post("/sandboxPerm/sandboxV2/battleFinish")
 @player_data_decorator
-def sandboxPerm_sandboxV2_battleFinish(player_data):
-    request_json = request.get_json()
+async def sandboxPerm_sandboxV2_battleFinish(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     log_battle_log_if_necessary(player_data, request_json["data"])
@@ -600,10 +600,10 @@ def sandboxPerm_sandboxV2_battleFinish(player_data):
     return response
 
 
-@bp_sandboxPerm.route("/sandboxPerm/sandboxV2/eatFood", methods=["POST"])
+@router.post("/sandboxPerm/sandboxV2/eatFood")
 @player_data_decorator
-def sandboxPerm_sandboxV2_eatFood(player_data):
-    request_json = request.get_json()
+async def sandboxPerm_sandboxV2_eatFood(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     topic_id = request_json["topicId"]
@@ -615,10 +615,10 @@ def sandboxPerm_sandboxV2_eatFood(player_data):
     return response
 
 
-@bp_sandboxPerm.route("/sandboxPerm/sandboxV2/homeBuildSave", methods=["POST"])
+@router.post("/sandboxPerm/sandboxV2/homeBuildSave")
 @player_data_decorator
-def sandboxPerm_sandboxV2_homeBuildSave(player_data):
-    request_json = request.get_json()
+async def sandboxPerm_sandboxV2_homeBuildSave(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     topic_id = request_json["topicId"]
@@ -630,10 +630,10 @@ def sandboxPerm_sandboxV2_homeBuildSave(player_data):
     return response
 
 
-@bp_sandboxPerm.route("/sandboxPerm/sandboxV2/switchMode", methods=["POST"])
+@router.post("/sandboxPerm/sandboxV2/switchMode")
 @player_data_decorator
-def sandboxPerm_sandboxV2_switchMode(player_data):
-    request_json = request.get_json()
+async def sandboxPerm_sandboxV2_switchMode(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     topic_id = request_json["topicId"]
@@ -645,10 +645,10 @@ def sandboxPerm_sandboxV2_switchMode(player_data):
     return response
 
 
-@bp_sandboxPerm.route("/sandboxPerm/sandboxV2/monthBattleStart", methods=["POST"])
+@router.post("/sandboxPerm/sandboxV2/monthBattleStart")
 @player_data_decorator
-def sandboxPerm_sandboxV2_monthBattleStart(player_data):
-    request_json = request.get_json()
+async def sandboxPerm_sandboxV2_monthBattleStart(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     topic_id = request_json["topicId"]
@@ -660,10 +660,10 @@ def sandboxPerm_sandboxV2_monthBattleStart(player_data):
     return response
 
 
-@bp_sandboxPerm.route("/sandboxPerm/sandboxV2/monthBattleFinish", methods=["POST"])
+@router.post("/sandboxPerm/sandboxV2/monthBattleFinish")
 @player_data_decorator
-def sandboxPerm_sandboxV2_monthBattleFinish(player_data):
-    request_json = request.get_json()
+async def sandboxPerm_sandboxV2_monthBattleFinish(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     log_battle_log_if_necessary(player_data, request_json["data"])
@@ -677,10 +677,10 @@ def sandboxPerm_sandboxV2_monthBattleFinish(player_data):
     return response
 
 
-@bp_sandboxPerm.route("/sandboxPerm/sandboxV2/racing/battleStart", methods=["POST"])
+@router.post("/sandboxPerm/sandboxV2/racing/battleStart")
 @player_data_decorator
-def sandboxPerm_sandboxV2_racing_battleStart(player_data):
-    request_json = request.get_json()
+async def sandboxPerm_sandboxV2_racing_battleStart(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     topic_id = request_json["topicId"]
@@ -692,10 +692,10 @@ def sandboxPerm_sandboxV2_racing_battleStart(player_data):
     return response
 
 
-@bp_sandboxPerm.route("/sandboxPerm/sandboxV2/racing/battleFinish", methods=["POST"])
+@router.post("/sandboxPerm/sandboxV2/racing/battleFinish")
 @player_data_decorator
-def sandboxPerm_sandboxV2_racing_battleFinish(player_data):
-    request_json = request.get_json()
+async def sandboxPerm_sandboxV2_racing_battleFinish(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     log_battle_log_if_necessary(player_data, request_json["data"])
@@ -709,10 +709,10 @@ def sandboxPerm_sandboxV2_racing_battleFinish(player_data):
     return response
 
 
-@bp_sandboxPerm.route("/sandboxPerm/sandboxV2/enterChallenge", methods=["POST"])
+@router.post("/sandboxPerm/sandboxV2/enterChallenge")
 @player_data_decorator
-def sandboxPerm_sandboxV2_enterChallenge(player_data):
-    request_json = request.get_json()
+async def sandboxPerm_sandboxV2_enterChallenge(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     topic_id = request_json["topicId"]
@@ -724,10 +724,10 @@ def sandboxPerm_sandboxV2_enterChallenge(player_data):
     return response
 
 
-@bp_sandboxPerm.route("/sandboxPerm/sandboxV2/settleChallenge", methods=["POST"])
+@router.post("/sandboxPerm/sandboxV2/settleChallenge")
 @player_data_decorator
-def sandboxPerm_sandboxV2_settleChallenge(player_data):
-    request_json = request.get_json()
+async def sandboxPerm_sandboxV2_settleChallenge(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     topic_id = request_json["topicId"]
@@ -739,10 +739,10 @@ def sandboxPerm_sandboxV2_settleChallenge(player_data):
     return response
 
 
-@bp_sandboxPerm.route("/sandboxPerm/sandboxV2/exitChallenge", methods=["POST"])
+@router.post("/sandboxPerm/sandboxV2/exitChallenge")
 @player_data_decorator
-def sandboxPerm_sandboxV2_exitChallenge(player_data):
-    request_json = request.get_json()
+async def sandboxPerm_sandboxV2_exitChallenge(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     topic_id = request_json["topicId"]

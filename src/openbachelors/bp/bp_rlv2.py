@@ -1,8 +1,8 @@
 from enum import Enum
 from copy import deepcopy
 
-from flask import Blueprint
-from flask import request
+from fastapi import APIRouter
+from fastapi import Request
 
 from ..const.json_const import true, false, null
 from ..const.filepath import (
@@ -19,7 +19,7 @@ from ..util.helper import (
 )
 from ..util.battle_log_logger import log_battle_log_if_necessary
 
-bp_rlv2 = Blueprint("bp_rlv2", __name__)
+router = APIRouter()
 
 profession_lst = ConstJson(
     [
@@ -1251,10 +1251,10 @@ def get_rlv2_manager(player_data, request_json, response):
     return Rlv2BasicManager(player_data, theme_id, request_json, response)
 
 
-@bp_rlv2.route("/rlv2/createGame", methods=["POST"])
+@router.post("/rlv2/createGame")
 @player_data_decorator
-def rlv2_createGame(player_data):
-    request_json = request.get_json()
+async def rlv2_createGame(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     mode = request_json["mode"]
@@ -1271,10 +1271,10 @@ def rlv2_createGame(player_data):
     return response
 
 
-@bp_rlv2.route("/rlv2/giveUpGame", methods=["POST"])
+@router.post("/rlv2/giveUpGame")
 @player_data_decorator
-def rlv2_giveUpGame(player_data):
-    request_json = request.get_json()
+async def rlv2_giveUpGame(player_data, request: Request):
+    request_json = await request.json()
     response = {"result": "ok"}
 
     rlv2_manager = get_rlv2_manager(player_data, request_json, response)
@@ -1284,10 +1284,10 @@ def rlv2_giveUpGame(player_data):
     return response
 
 
-@bp_rlv2.route("/rlv2/chooseInitialRelic", methods=["POST"])
+@router.post("/rlv2/chooseInitialRelic")
 @player_data_decorator
-def rlv2_chooseInitialRelic(player_data):
-    request_json = request.get_json()
+async def rlv2_chooseInitialRelic(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     rlv2_manager = get_rlv2_manager(player_data, request_json, response)
@@ -1297,10 +1297,10 @@ def rlv2_chooseInitialRelic(player_data):
     return response
 
 
-@bp_rlv2.route("/rlv2/chooseInitialRecruitSet", methods=["POST"])
+@router.post("/rlv2/chooseInitialRecruitSet")
 @player_data_decorator
-def rlv2_chooseInitialRecruitSet(player_data):
-    request_json = request.get_json()
+async def rlv2_chooseInitialRecruitSet(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     rlv2_manager = get_rlv2_manager(player_data, request_json, response)
@@ -1310,10 +1310,10 @@ def rlv2_chooseInitialRecruitSet(player_data):
     return response
 
 
-@bp_rlv2.route("/rlv2/finishEvent", methods=["POST"])
+@router.post("/rlv2/finishEvent")
 @player_data_decorator
-def rlv2_finishEvent(player_data):
-    request_json = request.get_json()
+async def rlv2_finishEvent(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     rlv2_manager = get_rlv2_manager(player_data, request_json, response)
@@ -1323,10 +1323,10 @@ def rlv2_finishEvent(player_data):
     return response
 
 
-@bp_rlv2.route("/rlv2/moveTo", methods=["POST"])
+@router.post("/rlv2/moveTo")
 @player_data_decorator
-def rlv2_moveTo(player_data):
-    request_json = request.get_json()
+async def rlv2_moveTo(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     rlv2_manager = get_rlv2_manager(player_data, request_json, response)
@@ -1336,10 +1336,10 @@ def rlv2_moveTo(player_data):
     return response
 
 
-@bp_rlv2.route("/rlv2/shopAction", methods=["POST"])
+@router.post("/rlv2/shopAction")
 @player_data_decorator
-def rlv2_shopAction(player_data):
-    request_json = request.get_json()
+async def rlv2_shopAction(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     rlv2_manager = get_rlv2_manager(player_data, request_json, response)
@@ -1349,10 +1349,10 @@ def rlv2_shopAction(player_data):
     return response
 
 
-@bp_rlv2.route("/rlv2/moveAndBattleStart", methods=["POST"])
+@router.post("/rlv2/moveAndBattleStart")
 @player_data_decorator
-def rlv2_moveAndBattleStart(player_data):
-    request_json = request.get_json()
+async def rlv2_moveAndBattleStart(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     rlv2_manager = get_rlv2_manager(player_data, request_json, response)
@@ -1362,10 +1362,10 @@ def rlv2_moveAndBattleStart(player_data):
     return response
 
 
-@bp_rlv2.route("/rlv2/battleFinish", methods=["POST"])
+@router.post("/rlv2/battleFinish")
 @player_data_decorator
-def rlv2_battleFinish(player_data):
-    request_json = request.get_json()
+async def rlv2_battleFinish(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     log_battle_log_if_necessary(player_data, request_json["data"])
@@ -1377,10 +1377,10 @@ def rlv2_battleFinish(player_data):
     return response
 
 
-@bp_rlv2.route("/rlv2/finishBattleReward", methods=["POST"])
+@router.post("/rlv2/finishBattleReward")
 @player_data_decorator
-def rlv2_finishBattleReward(player_data):
-    request_json = request.get_json()
+async def rlv2_finishBattleReward(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     rlv2_manager = get_rlv2_manager(player_data, request_json, response)
@@ -1390,10 +1390,10 @@ def rlv2_finishBattleReward(player_data):
     return response
 
 
-@bp_rlv2.route("/rlv2/recruitChar", methods=["POST"])
+@router.post("/rlv2/recruitChar")
 @player_data_decorator
-def rlv2_recruitChar(player_data):
-    request_json = request.get_json()
+async def rlv2_recruitChar(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     rlv2_manager = get_rlv2_manager(player_data, request_json, response)
@@ -1403,10 +1403,10 @@ def rlv2_recruitChar(player_data):
     return response
 
 
-@bp_rlv2.route("/rlv2/closeRecruitTicket", methods=["POST"])
+@router.post("/rlv2/closeRecruitTicket")
 @player_data_decorator
-def rlv2_closeRecruitTicket(player_data):
-    request_json = request.get_json()
+async def rlv2_closeRecruitTicket(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     rlv2_manager = get_rlv2_manager(player_data, request_json, response)
@@ -1416,10 +1416,10 @@ def rlv2_closeRecruitTicket(player_data):
     return response
 
 
-@bp_rlv2.route("/rlv2/setPinned", methods=["POST"])
+@router.post("/rlv2/setPinned")
 @player_data_decorator
-def rlv2_setPinned(player_data):
-    request_json = request.get_json()
+async def rlv2_setPinned(player_data, request: Request):
+    request_json = await request.json()
 
     theme_id = request_json["id"]
 

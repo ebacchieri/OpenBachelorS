@@ -1,5 +1,5 @@
-from flask import Blueprint
-from flask import request
+from fastapi import APIRouter
+from fastapi import Request
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, VERSION_JSON, ASSIST_JSON
@@ -12,13 +12,13 @@ from ..util.helper import (
     convert_char_obj_to_assist_char_obj,
 )
 
-bp_businessCard = Blueprint("bp_businessCard", __name__)
+router = APIRouter()
 
 
-@bp_businessCard.route("/businessCard/getOtherPlayerNameCard", methods=["POST"])
+@router.post("/businessCard/getOtherPlayerNameCard")
 @player_data_decorator
-def businessCard_getOtherPlayerNameCard(player_data):
-    request_json = request.get_json()
+async def businessCard_getOtherPlayerNameCard(player_data, request: Request):
+    request_json = await request.json()
 
     friend_uid = request_json["uid"]
 
@@ -58,10 +58,10 @@ def businessCard_getOtherPlayerNameCard(player_data):
     return response
 
 
-@bp_businessCard.route("/businessCard/editNameCard", methods=["POST"])
+@router.post("/businessCard/editNameCard")
 @player_data_decorator
-def businessCard_editNameCard(player_data):
-    request_json = request.get_json()
+async def businessCard_editNameCard(player_data, request: Request):
+    request_json = await request.json()
 
     request_content = request_json["content"]
 

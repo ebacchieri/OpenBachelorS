@@ -1,7 +1,7 @@
 import random
 
-from flask import Blueprint
-from flask import request
+from fastapi import APIRouter
+from fastapi import Request
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, VERSION_JSON, CLIMB_TOWER_TABLE
@@ -13,13 +13,13 @@ from ..util.helper import (
 )
 from ..util.battle_log_logger import log_battle_log_if_necessary
 
-bp_tower = Blueprint("bp_tower", __name__)
+router = APIRouter()
 
 
-@bp_tower.route("/tower/createGame", methods=["POST"])
+@router.post("/tower/createGame")
 @player_data_decorator
-def tower_createGame(player_data):
-    request_json = request.get_json()
+async def tower_createGame(player_data, request: Request):
+    request_json = await request.json()
 
     tower_id = request_json["tower"]
     is_hard = bool(request_json["isHard"])
@@ -69,10 +69,10 @@ def tower_createGame(player_data):
     return response
 
 
-@bp_tower.route("/tower/settleGame", methods=["POST"])
+@router.post("/tower/settleGame")
 @player_data_decorator
-def tower_settleGame(player_data):
-    request_json = request.get_json()
+async def tower_settleGame(player_data, request: Request):
+    request_json = await request.json()
 
     tower_obj = {
         "status": {
@@ -113,10 +113,10 @@ def tower_settleGame(player_data):
     return response
 
 
-@bp_tower.route("/tower/initGodCard", methods=["POST"])
+@router.post("/tower/initGodCard")
 @player_data_decorator
-def tower_initGodCard(player_data):
-    request_json = request.get_json()
+async def tower_initGodCard(player_data, request: Request):
+    request_json = await request.json()
 
     god_card_id = request_json["godCardId"]
 
@@ -127,10 +127,10 @@ def tower_initGodCard(player_data):
     return response
 
 
-@bp_tower.route("/tower/initGame", methods=["POST"])
+@router.post("/tower/initGame")
 @player_data_decorator
-def tower_initGame(player_data):
-    request_json = request.get_json()
+async def tower_initGame(player_data, request: Request):
+    request_json = await request.json()
 
     tactical = request_json["tactical"]
     strategy = request_json["strategy"]
@@ -143,10 +143,10 @@ def tower_initGame(player_data):
     return response
 
 
-@bp_tower.route("/tower/initCard", methods=["POST"])
+@router.post("/tower/initCard")
 @player_data_decorator
-def tower_initCard(player_data):
-    request_json = request.get_json()
+async def tower_initCard(player_data, request: Request):
+    request_json = await request.json()
 
     char_num_id_lst = []
 
@@ -171,10 +171,10 @@ def tower_initCard(player_data):
     return response
 
 
-@bp_tower.route("/tower/battleStart", methods=["POST"])
+@router.post("/tower/battleStart")
 @player_data_decorator
-def tower_battleStart(player_data):
-    request_json = request.get_json()
+async def tower_battleStart(player_data, request: Request):
+    request_json = await request.json()
 
     coord = player_data["tower"]["current"]["status"]["coord"]
 
@@ -210,10 +210,10 @@ def get_candidate_obj(player_data):
     return candidate_obj
 
 
-@bp_tower.route("/tower/battleFinish", methods=["POST"])
+@router.post("/tower/battleFinish")
 @player_data_decorator
-def tower_battleFinish(player_data):
-    request_json = request.get_json()
+async def tower_battleFinish(player_data, request: Request):
+    request_json = await request.json()
 
     log_battle_log_if_necessary(player_data, request_json["data"])
 
@@ -246,10 +246,10 @@ def tower_battleFinish(player_data):
     return response
 
 
-@bp_tower.route("/tower/chooseSubGodCard", methods=["POST"])
+@router.post("/tower/chooseSubGodCard")
 @player_data_decorator
-def tower_chooseSubGodCard(player_data):
-    request_json = request.get_json()
+async def tower_chooseSubGodCard(player_data, request: Request):
+    request_json = await request.json()
 
     sub_god_card_id = request_json["subGodCardId"]
 
@@ -260,10 +260,10 @@ def tower_chooseSubGodCard(player_data):
     return response
 
 
-@bp_tower.route("/tower/recruit", methods=["POST"])
+@router.post("/tower/recruit")
 @player_data_decorator
-def tower_recruit(player_data):
-    request_json = request.get_json()
+async def tower_recruit(player_data, request: Request):
+    request_json = await request.json()
 
     if not request_json["giveUp"]:
         char_id = request_json["charId"]

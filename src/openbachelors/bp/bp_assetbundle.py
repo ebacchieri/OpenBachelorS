@@ -3,10 +3,10 @@ import json
 from typing import Any
 from dataclasses import dataclass
 
-from flask import Blueprint
-from flask import request
-from flask import send_file
-from flask import redirect
+from fastapi import APIRouter
+from fastapi import Request, Response
+from fastapi.responses import FileResponse
+from fastapi.responses import RedirectResponse
 import requests
 
 from ..const.json_const import true, false, null
@@ -21,7 +21,7 @@ from ..util.const_json_loader import const_json_loader
 from ..util.mod_loader import mod_loader
 from ..util.helper import is_valid_res_version, is_valid_asset_filename, download_file
 
-bp_assetbundle = Blueprint("bp_assetbundle", __name__)
+router = APIRouter()
 
 
 HOT_UPDATE_LIST_JSON = "hot_update_list.json"
@@ -117,20 +117,20 @@ def download_asset(res_version, asset_filename):
     return DownloadAssetResult.SendFile(file_path=asset_abs_filepath)
 
 
-@bp_assetbundle.route(
-    "/assetbundle/official/Android/assets/<string:res_version>/<string:asset_filename>"
-)
-def assetbundle_official_Android_assets(res_version, asset_filename):
+@router.get("/assetbundle/official/Android/assets/{res_version}/{asset_filename}")
+async def assetbundle_official_Android_assets(
+    res_version: str, asset_filename: str, request: Request
+):
     result = download_asset(res_version, asset_filename)
 
     match result:
         case DownloadAssetResult.Response(response=response):
             return response
         case DownloadAssetResult.HttpStatusCode(status_code=status_code):
-            return "", status_code
+            return Response(status_code=status_code)
         case DownloadAssetResult.SendFile(file_path=file_path):
-            return send_file(file_path)
+            return FileResponse(file_path)
         case DownloadAssetResult.Redirect(url=url):
-            return redirect(url)
+            return RedirectResponse(url)
         case _:
             raise AssertionError(result)

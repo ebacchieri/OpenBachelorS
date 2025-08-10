@@ -1,8 +1,8 @@
 import os
 import json
 
-from flask import Blueprint
-from flask import request
+from fastapi import APIRouter
+from fastapi import Request
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, VERSION_JSON, TMP_DIRPATH
@@ -11,12 +11,12 @@ from ..util.player_data import PlayerData, player_data_decorator
 from ..util.mail_helper import get_player_mailbox
 from ..util.faketime import faketime
 
-bp_account = Blueprint("bp_account", __name__)
+router = APIRouter()
 
 
-@bp_account.route("/account/login", methods=["POST"])
-def account_login():
-    request_json = request.get_json()
+@router.post("/account/login")
+async def account_login(request: Request):
+    request_json = await request.json()
     token = request_json["token"]
 
     response = {
@@ -30,9 +30,9 @@ def account_login():
     return response
 
 
-@bp_account.route("/account/syncData", methods=["POST"])
-def account_syncData():
-    player_data = PlayerData()
+@router.post("/account/syncData")
+async def account_syncData(request: Request):
+    player_data = PlayerData(request=request)
 
     t = int(faketime())
     player_data["status"]["lastRefreshTs"] = t
@@ -65,17 +65,17 @@ def account_syncData():
     return response
 
 
-@bp_account.route("/account/syncStatus", methods=["POST"])
+@router.post("/account/syncStatus")
 @player_data_decorator
-def account_syncStatus(player_data):
-    request_json = request.get_json()
+async def account_syncStatus(player_data, request: Request):
+    request_json = await request.json()
     response = {"result": {}}
     return response
 
 
-@bp_account.route("/account/syncPushMessage", methods=["POST"])
+@router.post("/account/syncPushMessage")
 @player_data_decorator
-def account_syncPushMessage(player_data):
-    request_json = request.get_json()
+async def account_syncPushMessage(player_data, request: Request):
+    request_json = await request.json()
     response = {}
     return response

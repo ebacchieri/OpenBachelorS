@@ -1,7 +1,7 @@
 import json
 
-from flask import Blueprint
-from flask import request
+from fastapi import APIRouter
+from fastapi import Request
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, VERSION_JSON
@@ -10,13 +10,13 @@ from ..util.helper import get_username_by_token
 from ..util.player_data import player_data_decorator
 
 
-bp_user = Blueprint("bp_user", __name__)
+router = APIRouter()
 
 
-@bp_user.route("/user/auth/v1/token_by_phone_password", methods=["POST"])
-@bp_user.route("/user/auth/v2/token_by_phone_code", methods=["POST"])
-def user_auth_v1_token_by_phone_password():
-    request_json = request.get_json()
+@router.post("/user/auth/v1/token_by_phone_password")
+@router.post("/user/auth/v2/token_by_phone_code")
+async def user_auth_v1_token_by_phone_password(request: Request):
+    request_json = await request.json()
 
     phone = request_json["phone"]
 
@@ -24,9 +24,9 @@ def user_auth_v1_token_by_phone_password():
     return response
 
 
-@bp_user.route("/user/info/v1/basic")
-def user_info_v1_basic():
-    token = request.args.get("token", "")
+@router.get("/user/info/v1/basic")
+async def user_info_v1_basic(request: Request):
+    token = request.query_params.get("token", "")
     username = get_username_by_token(token)
     response = {
         "data": {
@@ -45,9 +45,9 @@ def user_info_v1_basic():
     return response
 
 
-@bp_user.route("/user/oauth2/v2/grant", methods=["POST"])
-def user_oauth2_v2_grant():
-    request_json = request.get_json()
+@router.post("/user/oauth2/v2/grant")
+async def user_oauth2_v2_grant(request: Request):
+    request_json = await request.json()
 
     token = request_json["token"]
 
@@ -60,34 +60,34 @@ def user_oauth2_v2_grant():
     return response
 
 
-@bp_user.route("/user/online/v1/loginout", methods=["POST"])
-def user_online_v1_loginout():
-    request_json = request.get_json()
+@router.post("/user/online/v1/loginout")
+async def user_online_v1_loginout(request: Request):
+    request_json = await request.json()
 
     response = {"msg": "OK", "status": 0, "type": "A"}
     return response
 
 
-@bp_user.route("/user/info/v1/logout", methods=["POST"])
-def user_info_v1_logout():
-    request_json = request.get_json()
+@router.post("/user/info/v1/logout")
+async def user_info_v1_logout(request: Request):
+    request_json = await request.json()
 
     response = {"msg": "OK", "status": 0, "type": "A"}
     return response
 
 
-@bp_user.route("/user/info/v1/update_agreement", methods=["POST"])
-def user_info_v1_update_agreement():
-    request_json = request.get_json()
+@router.post("/user/info/v1/update_agreement")
+async def user_info_v1_update_agreement(request: Request):
+    request_json = await request.json()
 
     response = {"msg": "OK", "status": 0, "type": "A"}
     return response
 
 
-@bp_user.route("/user/changeAvatar", methods=["POST"])
+@router.post("/user/changeAvatar")
 @player_data_decorator
-def user_changeAvatar(player_data):
-    request_json = request.get_json()
+async def user_changeAvatar(player_data, request: Request):
+    request_json = await request.json()
 
     avatar = request_json
 
@@ -97,10 +97,10 @@ def user_changeAvatar(player_data):
     return response
 
 
-@bp_user.route("/user/changeResume", methods=["POST"])
+@router.post("/user/changeResume")
 @player_data_decorator
-def user_changeResume(player_data):
-    request_json = request.get_json()
+async def user_changeResume(player_data, request: Request):
+    request_json = await request.json()
 
     resume = request_json["resume"]
 
@@ -110,11 +110,11 @@ def user_changeResume(player_data):
     return response
 
 
-@bp_user.route("/user/login", methods=["POST"])
-@bp_user.route("/user/quick-login", methods=["POST"])
-@bp_user.route("/user/detail", methods=["POST"])
-def user_login():
-    request_json = request.get_json()
+@router.post("/user/login")
+@router.post("/user/quick-login")
+@router.post("/user/detail")
+async def user_login(request: Request):
+    request_json = await request.json()
 
     token = request_json.get("Token", "")
 
@@ -168,18 +168,18 @@ def user_login():
     return response
 
 
-@bp_user.route("/user/agreement/confirm", methods=["POST"])
-def user_agreement_confirm():
-    request_json = request.get_json()
+@router.post("/user/agreement/confirm")
+async def user_agreement_confirm(request: Request):
+    request_json = await request.json()
 
     response = {"Code": 200, "Data": {}, "Msg": "OK"}
     return response
 
 
-@bp_user.route("/user/useRenameCard", methods=["POST"])
+@router.post("/user/useRenameCard")
 @player_data_decorator
-def user_useRenameCard(player_data):
-    request_json = request.get_json()
+async def user_useRenameCard(player_data, request: Request):
+    request_json = await request.json()
 
     player_data["status"]["nickName"] = request_json["nickName"]
 

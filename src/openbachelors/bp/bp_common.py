@@ -1,17 +1,17 @@
-from flask import Blueprint
-from flask import request
+from fastapi import APIRouter
+from fastapi import Request
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, VERSION_JSON
 from ..util.const_json_loader import const_json_loader
 from ..util.player_data import player_data_decorator
 
-bp_common = Blueprint("bp_common", __name__)
+router = APIRouter()
 
 
-@bp_common.route("/common/config", methods=["POST"])
-def common_config():
-    request_json = request.get_json()
+@router.post("/common/config")
+async def common_config(request: Request):
+    request_json = await request.json()
     response = {
         "Code": 200,
         "Data": {
@@ -276,16 +276,16 @@ def common_config():
     return response
 
 
-@bp_common.route("/common/client-info", methods=["POST"])
-def common_client_info():
-    request_json = request.get_json()
+@router.post("/common/client-info")
+async def common_client_info(request: Request):
+    request_json = await request.json()
     response = {"Code": 200, "Data": {"EuropeUnion": false}, "Msg": "OK"}
     return response
 
 
-@bp_common.route("/common/version", methods=["POST"])
-def common_version():
-    request_json = request.get_json()
+@router.post("/common/version")
+async def common_version(request: Request):
+    request_json = await request.json()
     response = {
         "Code": 200,
         "Data": {
@@ -312,9 +312,9 @@ def common_version():
     return response
 
 
-@bp_common.route("/common/client-code", methods=["POST"])
-def common_client_code():
-    request_json = request.get_json()
+@router.post("/common/client-code")
+async def common_client_code(request: Request):
+    request_json = await request.json()
     response = {
         "Code": 200,
         "Data": {
@@ -1363,8 +1363,8 @@ def common_client_code():
     return response
 
 
-@bp_common.route("/common/client-log", methods=["POST"])
-def common_client_log():
-    request_json = request.get_json()
+@router.post("/common/client-log")
+async def common_client_log(request: Request):
+    request_json = await request.json()
     response = {"Code": 200, "Data": {}, "Msg": "OK"}
     return response

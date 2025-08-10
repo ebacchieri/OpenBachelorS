@@ -1,8 +1,8 @@
 from enum import IntEnum
 import random
 
-from flask import Blueprint
-from flask import request
+from fastapi import APIRouter
+from fastapi import Request
 
 from ..const.json_const import true, false, null
 from ..const.filepath import (
@@ -22,13 +22,13 @@ from ..util.helper import (
 )
 from ..util.faketime import faketime
 
-bp_gacha = Blueprint("bp_gacha", __name__)
+router = APIRouter()
 
 
-@bp_gacha.route("/gacha/syncNormalGacha", methods=["POST"])
+@router.post("/gacha/syncNormalGacha")
 @player_data_decorator
-def gacha_syncNormalGacha(player_data):
-    request_json = request.get_json()
+async def gacha_syncNormalGacha(player_data, request: Request):
+    request_json = await request.json()
     response = {}
     return response
 
@@ -291,10 +291,10 @@ def get_normal_gacha_manager(player_data, request_json, response):
     return NormalGachaSimpleManager(player_data, request_json, response)
 
 
-@bp_gacha.route("/gacha/normalGacha", methods=["POST"])
+@router.post("/gacha/normalGacha")
 @player_data_decorator
-def gacha_normalGacha(player_data):
-    request_json = request.get_json()
+async def gacha_normalGacha(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     normal_gacha_manager = get_normal_gacha_manager(player_data, request_json, response)
@@ -303,10 +303,10 @@ def gacha_normalGacha(player_data):
     return response
 
 
-@bp_gacha.route("/gacha/boostNormalGacha", methods=["POST"])
+@router.post("/gacha/boostNormalGacha")
 @player_data_decorator
-def gacha_boostNormalGacha(player_data):
-    request_json = request.get_json()
+async def gacha_boostNormalGacha(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     normal_gacha_manager = get_normal_gacha_manager(player_data, request_json, response)
@@ -315,10 +315,10 @@ def gacha_boostNormalGacha(player_data):
     return response
 
 
-@bp_gacha.route("/gacha/finishNormalGacha", methods=["POST"])
+@router.post("/gacha/finishNormalGacha")
 @player_data_decorator
-def gacha_finishNormalGacha(player_data):
-    request_json = request.get_json()
+async def gacha_finishNormalGacha(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     normal_gacha_manager = get_normal_gacha_manager(player_data, request_json, response)
@@ -327,10 +327,10 @@ def gacha_finishNormalGacha(player_data):
     return response
 
 
-@bp_gacha.route("/gacha/cancelNormalGacha", methods=["POST"])
+@router.post("/gacha/cancelNormalGacha")
 @player_data_decorator
-def gacha_cancelNormalGacha(player_data):
-    request_json = request.get_json()
+async def gacha_cancelNormalGacha(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     normal_gacha_manager = get_normal_gacha_manager(player_data, request_json, response)
@@ -339,10 +339,10 @@ def gacha_cancelNormalGacha(player_data):
     return response
 
 
-@bp_gacha.route("/gacha/refreshTags", methods=["POST"])
+@router.post("/gacha/refreshTags")
 @player_data_decorator
-def gacha_refreshTags(player_data):
-    request_json = request.get_json()
+async def gacha_refreshTags(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     normal_gacha_manager = get_normal_gacha_manager(player_data, request_json, response)
@@ -1249,10 +1249,10 @@ def get_advanced_gacha_manager(player_data, request_json, response):
     )
 
 
-@bp_gacha.route("/gacha/advancedGacha", methods=["POST"])
+@router.post("/gacha/advancedGacha")
 @player_data_decorator
-def gacha_advancedGacha(player_data):
-    request_json = request.get_json()
+async def gacha_advancedGacha(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     advanced_gacha_manager = get_advanced_gacha_manager(
@@ -1263,10 +1263,10 @@ def gacha_advancedGacha(player_data):
     return response
 
 
-@bp_gacha.route("/gacha/tenAdvancedGacha", methods=["POST"])
+@router.post("/gacha/tenAdvancedGacha")
 @player_data_decorator
-def gacha_tenAdvancedGacha(player_data):
-    request_json = request.get_json()
+async def gacha_tenAdvancedGacha(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     advanced_gacha_manager = get_advanced_gacha_manager(
@@ -1277,10 +1277,10 @@ def gacha_tenAdvancedGacha(player_data):
     return response
 
 
-@bp_gacha.route("/gacha/getPoolDetail", methods=["POST"])
+@router.post("/gacha/getPoolDetail")
 @player_data_decorator
-def gacha_getPoolDetail(player_data):
-    request_json = request.get_json()
+async def gacha_getPoolDetail(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     advanced_gacha_manager = get_advanced_gacha_manager(
@@ -1291,10 +1291,10 @@ def gacha_getPoolDetail(player_data):
     return response
 
 
-@bp_gacha.route("/gacha/choosePoolUp", methods=["POST"])
+@router.post("/gacha/choosePoolUp")
 @player_data_decorator
-def gacha_choosePoolUp(player_data):
-    request_json = request.get_json()
+async def gacha_choosePoolUp(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     advanced_gacha_manager = get_advanced_gacha_manager(
@@ -1305,10 +1305,10 @@ def gacha_choosePoolUp(player_data):
     return response
 
 
-@bp_gacha.route("/gacha/getFreeChar", methods=["POST"])
+@router.post("/gacha/getFreeChar")
 @player_data_decorator
-def gacha_getFreeChar(player_data):
-    request_json = request.get_json()
+async def gacha_getFreeChar(player_data, request: Request):
+    request_json = await request.json()
     response = {}
 
     advanced_gacha_manager = get_advanced_gacha_manager(

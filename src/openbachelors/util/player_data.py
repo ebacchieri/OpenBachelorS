@@ -3,9 +3,8 @@ from functools import wraps
 import os
 import json
 from enum import Enum
+import inspect
 
-import flask
-from flask import request
 from psycopg.types.json import Json
 
 from ..const.json_const import true, false, null
@@ -954,8 +953,8 @@ class DBBasedDeltaJson(DeltaJson, SavableThing):
 
 
 class PlayerData(OverlayJson, SavableThing):
-    def __init__(self, player_id=None):
-        if flask.has_request_context():
+    def __init__(self, player_id=None, request=None):
+        if request is not None:
             token = request.headers.get("secret", "")
         else:
             if player_id is not None:
@@ -1039,10 +1038,16 @@ class PlayerData(OverlayJson, SavableThing):
 
 
 def player_data_decorator(func):
+    func_sig = inspect.signature(func)
+    func_param_lst = [
+        i for i in func_sig.parameters.values() if i.name != "player_data"
+    ]
+
     @wraps(func)
-    def wrapper(*args, **kwargs):
-        player_data = PlayerData()
-        json_response = func(player_data, *args, **kwargs)
+    async def wrapper(*args, **kwargs):
+        request = kwargs.get("request")
+        player_data = PlayerData(request=request)
+        json_response = await func(player_data, *args, **kwargs)
 
         if not isinstance(json_response, dict):
             return json_response
@@ -1080,11 +1085,10 @@ def player_data_decorator(func):
 
         if const_json_loader[CONFIG_JSON]["debug"]:
             delta_response_str = json.dumps(delta_response, ensure_ascii=False)
-            if flask.has_app_context():
-                flask.current_app.logger.debug(delta_response_str)
-            else:
-                print(delta_response_str)
+            print(delta_response_str)
 
         return json_response
+
+    wrapper.__signature__ = func_sig.replace(parameters=func_param_lst)
 
     return wrapper
