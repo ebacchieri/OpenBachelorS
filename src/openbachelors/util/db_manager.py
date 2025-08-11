@@ -1,6 +1,6 @@
 import psycopg
 from psycopg.types.json import Json
-from psycopg_pool import ConnectionPool
+from psycopg_pool import AsyncConnectionPool
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON
@@ -18,17 +18,11 @@ def get_db_url(with_database_name=True):
     return f"{db_url}?connect_timeout={DATABASE_TIMEOUT}"
 
 
-db_conn_pool = None
-
-
-def get_db_conn(use_pool=True):
-    global db_conn_pool
+def get_db_conn_or_pool(use_pool=True):
     db_url = get_db_url()
     if not use_pool:
         return psycopg.connect(db_url)
-    if not db_conn_pool:
-        db_conn_pool = ConnectionPool(db_url)
-    return db_conn_pool.connection()
+    return AsyncConnectionPool(db_url)
 
 
 def init_db():
@@ -38,7 +32,7 @@ def init_db():
         except Exception:
             pass
 
-    with get_db_conn(use_pool=False) as conn:
+    with get_db_conn_or_pool(use_pool=False) as conn:
         conn.execute(
             """
 CREATE TABLE IF NOT EXISTS player_data (
@@ -64,22 +58,25 @@ CREATE TABLE IF NOT EXISTS battle_replay (
         conn.commit()
 
 
-def create_user_if_necessary(username):
-    with get_db_conn() as conn:
-        with conn.cursor() as cur:
-            cur.execute("SELECT 1 FROM player_data WHERE username = %s", (username,))
-            if not cur.fetchone():
-                cur.execute(
-                    "INSERT INTO player_data VALUES (%s, %s, %s, %s)",
-                    (
-                        username,
-                        None,
-                        None,
-                        None,
-                    ),
+async def create_user_if_necessary(username):
+    async with get_db_conn_or_pool() as pool:
+        async with pool.connection() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute(
+                    "SELECT 1 FROM player_data WHERE username = %s", (username,)
                 )
+                if not await cur.fetchone():
+                    await cur.execute(
+                        "INSERT INTO player_data VALUES (%s, %s, %s, %s)",
+                        (
+                            username,
+                            None,
+                            None,
+                            None,
+                        ),
+                    )
 
-                conn.commit()
+                    await conn.commit()
 
 
 def destroy_db():

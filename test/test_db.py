@@ -1,8 +1,12 @@
-from openbachelors.util.db_manager import IS_DB_READY, get_db_conn
+import pytest
+
+from openbachelors.util.db_manager import IS_DB_READY, get_db_conn_or_pool
 
 
-def test_table():
+@pytest.mark.asyncio
+async def test_table():
     if IS_DB_READY:
-        with get_db_conn() as conn:
-            with conn.cursor() as cur:
-                cur.execute("SELECT * FROM player_data")
+        async with get_db_conn_or_pool() as pool:
+            async with pool.connection() as conn:
+                async with conn.cursor() as cur:
+                    await cur.execute("SELECT * FROM player_data")

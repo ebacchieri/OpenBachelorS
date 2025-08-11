@@ -162,7 +162,7 @@ async def quest_saveBattleReplay(player_data, request: Request):
 
     battle_replay = request_json["battleReplay"]
 
-    player_data.battle_replay_manager.save_battle_replay(stage_id, battle_replay)
+    await player_data.battle_replay_manager.save_battle_replay(stage_id, battle_replay)
 
     player_data["dungeon"]["stages"][stage_id]["hasBattleReplay"] = 1
 
@@ -176,7 +176,7 @@ async def quest_getBattleReplay(player_data, request: Request):
 
     stage_id = request_json["stageId"]
 
-    battle_replay = player_data.battle_replay_manager.load_battle_replay(stage_id)
+    battle_replay = await player_data.battle_replay_manager.load_battle_replay(stage_id)
 
     response = {"battleReplay": battle_replay}
     return response

@@ -32,12 +32,12 @@ async def account_login(request: Request):
 
 @router.post("/account/syncData")
 async def account_syncData(request: Request):
-    player_data = PlayerData(request=request)
+    player_data = await PlayerData.create(request=request)
 
     t = int(faketime())
     player_data["status"]["lastRefreshTs"] = t
 
-    battle_replay_lst = player_data.battle_replay_manager.get_battle_replay_lst()
+    battle_replay_lst = await player_data.battle_replay_manager.get_battle_replay_lst()
     for stage_id in battle_replay_lst:
         player_data["dungeon"]["stages"][stage_id]["hasBattleReplay"] = 1
 
@@ -45,7 +45,7 @@ async def account_syncData(request: Request):
     player_data["pushFlags"]["hasGifts"] = int(bool(pending_mail_set))
 
     delta_response = player_data.build_delta_response()
-    player_data.save()
+    await player_data.save()
 
     player_data_json_obj = player_data.copy()
 

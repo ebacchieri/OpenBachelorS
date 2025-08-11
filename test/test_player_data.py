@@ -184,10 +184,10 @@ def test_player_data_template():
 
 @pytest.mark.asyncio
 async def test_player_data():
-    player_data = PlayerData()
+    player_data = await PlayerData.create()
 
     player_data.reset()
-    player_data.save()
+    await player_data.save()
 
     @player_data_decorator
     async def f(player_data):
@@ -203,7 +203,7 @@ async def test_player_data():
         "playerDataDelta": {"modified": {"status": {"ap": 789}}, "deleted": {}}
     }
 
-    player_data = PlayerData()
+    player_data = await PlayerData.create()
 
     assert player_data.sav_delta_json.modified_dict == {"status": {"ap": 789}}
     assert player_data.sav_delta_json.deleted_dict == {"status": {"ap": None}}
