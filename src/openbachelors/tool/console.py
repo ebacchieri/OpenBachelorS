@@ -1,4 +1,6 @@
 import traceback
+from functools import wraps
+import asyncio
 
 import click
 from prompt_toolkit import PromptSession
@@ -10,6 +12,14 @@ from ..util.const_json_loader import const_json_loader, ConstJson
 from ..util.player_data import PlayerData, player_data_template
 from ..util.helper import get_char_num_id
 from ..util.db_manager import IS_DB_READY, destroy_db, init_db
+
+
+def become_sync(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        asyncio.run(f(*args, **kwargs))
+
+    return wrapper
 
 
 @click.group(invoke_without_command=True)
@@ -76,7 +86,8 @@ def configure_current_equip(player_data, char_num_id, evolve_phase):
 @click.option("--equip-level", type=int)
 @click.option("--tmpl-id")
 @click.pass_context
-def char(
+@become_sync
+async def char(
     ctx,
     player_id,
     char_id,
@@ -91,7 +102,7 @@ def char(
     equip_level,
     tmpl_id,
 ):
-    player_data = PlayerData(player_id)
+    player_data = await PlayerData.create(player_id)
 
     char_num_id = get_char_num_id(char_id)
 
@@ -147,7 +158,7 @@ def char(
                         "equip"
                     ][equip_id]["level"] = equip_level
 
-    player_data.save()
+    await player_data.save()
 
 
 @cli.group()
@@ -195,7 +206,8 @@ enemy_rush_type_dict = ConstJson(
 @click.option("--enemy-id", required=True)
 @click.option("--node-id", required=True)
 @click.pass_context
-def enemy_rush(
+@become_sync
+async def enemy_rush(
     ctx,
     enemy_id,
     node_id,
@@ -203,7 +215,7 @@ def enemy_rush(
     player_id = ctx.obj["player_id"]
     topic_id = ctx.obj["topic_id"]
 
-    player_data = PlayerData(player_id)
+    player_data = await PlayerData.create(player_id)
 
     enemy_rush_id = get_next_enemy_rush_id(player_data, topic_id)
 
@@ -247,26 +259,27 @@ def enemy_rush(
         "enemyRush"
     ][enemy_rush_id] = enemy_rush_obj
 
-    player_data.save()
+    await player_data.save()
 
 
 @sandbox.command()
 @click.option("--season-idx", required=True, type=int)
 @click.pass_context
-def season(
+@become_sync
+async def season(
     ctx,
     season_idx,
 ):
     player_id = ctx.obj["player_id"]
     topic_id = ctx.obj["topic_id"]
 
-    player_data = PlayerData(player_id)
+    player_data = await PlayerData.create(player_id)
 
     player_data["sandboxPerm"]["template"]["SANDBOX_V2"][topic_id]["main"]["map"][
         "season"
     ]["type"] = season_idx
 
-    player_data.save()
+    await player_data.save()
 
 
 @cli.group()
@@ -283,14 +296,15 @@ def rlv2(
 @click.option("--relic-id", required=True)
 @click.option("--layer", required=True, type=int)
 @click.pass_context
-def relic_layer(
+@become_sync
+async def relic_layer(
     ctx,
     relic_id,
     layer,
 ):
     player_id = ctx.obj["player_id"]
 
-    player_data = PlayerData(player_id)
+    player_data = await PlayerData.create(player_id)
 
     for relic_inst_id, relic_obj in player_data["rlv2"]["current"]["inventory"][
         "relic"
@@ -298,60 +312,63 @@ def relic_layer(
         if relic_obj["id"] == relic_id:
             relic_obj["layer"] = layer
 
-    player_data.save()
+    await player_data.save()
 
 
 @rlv2.command()
 @click.option("-n", required=True, type=int)
 @click.pass_context
-def difficulty(
+@become_sync
+async def difficulty(
     ctx,
     n,
 ):
     player_id = ctx.obj["player_id"]
 
-    player_data = PlayerData(player_id)
+    player_data = await PlayerData.create(player_id)
 
     player_data["rlv2"]["current"]["game"]["modeGrade"] = n
     player_data["rlv2"]["current"]["game"]["equivalentGrade"] = n
 
-    player_data.save()
+    await player_data.save()
 
 
 @rlv2.command()
 @click.option("-c", "--char-id", required=True)
 @click.option("--char-buff-id", required=True)
 @click.pass_context
-def char_buff(
+@become_sync
+async def char_buff(
     ctx,
     char_id,
     char_buff_id,
 ):
     player_id = ctx.obj["player_id"]
 
-    player_data = PlayerData(player_id)
+    player_data = await PlayerData.create(player_id)
 
     for char_inst_id, char_obj in player_data["rlv2"]["current"]["troop"]["chars"]:
         if char_obj["charId"] == char_id:
             char_obj["charBuff"] = [char_buff_id]
 
-    player_data.save()
+    await player_data.save()
 
 
 @cli.command()
 @click.option("-p", "--player-id", required=True)
 @click.option("-k", "--key", required=True)
 @click.pass_context
-def reset_key(
+@become_sync
+async def reset_key(
     ctx,
     player_id,
     key,
 ):
-    player_data = PlayerData(player_id)
+    player_data = await PlayerData.create(player_id)
 
     player_data.reset_key(key)
 
-    player_data.save()
+    await player_data.save()
 
     click.echo("info: relogin is required for changes to take effect")
 
@@ -359,15 +376,16 @@ def reset_key(
 @cli.command()
 @click.option("-p", "--player-id", required=True)
 @click.pass_context
-def reset_all(
+@become_sync
+async def reset_all(
     ctx,
     player_id,
 ):
-    player_data = PlayerData(player_id)
+    player_data = await PlayerData.create(player_id)
 
     player_data.reset()
 
-    player_data.save()
+    await player_data.save()
 
     click.echo("info: relogin is required for changes to take effect")
 
