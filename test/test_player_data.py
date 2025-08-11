@@ -182,8 +182,8 @@ def test_player_data_template():
         json.dump(player_data_template.copy(), f, ensure_ascii=False, indent=4)
 
 
-@pytest.mark.asyncio
-async def test_player_data():
+@pytest.mark.asyncio(loop_scope="session")
+async def test_player_data(db_pool_fixture):
     player_data = await PlayerData.create()
 
     player_data.reset()
