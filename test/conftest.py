@@ -10,10 +10,8 @@ if sys.platform == "win32":
 
 @pytest_asyncio.fixture(loop_scope="session")
 async def db_pool_fixture():
-    if not IS_DB_READY:
-        return
-
-    pool = get_db_conn_or_pool()
-    await pool.open()
+    if IS_DB_READY:
+        pool = get_db_conn_or_pool()
+        await pool.open()
 
     yield
