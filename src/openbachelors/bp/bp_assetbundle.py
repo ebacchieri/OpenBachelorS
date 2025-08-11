@@ -7,7 +7,8 @@ from fastapi import APIRouter
 from fastapi import Request, Response
 from fastapi.responses import FileResponse
 from fastapi.responses import RedirectResponse
-import requests
+import httpx
+import aiofiles
 
 from ..const.json_const import true, false, null
 from ..const.filepath import (
@@ -54,7 +55,7 @@ DownloadAssetResultType = (
 )
 
 
-def download_asset(res_version, asset_filename):
+async def download_asset(res_version, asset_filename):
     if not is_valid_res_version(res_version) or not is_valid_asset_filename(
         asset_filename
     ):
@@ -63,24 +64,26 @@ def download_asset(res_version, asset_filename):
     src_res_version = const_json_loader[VERSION_JSON]["version"]["resVersion"]
     if const_json_loader[CONFIG_JSON]["mod"] and res_version != src_res_version:
         if mod_loader.hot_update_list is None:
-            download_asset(src_res_version, HOT_UPDATE_LIST_JSON)
-            with open(
+            await download_asset(src_res_version, HOT_UPDATE_LIST_JSON)
+            async with aiofiles.open(
                 os.path.join(ASSET_DIRPATH, src_res_version, HOT_UPDATE_LIST_JSON),
                 encoding="utf-8",
             ) as f:
-                src_hot_update_list = json.load(f)
+                src_hot_update_list = json.loads(await f.read())
             mod_loader.build_hot_update_list(src_hot_update_list)
         if asset_filename == HOT_UPDATE_LIST_JSON:
             hot_update_list = mod_loader.hot_update_list.copy()
             hot_update_list["versionId"] = res_version
             if const_json_loader[CONFIG_JSON]["debug"]:
                 os.makedirs(TMP_DIRPATH, exist_ok=True)
-                with open(
+                async with aiofiles.open(
                     os.path.join(TMP_DIRPATH, HOT_UPDATE_LIST_JSON),
                     "w",
                     encoding="utf-8",
                 ) as f:
-                    json.dump(hot_update_list, f, ensure_ascii=False, indent=4)
+                    await f.write(
+                        json.dumps(hot_update_list, ensure_ascii=False, indent=4)
+                    )
             return DownloadAssetResult.Response(response=hot_update_list)
 
         mod_filename = mod_loader.get_mod_filename_by_asset_filename(asset_filename)
@@ -107,12 +110,13 @@ def download_asset(res_version, asset_filename):
                 url=f"{ORIG_ASSET_URL_PREFIX}/{res_version}/{asset_filename}"
             )
 
-        req = requests.head(url)
+        async with httpx.AsyncClient() as client:
+            req = await client.head(url)
 
         if req.status_code != 200:
             return DownloadAssetResult.HttpStatusCode(status_code=404)
 
-        download_file(url, asset_filename, asset_dirpath)
+        await download_file(url, asset_filename, asset_dirpath)
 
     return DownloadAssetResult.SendFile(file_path=asset_abs_filepath)
 
@@ -121,7 +125,7 @@ def download_asset(res_version, asset_filename):
 async def assetbundle_official_Android_assets(
     res_version: str, asset_filename: str, request: Request
 ):
-    result = download_asset(res_version, asset_filename)
+    result = await download_asset(res_version, asset_filename)
 
     match result:
         case DownloadAssetResult.Response(response=response):

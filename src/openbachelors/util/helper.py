@@ -9,6 +9,7 @@ from uuid import uuid4
 import re
 from hashlib import md5
 import random
+import asyncio
 
 from pathvalidate import is_valid_filename
 from Crypto.Cipher import AES
@@ -112,21 +113,23 @@ async def save_delta_json_obj(path: str, modified: dict, deleted: dict):
         return await f.write(json.dumps(json_obj, indent=4, ensure_ascii=False))
 
 
-def download_file(url: str, filename: str, dirpath: str):
+async def download_file(url: str, filename: str, dirpath: str):
     os.makedirs(TMP_DIRPATH, exist_ok=True)
 
     tmp_filename = str(uuid4())
-    proc = subprocess.run(
-        [
-            "aria2c",
-            "-q",
-            "-d",
-            TMP_DIRPATH,
-            "-o",
-            tmp_filename,
-            "--auto-file-renaming=false",
-            url,
-        ]
+    proc = await asyncio.to_thread(
+        lambda: subprocess.run(
+            [
+                "aria2c",
+                "-q",
+                "-d",
+                TMP_DIRPATH,
+                "-o",
+                tmp_filename,
+                "--auto-file-renaming=false",
+                url,
+            ]
+        )
     )
 
     if proc.returncode:
