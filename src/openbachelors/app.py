@@ -45,7 +45,7 @@ async def lifespan(app: FastAPI):
     pool = get_db_conn_or_pool()
     await pool.open()
 
-    yield {}
+    yield
 
     await pool.close()
 

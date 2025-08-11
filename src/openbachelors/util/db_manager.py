@@ -27,7 +27,7 @@ def get_db_conn_or_pool(use_pool=True):
     if not use_pool:
         return psycopg.connect(db_url)
     if pool is None:
-        pool = AsyncConnectionPool(db_url)
+        pool = AsyncConnectionPool(db_url, open=False)
     return pool
 
 
