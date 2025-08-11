@@ -2,6 +2,7 @@ import os
 import json
 from concurrent.futures import ProcessPoolExecutor, as_completed
 import sys
+import asyncio
 
 
 from ..app import app
@@ -18,13 +19,13 @@ from ..util.helper import get_asset_filename
 NUM_ASSET_DOWNLOAD_WORKER = 8
 
 
-def asset_download_worker_func(worker_param):
+async def async_asset_download_worker_func(worker_param):
     res_version, asset_filename = worker_param
 
     print(f"info: downloading {asset_filename}")
 
     try:
-        ret_val = download_asset(res_version, asset_filename)
+        ret_val = await download_asset(res_version, asset_filename)
     except Exception as e:
         print(f"err: exception during download of {asset_filename}: {e}")
         return asset_filename
@@ -33,7 +34,13 @@ def asset_download_worker_func(worker_param):
         print(f"err: failed to download {asset_filename}")
         return asset_filename
 
+    print(f"info: downloaded {asset_filename}")
+
     return None
+
+
+def asset_download_worker_func(worker_param):
+    return asyncio.run(async_asset_download_worker_func(worker_param))
 
 
 def main():
@@ -43,7 +50,7 @@ def main():
     if "--download_all" in sys.argv:
         download_all = True
 
-    download_asset(res_version, HOT_UPDATE_LIST_JSON)
+    asyncio.run(download_asset(res_version, HOT_UPDATE_LIST_JSON))
     with open(
         os.path.join(ASSET_DIRPATH, res_version, HOT_UPDATE_LIST_JSON),
         encoding="utf-8",
