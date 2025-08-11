@@ -60,24 +60,24 @@ class DBExtraSave(BasicExtraSave, SavableThing):
         return extra_save
 
     async def load_save_obj_from_db(self):
-        async with get_db_conn_or_pool() as pool:
-            async with pool.connection() as conn:
-                async with conn.cursor() as cur:
-                    await cur.execute(
-                        "SELECT extra FROM player_data WHERE username = %s",
-                        (self.username,),
-                    )
-                    return (await cur.fetchone())[0]
+        pool = get_db_conn_or_pool()
+        async with pool.connection() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute(
+                    "SELECT extra FROM player_data WHERE username = %s",
+                    (self.username,),
+                )
+                return (await cur.fetchone())[0]
 
     async def save(self):
-        async with get_db_conn_or_pool() as pool:
-            async with pool.connection() as conn:
-                async with conn.cursor() as cur:
-                    await cur.execute(
-                        "UPDATE player_data SET extra = %s WHERE username = %s",
-                        (
-                            Json(self.save_obj),
-                            self.username,
-                        ),
-                    )
-                    await conn.commit()
+        pool = get_db_conn_or_pool()
+        async with pool.connection() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute(
+                    "UPDATE player_data SET extra = %s WHERE username = %s",
+                    (
+                        Json(self.save_obj),
+                        self.username,
+                    ),
+                )
+                await conn.commit()

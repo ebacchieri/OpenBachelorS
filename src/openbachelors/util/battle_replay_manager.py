@@ -60,42 +60,42 @@ class DBBattleReplayManager(AbstractBattleReplayManager):
         self.username = username
 
     async def load_battle_replay(self, stage_id: str) -> str:
-        async with get_db_conn_or_pool() as pool:
-            async with pool.connection() as conn:
-                async with conn.cursor() as cur:
-                    await cur.execute(
-                        "SELECT battle_replay FROM battle_replay WHERE username = %s AND stage_id = %s",
-                        (self.username, stage_id),
-                    )
-                    return encode_battle_replay((await cur.fetchone())[0])
+        pool = get_db_conn_or_pool()
+        async with pool.connection() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute(
+                    "SELECT battle_replay FROM battle_replay WHERE username = %s AND stage_id = %s",
+                    (self.username, stage_id),
+                )
+                return encode_battle_replay((await cur.fetchone())[0])
 
     async def save_battle_replay(self, stage_id: str, battle_replay: str):
         decoded_battle_replay = Json(decode_battle_replay(battle_replay))
-        async with get_db_conn_or_pool() as pool:
-            async with pool.connection() as conn:
-                async with conn.cursor() as cur:
+        pool = get_db_conn_or_pool()
+        async with pool.connection() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute(
+                    "SELECT 1 FROM battle_replay WHERE username = %s AND stage_id = %s",
+                    (self.username, stage_id),
+                )
+                if await cur.fetchone():
                     await cur.execute(
-                        "SELECT 1 FROM battle_replay WHERE username = %s AND stage_id = %s",
-                        (self.username, stage_id),
+                        "UPDATE battle_replay SET battle_replay = %s WHERE username = %s AND stage_id = %s",
+                        (decoded_battle_replay, self.username, stage_id),
                     )
-                    if await cur.fetchone():
-                        await cur.execute(
-                            "UPDATE battle_replay SET battle_replay = %s WHERE username = %s AND stage_id = %s",
-                            (decoded_battle_replay, self.username, stage_id),
-                        )
-                    else:
-                        await cur.execute(
-                            "INSERT INTO battle_replay VALUES (%s, %s, %s)",
-                            (self.username, stage_id, decoded_battle_replay),
-                        )
-                    await conn.commit()
+                else:
+                    await cur.execute(
+                        "INSERT INTO battle_replay VALUES (%s, %s, %s)",
+                        (self.username, stage_id, decoded_battle_replay),
+                    )
+                await conn.commit()
 
     async def get_battle_replay_lst(self) -> List[str]:
-        async with get_db_conn_or_pool() as pool:
-            async with pool.connection() as conn:
-                async with conn.cursor() as cur:
-                    await cur.execute(
-                        "SELECT stage_id FROM battle_replay WHERE username = %s",
-                        (self.username,),
-                    )
-                    return [t[0] for t in await cur.fetchall()]
+        pool = get_db_conn_or_pool()
+        async with pool.connection() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute(
+                    "SELECT stage_id FROM battle_replay WHERE username = %s",
+                    (self.username,),
+                )
+                return [t[0] for t in await cur.fetchall()]

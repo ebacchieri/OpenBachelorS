@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 import uvicorn
 
@@ -35,9 +37,20 @@ from .bp import (
     legacy_bp,
     misc_bp,
 )
+from .util.db_manager import get_db_conn_or_pool
 
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    pool = get_db_conn_or_pool()
+    await pool.open()
+
+    yield {}
+
+    await pool.close()
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 app.include_router(bp_account.router)

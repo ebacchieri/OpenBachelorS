@@ -18,11 +18,17 @@ def get_db_url(with_database_name=True):
     return f"{db_url}?connect_timeout={DATABASE_TIMEOUT}"
 
 
+pool = None
+
+
 def get_db_conn_or_pool(use_pool=True):
+    global pool
     db_url = get_db_url()
     if not use_pool:
         return psycopg.connect(db_url)
-    return AsyncConnectionPool(db_url)
+    if pool is None:
+        pool = AsyncConnectionPool(db_url)
+    return pool
 
 
 def init_db():
@@ -59,24 +65,24 @@ CREATE TABLE IF NOT EXISTS battle_replay (
 
 
 async def create_user_if_necessary(username):
-    async with get_db_conn_or_pool() as pool:
-        async with pool.connection() as conn:
-            async with conn.cursor() as cur:
+    pool = get_db_conn_or_pool()
+    async with pool.connection() as conn:
+        async with conn.cursor() as cur:
+            await cur.execute(
+                "SELECT 1 FROM player_data WHERE username = %s", (username,)
+            )
+            if not await cur.fetchone():
                 await cur.execute(
-                    "SELECT 1 FROM player_data WHERE username = %s", (username,)
+                    "INSERT INTO player_data VALUES (%s, %s, %s, %s)",
+                    (
+                        username,
+                        None,
+                        None,
+                        None,
+                    ),
                 )
-                if not await cur.fetchone():
-                    await cur.execute(
-                        "INSERT INTO player_data VALUES (%s, %s, %s, %s)",
-                        (
-                            username,
-                            None,
-                            None,
-                            None,
-                        ),
-                    )
 
-                    await conn.commit()
+                await conn.commit()
 
 
 def destroy_db():

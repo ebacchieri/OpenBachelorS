@@ -934,32 +934,32 @@ class DBBasedDeltaJson(DeltaJson, SavableThing):
 
     @classmethod
     async def load_delta_json_obj_from_db(cls, column_name: str, username: str):
-        async with get_db_conn_or_pool() as pool:
-            async with pool.connection() as conn:
-                async with conn.cursor() as cur:
-                    await cur.execute(
-                        f"SELECT {column_name} FROM player_data WHERE username = %s",
-                        (username,),
-                    )
-                    return (await cur.fetchone())[0]
+        pool = get_db_conn_or_pool()
+        async with pool.connection() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute(
+                    f"SELECT {column_name} FROM player_data WHERE username = %s",
+                    (username,),
+                )
+                return (await cur.fetchone())[0]
 
     async def save(self):
-        async with get_db_conn_or_pool() as pool:
-            async with pool.connection() as conn:
-                async with conn.cursor() as cur:
-                    await cur.execute(
-                        f"UPDATE player_data SET {self.column_name} = %s WHERE username = %s",
-                        (
-                            Json(
-                                {
-                                    "modified": self.modified_dict,
-                                    "deleted": self.deleted_dict,
-                                }
-                            ),
-                            self.username,
+        pool = get_db_conn_or_pool()
+        async with pool.connection() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute(
+                    f"UPDATE player_data SET {self.column_name} = %s WHERE username = %s",
+                    (
+                        Json(
+                            {
+                                "modified": self.modified_dict,
+                                "deleted": self.deleted_dict,
+                            }
                         ),
-                    )
-                    await conn.commit()
+                        self.username,
+                    ),
+                )
+                await conn.commit()
 
 
 class PlayerData(OverlayJson, SavableThing):
