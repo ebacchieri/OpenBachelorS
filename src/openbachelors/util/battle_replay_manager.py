@@ -39,11 +39,11 @@ class BattleReplayManager(AbstractBattleReplayManager):
 
     async def load_battle_replay(self, stage_id: str) -> str:
         battle_replay_filepath = self.get_battle_replay_filepath(stage_id)
-        return load_battle_replay_from_file(battle_replay_filepath)
+        return await load_battle_replay_from_file(battle_replay_filepath)
 
     async def save_battle_replay(self, stage_id: str, battle_replay: str):
         battle_replay_filepath = self.get_battle_replay_filepath(stage_id)
-        save_battle_replay_to_file(battle_replay_filepath, battle_replay)
+        await save_battle_replay_to_file(battle_replay_filepath, battle_replay)
 
     async def get_battle_replay_lst(self) -> List[str]:
         raw_battle_replay_lst = os.listdir(self.dirpath)

@@ -900,7 +900,7 @@ def recursive_collapse_deleted_dict(target_dict: dict):
 class FileBasedDeltaJson(DeltaJson, SavableThing):
     @classmethod
     async def create(cls, path: str):
-        json_obj = load_delta_json_obj(path)
+        json_obj = await load_delta_json_obj(path)
 
         delta_json = cls(
             modified_dict=json_obj["modified"], deleted_dict=json_obj["deleted"]
@@ -911,7 +911,7 @@ class FileBasedDeltaJson(DeltaJson, SavableThing):
         return delta_json
 
     async def save(self):
-        save_delta_json_obj(self.path, self.modified_dict, self.deleted_dict)
+        await save_delta_json_obj(self.path, self.modified_dict, self.deleted_dict)
 
 
 class DBBasedDeltaJson(DeltaJson, SavableThing):

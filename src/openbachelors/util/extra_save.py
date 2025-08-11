@@ -2,6 +2,7 @@ import os
 import json
 
 from psycopg.types.json import Json
+import aiofiles
 
 from ..const.json_const import true, false, null
 from .db_manager import IS_DB_READY, get_db_conn_or_pool, create_user_if_necessary
@@ -28,8 +29,8 @@ class ExtraSave(BasicExtraSave, SavableThing):
         extra_save.filepath = filepath
 
         if os.path.isfile(extra_save.filepath):
-            with open(extra_save.filepath, encoding="utf-8") as f:
-                extra_save.save_obj = json.load(f)
+            async with aiofiles.open(extra_save.filepath, encoding="utf-8") as f:
+                extra_save.save_obj = json.loads(await f.read())
         else:
             extra_save.save_obj = ExtraSave.get_default_save_obj()
 
@@ -39,8 +40,8 @@ class ExtraSave(BasicExtraSave, SavableThing):
         dirpath = os.path.dirname(self.filepath)
         os.makedirs(dirpath, exist_ok=True)
 
-        with open(self.filepath, "w", encoding="utf-8") as f:
-            json.dump(self.save_obj, f, ensure_ascii=False, indent=4)
+        async with aiofiles.open(self.filepath, "w", encoding="utf-8") as f:
+            await f.write(json.dumps(self.save_obj, ensure_ascii=False, indent=4))
 
 
 class DBExtraSave(BasicExtraSave, SavableThing):

@@ -3,6 +3,7 @@ import json
 
 from fastapi import APIRouter
 from fastapi import Request
+import aiofiles
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, VERSION_JSON, TMP_DIRPATH
@@ -51,10 +52,12 @@ async def account_syncData(request: Request):
 
     if const_json_loader[CONFIG_JSON]["debug"]:
         os.makedirs(TMP_DIRPATH, exist_ok=True)
-        with open(
+        async with aiofiles.open(
             os.path.join(TMP_DIRPATH, "player_data.json"), "w", encoding="utf-8"
         ) as f:
-            json.dump(player_data_json_obj, f, ensure_ascii=False, indent=4)
+            await f.write(
+                json.dumps(player_data_json_obj, ensure_ascii=False, indent=4)
+            )
 
     response = {
         "result": 0,
