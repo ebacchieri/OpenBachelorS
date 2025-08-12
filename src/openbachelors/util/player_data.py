@@ -4,6 +4,7 @@ import os
 import json
 from enum import Enum
 import inspect
+import asyncio
 
 from psycopg.types.json import Json
 
@@ -977,38 +978,59 @@ class PlayerData(OverlayJson, SavableThing):
         config = const_json_loader[CONFIG_JSON]
         if config["multi_user"]:
             if IS_DB_READY:
-                sav_delta_json = await DBBasedDeltaJson.create(
-                    "delta",
-                    username,
+                (
+                    sav_delta_json,
+                    sav_pending_delta_json,
+                    extra_save,
+                ) = await asyncio.gather(
+                    DBBasedDeltaJson.create(
+                        "delta",
+                        username,
+                    ),
+                    DBBasedDeltaJson.create(
+                        "pending_delta",
+                        username,
+                    ),
+                    DBExtraSave.create(username),
                 )
-                sav_pending_delta_json = await DBBasedDeltaJson.create(
-                    "pending_delta",
-                    username,
-                )
+
                 battle_replay_manager = DBBattleReplayManager(
                     username,
                 )
-                extra_save = await DBExtraSave.create(username)
             else:
-                sav_delta_json = await FileBasedDeltaJson.create(
-                    os.path.join(MULTI_USER_SAV_DIRPATH, username, "delta.json")
+                (
+                    sav_delta_json,
+                    sav_pending_delta_json,
+                    extra_save,
+                ) = await asyncio.gather(
+                    FileBasedDeltaJson.create(
+                        os.path.join(MULTI_USER_SAV_DIRPATH, username, "delta.json")
+                    ),
+                    FileBasedDeltaJson.create(
+                        os.path.join(
+                            MULTI_USER_SAV_DIRPATH, username, "pending_delta.json"
+                        )
+                    ),
+                    ExtraSave.create(
+                        os.path.join(MULTI_EXTRA_SAVE_DIRPATH, username, "extra.json")
+                    ),
                 )
-                sav_pending_delta_json = await FileBasedDeltaJson.create(
-                    os.path.join(MULTI_USER_SAV_DIRPATH, username, "pending_delta.json")
-                )
+
                 battle_replay_manager = BattleReplayManager(
                     os.path.join(MULTI_REPLAY_DIRPATH, username)
                 )
-                extra_save = await ExtraSave.create(
-                    os.path.join(MULTI_EXTRA_SAVE_DIRPATH, username, "extra.json")
-                )
         else:
-            sav_delta_json = await FileBasedDeltaJson.create(SAV_DELTA_JSON)
-            sav_pending_delta_json = await FileBasedDeltaJson.create(
-                SAV_PENDING_DELTA_JSON
+            (
+                sav_delta_json,
+                sav_pending_delta_json,
+                extra_save,
+            ) = await asyncio.gather(
+                FileBasedDeltaJson.create(SAV_DELTA_JSON),
+                FileBasedDeltaJson.create(SAV_PENDING_DELTA_JSON),
+                ExtraSave.create(EXTRA_SAVE_FILEPATH),
             )
+
             battle_replay_manager = BattleReplayManager(REPLAY_DIRPATH)
-            extra_save = await ExtraSave.create(EXTRA_SAVE_FILEPATH)
 
         json_with_delta = OverlayJson(player_data_template, sav_delta_json)
         player_data = cls(json_with_delta, sav_pending_delta_json)
@@ -1022,9 +1044,11 @@ class PlayerData(OverlayJson, SavableThing):
         return player_data
 
     async def save(self):
-        await self.sav_delta_json.save()
-        await self.sav_pending_delta_json.save()
-        await self.extra_save.save()
+        await asyncio.gather(
+            self.sav_delta_json.save(),
+            self.sav_pending_delta_json.save(),
+            self.extra_save.save(),
+        )
 
     def reset(self):
         self.sav_delta_json.reset()
