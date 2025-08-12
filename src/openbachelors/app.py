@@ -43,17 +43,19 @@ from .bp import (
     legacy_bp,
     misc_bp,
 )
-from .util.db_manager import get_db_conn_or_pool
+from .util.db_manager import get_db_conn_or_pool, IS_DB_READY
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    pool = get_db_conn_or_pool()
-    await pool.open()
+    if IS_DB_READY:
+        pool = get_db_conn_or_pool()
+        await pool.open()
 
     yield
 
-    await pool.close()
+    if IS_DB_READY:
+        await pool.close()
 
 
 app = FastAPI(lifespan=lifespan)
