@@ -50,8 +50,6 @@ class DBExtraSave(BasicExtraSave, SavableThing):
         extra_save = cls()
         extra_save.username = username
 
-        await create_user_if_necessary(extra_save.username)
-
         save_obj = await extra_save.load_save_obj_from_db()
         if not save_obj:
             save_obj = ExtraSave.get_default_save_obj()

@@ -918,8 +918,6 @@ class FileBasedDeltaJson(DeltaJson, SavableThing):
 class DBBasedDeltaJson(DeltaJson, SavableThing):
     @classmethod
     async def create(cls, column_name: str, username: str):
-        await create_user_if_necessary(username)
-
         json_obj = await cls.load_delta_json_obj_from_db(column_name, username)
         if not json_obj:
             json_obj = {"modified": {}, "deleted": {}}
@@ -980,6 +978,8 @@ class PlayerData(OverlayJson, SavableThing):
         config = const_json_loader[CONFIG_JSON]
         if config["multi_user"]:
             if IS_DB_READY:
+                await create_user_if_necessary(username)
+
                 (
                     sav_delta_json,
                     sav_pending_delta_json,
