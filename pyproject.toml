@@ -33,7 +33,7 @@ poethepoet = "^0.36.0"
 [tool.poe.tasks]
 test = "pytest"
 dev = "flask --debug --app openbachelors.app:app run -p 8443"
-prod = "waitress-serve --port=8443 openbachelors.app:app"
+prod = "waitress-serve --port=8443 --threads=16 openbachelors.app:app"
 
 
 [tool.poetry.scripts]
