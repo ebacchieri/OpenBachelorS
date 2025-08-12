@@ -2,6 +2,7 @@ import os
 import json
 
 import pytest
+import orjson
 
 from openbachelors.util.const_json_loader import ConstJson
 from openbachelors.const.filepath import TMP_DIRPATH
@@ -195,7 +196,7 @@ async def test_player_data(db_pool_fixture):
         response = {}
         return response
 
-    response = await f()
+    response = orjson.loads((await f()).body)
 
     response.pop("pushMessage", None)
 

@@ -3,7 +3,9 @@ import json
 
 from fastapi import APIRouter
 from fastapi import Request
+from fastapi import Response
 import aiofiles
+import orjson
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, VERSION_JSON, TMP_DIRPATH
@@ -65,7 +67,7 @@ async def account_syncData(request: Request):
         "user": player_data_json_obj,
         "playerDataDelta": {"modified": {}, "deleted": {}},
     }
-    return response
+    return Response(content=orjson.dumps(response), media_type="application/json")
 
 
 @router.post("/account/syncStatus")

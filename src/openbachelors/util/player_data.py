@@ -7,6 +7,8 @@ import inspect
 import asyncio
 
 from psycopg.types.json import Json
+from fastapi import Response
+import orjson
 
 from ..const.json_const import true, false, null
 from ..const.filepath import (
@@ -1132,7 +1134,9 @@ def player_data_decorator(func):
             delta_response_str = json.dumps(delta_response, ensure_ascii=False)
             print(delta_response_str)
 
-        return json_response
+        return Response(
+            content=orjson.dumps(json_response), media_type="application/json"
+        )
 
     wrapper.__signature__ = func_sig.replace(parameters=func_param_lst)
 
