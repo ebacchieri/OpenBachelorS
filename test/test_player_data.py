@@ -206,4 +206,4 @@ def test_player_data():
     assert player_data.sav_delta_json.deleted_dict == {"status": {"ap": None}}
 
     assert player_data.sav_pending_delta_json.modified_dict == {}
-    assert player_data.sav_pending_delta_json.deleted_dict == {"status": {}}
+    assert player_data.sav_pending_delta_json.deleted_dict == {}

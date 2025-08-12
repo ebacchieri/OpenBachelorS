@@ -962,6 +962,8 @@ class PlayerData(OverlayJson, SavableThing):
                 token = player_id
             else:
                 token = ""
+        if not token:
+            token = "_"
         self.username = get_username_by_token(token)
 
         config = const_json_loader[CONFIG_JSON]
