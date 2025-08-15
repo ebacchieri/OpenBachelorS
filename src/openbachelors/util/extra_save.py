@@ -46,15 +46,23 @@ class ExtraSave(BasicExtraSave, SavableThing):
 
 class DBExtraSave(BasicExtraSave, SavableThing):
     @classmethod
-    async def create(cls, username: str):
+    async def create(
+        cls,
+        username: str,
+        save_aggregator=None,
+    ):
         extra_save = cls()
         extra_save.username = username
 
-        save_obj = await extra_save.load_save_obj_from_db()
+        if save_aggregator is None:
+            save_obj = await extra_save.load_save_obj_from_db()
+        else:
+            save_obj = save_aggregator.get("extra")
         if not save_obj:
             save_obj = ExtraSave.get_default_save_obj()
 
         extra_save.save_obj = save_obj
+        extra_save.save_aggregator = save_aggregator
 
         return extra_save
 
@@ -69,13 +77,20 @@ class DBExtraSave(BasicExtraSave, SavableThing):
                 return (await cur.fetchone())[0]
 
     async def save(self):
+        save_obj = Json(self.save_obj)
+        if self.save_aggregator is not None:
+            self.save_aggregator.set(
+                "extra",
+                save_obj,
+            )
+            return
         pool = get_db_conn_or_pool()
         async with pool.connection() as conn:
             async with conn.cursor() as cur:
                 await cur.execute(
                     "UPDATE player_data SET extra = %s WHERE username = %s",
                     (
-                        Json(self.save_obj),
+                        save_obj,
                         self.username,
                     ),
                 )

@@ -9,6 +9,7 @@ import asyncio
 from psycopg.types.json import Json
 from fastapi import Response
 import orjson
+from psycopg import sql
 
 from ..const.json_const import true, false, null
 from ..const.filepath import (
@@ -919,8 +920,16 @@ class FileBasedDeltaJson(DeltaJson, SavableThing):
 
 class DBBasedDeltaJson(DeltaJson, SavableThing):
     @classmethod
-    async def create(cls, column_name: str, username: str):
-        json_obj = await cls.load_delta_json_obj_from_db(column_name, username)
+    async def create(
+        cls,
+        column_name: str,
+        username: str,
+        save_aggregator=None,
+    ):
+        if save_aggregator is None:
+            json_obj = await cls.load_delta_json_obj_from_db(column_name, username)
+        else:
+            json_obj = save_aggregator.get(column_name)
         if not json_obj:
             json_obj = {"modified": {}, "deleted": {}}
 
@@ -930,6 +939,7 @@ class DBBasedDeltaJson(DeltaJson, SavableThing):
 
         delta_json.column_name = column_name
         delta_json.username = username
+        delta_json.save_aggregator = save_aggregator
 
         return delta_json
 
@@ -939,24 +949,75 @@ class DBBasedDeltaJson(DeltaJson, SavableThing):
         async with pool.connection() as conn:
             async with conn.cursor() as cur:
                 await cur.execute(
-                    f"SELECT {column_name} FROM player_data WHERE username = %s",
+                    sql.SQL(
+                        "SELECT {column_name} FROM player_data WHERE username = %s",
+                    ).format(column_name=sql.Identifier(column_name)),
                     (username,),
                 )
                 return (await cur.fetchone())[0]
+
+    async def save(self):
+        save_obj = Json(
+            {
+                "modified": self.modified_dict,
+                "deleted": self.deleted_dict,
+            }
+        )
+        if self.save_aggregator is not None:
+            self.save_aggregator.set(
+                self.column_name,
+                save_obj,
+            )
+            return
+        pool = get_db_conn_or_pool()
+        async with pool.connection() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute(
+                    sql.SQL(
+                        "UPDATE player_data SET {column_name} = %s WHERE username = %s",
+                    ).format(column_name=sql.Identifier(self.column_name))(
+                        save_obj,
+                        self.username,
+                    ),
+                )
+                await conn.commit()
+
+
+class DBSaveAggregator:
+    def __init__(self, username):
+        self.username = username
+        self.kv_dict = {}
+
+    def get(self, key):
+        return self.kv_dict.pop(key)
+
+    def set(self, key, value):
+        self.kv_dict[key] = value
+
+    async def load(self):
+        pool = get_db_conn_or_pool()
+        async with pool.connection() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute(
+                    "SELECT delta, pending_delta, extra FROM player_data WHERE username = %s",
+                    (self.username,),
+                )
+                delta, pending_delta, extra = await cur.fetchone()
+
+                self.set("delta", delta)
+                self.set("pending_delta", pending_delta)
+                self.set("extra", extra)
 
     async def save(self):
         pool = get_db_conn_or_pool()
         async with pool.connection() as conn:
             async with conn.cursor() as cur:
                 await cur.execute(
-                    f"UPDATE player_data SET {self.column_name} = %s WHERE username = %s",
+                    "UPDATE player_data SET delta = %s, pending_delta = %s, extra = %s WHERE username = %s",
                     (
-                        Json(
-                            {
-                                "modified": self.modified_dict,
-                                "deleted": self.deleted_dict,
-                            }
-                        ),
+                        self.get("delta"),
+                        self.get("pending_delta"),
+                        self.get("extra"),
                         self.username,
                     ),
                 )
@@ -982,6 +1043,10 @@ class PlayerData(OverlayJson, SavableThing):
             if IS_DB_READY:
                 await create_user_if_necessary(username)
 
+                save_aggregator = DBSaveAggregator(username)
+
+                await save_aggregator.load()
+
                 (
                     sav_delta_json,
                     sav_pending_delta_json,
@@ -990,18 +1055,25 @@ class PlayerData(OverlayJson, SavableThing):
                     DBBasedDeltaJson.create(
                         "delta",
                         username,
+                        save_aggregator,
                     ),
                     DBBasedDeltaJson.create(
                         "pending_delta",
                         username,
+                        save_aggregator,
                     ),
-                    DBExtraSave.create(username),
+                    DBExtraSave.create(
+                        username,
+                        save_aggregator,
+                    ),
                 )
 
                 battle_replay_manager = DBBattleReplayManager(
                     username,
                 )
             else:
+                save_aggregator = None
+
                 (
                     sav_delta_json,
                     sav_pending_delta_json,
@@ -1024,6 +1096,8 @@ class PlayerData(OverlayJson, SavableThing):
                     os.path.join(MULTI_REPLAY_DIRPATH, username)
                 )
         else:
+            save_aggregator = None
+
             (
                 sav_delta_json,
                 sav_pending_delta_json,
@@ -1039,6 +1113,7 @@ class PlayerData(OverlayJson, SavableThing):
         json_with_delta = OverlayJson(player_data_template, sav_delta_json)
         player_data = cls(json_with_delta, sav_pending_delta_json)
 
+        player_data.save_aggregator = save_aggregator
         player_data.sav_delta_json = sav_delta_json
         player_data.sav_pending_delta_json = sav_pending_delta_json
         player_data.battle_replay_manager = battle_replay_manager
@@ -1053,6 +1128,9 @@ class PlayerData(OverlayJson, SavableThing):
             self.sav_pending_delta_json.save(),
             self.extra_save.save(),
         )
+
+        if self.save_aggregator is not None:
+            await self.save_aggregator.save()
 
     def reset(self):
         self.sav_delta_json.reset()
