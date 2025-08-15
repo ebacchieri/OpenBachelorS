@@ -975,7 +975,8 @@ class DBBasedDeltaJson(DeltaJson, SavableThing):
                 await cur.execute(
                     sql.SQL(
                         "UPDATE player_data SET {column_name} = %s WHERE username = %s",
-                    ).format(column_name=sql.Identifier(self.column_name))(
+                    ).format(column_name=sql.Identifier(self.column_name)),
+                    (
                         save_obj,
                         self.username,
                     ),
