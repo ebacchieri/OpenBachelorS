@@ -1,5 +1,5 @@
-from flask import Blueprint
-from flask import request
+from fastapi import APIRouter
+from fastapi import Request
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, VERSION_JSON, ACTIVITY_TABLE
@@ -7,13 +7,13 @@ from ..util.const_json_loader import const_json_loader
 from ..util.player_data import player_data_decorator
 from ..util.battle_log_logger import log_battle_log_if_necessary
 
-misc_bp = Blueprint("misc_bp", __name__)
+router = APIRouter()
 
 
-@misc_bp.route("/deepSea/branch", methods=["POST"])
+@router.post("/deepSea/branch")
 @player_data_decorator
-def deepSea_branch(player_data):
-    request_json = request.get_json()
+async def deepSea_branch(player_data, request: Request):
+    request_json = await request.json()
 
     for branch in request_json["branches"]:
         tech_tree_id = branch["techTreeId"]
@@ -25,10 +25,10 @@ def deepSea_branch(player_data):
     return response
 
 
-@misc_bp.route("/act25side/battleStart", methods=["POST"])
+@router.post("/act25side/battleStart")
 @player_data_decorator
-def act25side_battleStart(player_data):
-    request_json = request.get_json()
+async def act25side_battleStart(player_data, request: Request):
+    request_json = await request.json()
 
     stage_id = request_json["stageId"]
     player_data.extra_save.save_obj["cur_stage_id"] = stage_id
@@ -44,10 +44,10 @@ def act25side_battleStart(player_data):
     return response
 
 
-@misc_bp.route("/act25side/battleFinish", methods=["POST"])
+@router.post("/act25side/battleFinish")
 @player_data_decorator
-def act25side_battleFinish(player_data):
-    request_json = request.get_json()
+async def act25side_battleFinish(player_data, request: Request):
+    request_json = await request.json()
 
     log_battle_log_if_necessary(player_data, request_json["data"])
 
@@ -71,10 +71,10 @@ def act25side_battleFinish(player_data):
     return response
 
 
-@misc_bp.route("/charm/setSquad", methods=["POST"])
+@router.post("/charm/setSquad")
 @player_data_decorator
-def charm_setSquad(player_data):
-    request_json = request.get_json()
+async def charm_setSquad(player_data, request: Request):
+    request_json = await request.json()
 
     player_data["charm"]["squad"] = request_json["squad"]
 
@@ -82,10 +82,10 @@ def charm_setSquad(player_data):
     return response
 
 
-@misc_bp.route("/car/confirmBattleCar", methods=["POST"])
+@router.post("/car/confirmBattleCar")
 @player_data_decorator
-def car_confirmBattleCar(player_data):
-    request_json = request.get_json()
+async def car_confirmBattleCar(player_data, request: Request):
+    request_json = await request.json()
 
     player_data["car"]["battleCar"] = request_json["car"]
 
@@ -93,10 +93,10 @@ def car_confirmBattleCar(player_data):
     return response
 
 
-@misc_bp.route("/retro/typeAct20side/competitionStart", methods=["POST"])
+@router.post("/retro/typeAct20side/competitionStart")
 @player_data_decorator
-def retro_typeAct20side_competitionStart(player_data):
-    request_json = request.get_json()
+async def retro_typeAct20side_competitionStart(player_data, request: Request):
+    request_json = await request.json()
     response = {
         "result": 0,
         "battleId": "00000000-0000-0000-0000-000000000000",
@@ -104,10 +104,10 @@ def retro_typeAct20side_competitionStart(player_data):
     return response
 
 
-@misc_bp.route("/retro/typeAct20side/competitionFinish", methods=["POST"])
+@router.post("/retro/typeAct20side/competitionFinish")
 @player_data_decorator
-def retro_typeAct20side_competitionFinish(player_data):
-    request_json = request.get_json()
+async def retro_typeAct20side_competitionFinish(player_data, request: Request):
+    request_json = await request.json()
 
     log_battle_log_if_necessary(player_data, request_json["data"])
 
@@ -122,10 +122,10 @@ def retro_typeAct20side_competitionFinish(player_data):
     return response
 
 
-@misc_bp.route("/trainingGround/battleStart", methods=["POST"])
+@router.post("/trainingGround/battleStart")
 @player_data_decorator
-def trainingGround_battleStart(player_data):
-    request_json = request.get_json()
+async def trainingGround_battleStart(player_data, request: Request):
+    request_json = await request.json()
     response = {
         "result": 0,
         "battleId": "00000000-0000-0000-0000-000000000000",
@@ -133,10 +133,10 @@ def trainingGround_battleStart(player_data):
     return response
 
 
-@misc_bp.route("/trainingGround/battleFinish", methods=["POST"])
+@router.post("/trainingGround/battleFinish")
 @player_data_decorator
-def trainingGround_battleFinish(player_data):
-    request_json = request.get_json()
+async def trainingGround_battleFinish(player_data, request: Request):
+    request_json = await request.json()
 
     log_battle_log_if_necessary(player_data, request_json["data"])
 
@@ -147,10 +147,10 @@ def trainingGround_battleFinish(player_data):
     return response
 
 
-@misc_bp.route("/medal/setCustomData", methods=["POST"])
+@router.post("/medal/setCustomData")
 @player_data_decorator
-def medal_setCustomData(player_data):
-    request_json = request.get_json()
+async def medal_setCustomData(player_data, request: Request):
+    request_json = await request.json()
 
     custom_data = request_json["data"]
 
@@ -160,10 +160,10 @@ def medal_setCustomData(player_data):
     return response
 
 
-@misc_bp.route("/firework/savePlateSlots", methods=["POST"])
+@router.post("/firework/savePlateSlots")
 @player_data_decorator
-def firework_savePlateSlots(player_data):
-    request_json = request.get_json()
+async def firework_savePlateSlots(player_data, request: Request):
+    request_json = await request.json()
 
     player_data["firework"]["plate"]["slots"] = request_json["slots"]
 
@@ -171,10 +171,10 @@ def firework_savePlateSlots(player_data):
     return response
 
 
-@misc_bp.route("/firework/changeAnimal", methods=["POST"])
+@router.post("/firework/changeAnimal")
 @player_data_decorator
-def firework_changeAnimal(player_data):
-    request_json = request.get_json()
+async def firework_changeAnimal(player_data, request: Request):
+    request_json = await request.json()
 
     player_data["firework"]["animal"]["select"] = request_json["animal"]
 
@@ -184,10 +184,10 @@ def firework_changeAnimal(player_data):
     return response
 
 
-@misc_bp.route("/activity/enemyDuel/singleBattleStart", methods=["POST"])
+@router.post("/activity/enemyDuel/singleBattleStart")
 @player_data_decorator
-def activity_enemyDuel_singleBattleStart(player_data):
-    request_json = request.get_json()
+async def activity_enemyDuel_singleBattleStart(player_data, request: Request):
+    request_json = await request.json()
 
     response = {
         "result": 0,
@@ -196,10 +196,10 @@ def activity_enemyDuel_singleBattleStart(player_data):
     return response
 
 
-@misc_bp.route("/activity/enemyDuel/singleBattleFinish", methods=["POST"])
+@router.post("/activity/enemyDuel/singleBattleFinish")
 @player_data_decorator
-def activity_enemyDuel_singleBattleFinish(player_data):
-    request_json = request.get_json()
+async def activity_enemyDuel_singleBattleFinish(player_data, request: Request):
+    request_json = await request.json()
 
     log_battle_log_if_necessary(player_data, request_json["data"])
 
@@ -224,10 +224,10 @@ def activity_enemyDuel_singleBattleFinish(player_data):
     return response
 
 
-@misc_bp.route("/activity/vecBreakV2/battleStart", methods=["POST"])
+@router.post("/activity/vecBreakV2/battleStart")
 @player_data_decorator
-def activity_vecBreakV2_battleStart(player_data):
-    request_json = request.get_json()
+async def activity_vecBreakV2_battleStart(player_data, request: Request):
+    request_json = await request.json()
 
     response = {
         "result": 0,
@@ -236,10 +236,10 @@ def activity_vecBreakV2_battleStart(player_data):
     return response
 
 
-@misc_bp.route("/activity/vecBreakV2/battleFinish", methods=["POST"])
+@router.post("/activity/vecBreakV2/battleFinish")
 @player_data_decorator
-def activity_vecBreakV2_battleFinish(player_data):
-    request_json = request.get_json()
+async def activity_vecBreakV2_battleFinish(player_data, request: Request):
+    request_json = await request.json()
 
     log_battle_log_if_necessary(player_data, request_json["data"])
 
@@ -254,10 +254,10 @@ def activity_vecBreakV2_battleFinish(player_data):
     return response
 
 
-@misc_bp.route("/vecBreakV2/getSeasonRecord", methods=["POST"])
+@router.post("/vecBreakV2/getSeasonRecord")
 @player_data_decorator
-def vecBreakV2_getSeasonRecord(player_data):
-    request_json = request.get_json()
+async def vecBreakV2_getSeasonRecord(player_data, request: Request):
+    request_json = await request.json()
 
     response = {
         "seasons": {},
@@ -275,10 +275,10 @@ def get_vec_break_v2_defense_buff_id(activity_id, stage_id):
     return defense_buff_id
 
 
-@misc_bp.route("/activity/vecBreakV2/defendBattleStart", methods=["POST"])
+@router.post("/activity/vecBreakV2/defendBattleStart")
 @player_data_decorator
-def activity_vecBreakV2_defendBattleStart(player_data):
-    request_json = request.get_json()
+async def activity_vecBreakV2_defendBattleStart(player_data, request: Request):
+    request_json = await request.json()
 
     activity_id = request_json["activityId"]
     stage_id = request_json["stageId"]
@@ -305,10 +305,10 @@ def activity_vecBreakV2_defendBattleStart(player_data):
     return response
 
 
-@misc_bp.route("/activity/vecBreakV2/defendBattleFinish", methods=["POST"])
+@router.post("/activity/vecBreakV2/defendBattleFinish")
 @player_data_decorator
-def activity_vecBreakV2_defendBattleFinish(player_data):
-    request_json = request.get_json()
+async def activity_vecBreakV2_defendBattleFinish(player_data, request: Request):
+    request_json = await request.json()
 
     log_battle_log_if_necessary(player_data, request_json["data"])
 
@@ -320,10 +320,10 @@ def activity_vecBreakV2_defendBattleFinish(player_data):
     return response
 
 
-@misc_bp.route("/activity/vecBreakV2/setDefend", methods=["POST"])
+@router.post("/activity/vecBreakV2/setDefend")
 @player_data_decorator
-def activity_vecBreakV2_setDefend(player_data):
-    request_json = request.get_json()
+async def activity_vecBreakV2_setDefend(player_data, request: Request):
+    request_json = await request.json()
 
     activity_id = request_json["activityId"]
     stage_id = request_json["stageId"]
@@ -347,10 +347,10 @@ def activity_vecBreakV2_setDefend(player_data):
     return response
 
 
-@misc_bp.route("/activity/vecBreakV2/changeBuffList", methods=["POST"])
+@router.post("/activity/vecBreakV2/changeBuffList")
 @player_data_decorator
-def activity_vecBreakV2_changeBuffList(player_data):
-    request_json = request.get_json()
+async def activity_vecBreakV2_changeBuffList(player_data, request: Request):
+    request_json = await request.json()
 
     activity_id = request_json["activityId"]
 
@@ -362,10 +362,10 @@ def activity_vecBreakV2_changeBuffList(player_data):
     return response
 
 
-@misc_bp.route("/activity/bossRush/battleStart", methods=["POST"])
+@router.post("/activity/bossRush/battleStart")
 @player_data_decorator
-def activity_bossRush_battleStart(player_data):
-    request_json = request.get_json()
+async def activity_bossRush_battleStart(player_data, request: Request):
+    request_json = await request.json()
 
     response = {
         "result": 0,
@@ -378,10 +378,10 @@ def activity_bossRush_battleStart(player_data):
     return response
 
 
-@misc_bp.route("/activity/bossRush/battleFinish", methods=["POST"])
+@router.post("/activity/bossRush/battleFinish")
 @player_data_decorator
-def activity_bossRush_battleFinish(player_data):
-    request_json = request.get_json()
+async def activity_bossRush_battleFinish(player_data, request: Request):
+    request_json = await request.json()
 
     log_battle_log_if_necessary(player_data, request_json["data"])
 
@@ -409,10 +409,10 @@ def activity_bossRush_battleFinish(player_data):
     return response
 
 
-@misc_bp.route("/activity/bossRush/relicSelect", methods=["POST"])
+@router.post("/activity/bossRush/relicSelect")
 @player_data_decorator
-def activity_bossRush_relicSelect(player_data):
-    request_json = request.get_json()
+async def activity_bossRush_relicSelect(player_data, request: Request):
+    request_json = await request.json()
 
     player_data["activity"]["BOSS_RUSH"][request_json["activityId"]]["relic"][
         "select"

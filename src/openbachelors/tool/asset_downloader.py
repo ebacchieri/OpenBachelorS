@@ -2,6 +2,8 @@ import os
 import json
 from concurrent.futures import ProcessPoolExecutor, as_completed
 import sys
+import asyncio
+import logging
 
 
 from ..app import app
@@ -15,25 +17,33 @@ from ..bp.bp_assetbundle import (
 )
 from ..util.helper import get_asset_filename
 
+logger = logging.getLogger(__name__)
+
 NUM_ASSET_DOWNLOAD_WORKER = 8
 
 
-def asset_download_worker_func(worker_param):
+async def async_asset_download_worker_func(worker_param):
     res_version, asset_filename = worker_param
 
-    print(f"info: downloading {asset_filename}")
+    logger.info(f"downloading {asset_filename}")
 
     try:
-        ret_val = download_asset(res_version, asset_filename)
+        ret_val = await download_asset(res_version, asset_filename)
     except Exception as e:
-        print(f"err: exception during download of {asset_filename}: {e}")
+        logger.error(f"exception during download of {asset_filename}: {e}")
         return asset_filename
 
     if isinstance(ret_val, DownloadAssetResult.HttpStatusCode):
-        print(f"err: failed to download {asset_filename}")
+        logger.error(f"failed to download {asset_filename}")
         return asset_filename
 
+    logger.info(f"downloaded {asset_filename}")
+
     return None
+
+
+def asset_download_worker_func(worker_param):
+    return asyncio.run(async_asset_download_worker_func(worker_param))
 
 
 def main():
@@ -43,7 +53,7 @@ def main():
     if "--download_all" in sys.argv:
         download_all = True
 
-    download_asset(res_version, HOT_UPDATE_LIST_JSON)
+    asyncio.run(download_asset(res_version, HOT_UPDATE_LIST_JSON))
     with open(
         os.path.join(ASSET_DIRPATH, res_version, HOT_UPDATE_LIST_JSON),
         encoding="utf-8",
@@ -88,10 +98,10 @@ def main():
                 for future in as_completed(future_lst):
                     ret_val_lst.append(future.result())
     except KeyboardInterrupt:
-        print("warn: keyboard interrupt")
+        logger.warning("keyboard interrupt")
         sys.exit(1)
 
-    print("--- summary ---")
+    logger.info("--- summary ---")
 
     err_flag = False
 
@@ -101,10 +111,10 @@ def main():
 
         err_flag = True
 
-        print(f"err: failed to download {ret_val}")
+        logger.error(f"failed to download {ret_val}")
 
     if not err_flag:
-        print("info: success")
+        logger.info("success")
 
 
 if __name__ == "__main__":

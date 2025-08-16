@@ -9,10 +9,12 @@ from uuid import uuid4
 import re
 from hashlib import md5
 import random
+import asyncio
 
 from pathvalidate import is_valid_filename
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
+import aiofiles
 
 from ..const.filepath import TMP_DIRPATH
 
@@ -56,17 +58,17 @@ def decode_battle_replay(battle_replay: str) -> dict:
     return decoded_battle_replay
 
 
-def load_battle_replay_from_file(battle_replay_filepath: str) -> str:
-    with open(battle_replay_filepath, encoding="utf-8") as f:
-        decoded_battle_replay = json.load(f)
+async def load_battle_replay_from_file(battle_replay_filepath: str) -> str:
+    async with aiofiles.open(battle_replay_filepath, encoding="utf-8") as f:
+        decoded_battle_replay = json.loads(await f.read())
     battle_replay = encode_battle_replay(decoded_battle_replay)
     return battle_replay
 
 
-def save_battle_replay_to_file(battle_replay_filepath: str, battle_replay: str):
+async def save_battle_replay_to_file(battle_replay_filepath: str, battle_replay: str):
     decoded_battle_replay = decode_battle_replay(battle_replay)
-    with open(battle_replay_filepath, "w", encoding="utf-8") as f:
-        json.dump(decoded_battle_replay, f, indent=4, ensure_ascii=False)
+    async with aiofiles.open(battle_replay_filepath, "w", encoding="utf-8") as f:
+        await f.write(json.dumps(decoded_battle_replay, indent=4, ensure_ascii=False))
 
 
 ASSIST_LST_IDX_UID_OFFSET = 10000
@@ -96,36 +98,38 @@ def convert_char_obj_to_assist_char_obj(char_obj: dict):
                 del char_obj["tmpl"][i]["defaultSkillIndex"]
 
 
-def load_delta_json_obj(path: str):
+async def load_delta_json_obj(path: str):
     if not os.path.isfile(path):
         return {"modified": {}, "deleted": {}}
-    with open(path, encoding="utf-8") as f:
-        return json.load(f)
+    async with aiofiles.open(path, encoding="utf-8") as f:
+        return json.loads(await f.read())
 
 
-def save_delta_json_obj(path: str, modified: dict, deleted: dict):
+async def save_delta_json_obj(path: str, modified: dict, deleted: dict):
     dirpath = os.path.dirname(path)
     os.makedirs(dirpath, exist_ok=True)
     json_obj = {"modified": modified, "deleted": deleted}
-    with open(path, "w", encoding="utf-8") as f:
-        return json.dump(json_obj, f, indent=4, ensure_ascii=False)
+    async with aiofiles.open(path, "w", encoding="utf-8") as f:
+        return await f.write(json.dumps(json_obj, indent=4, ensure_ascii=False))
 
 
-def download_file(url: str, filename: str, dirpath: str):
+async def download_file(url: str, filename: str, dirpath: str):
     os.makedirs(TMP_DIRPATH, exist_ok=True)
 
     tmp_filename = str(uuid4())
-    proc = subprocess.run(
-        [
-            "aria2c",
-            "-q",
-            "-d",
-            TMP_DIRPATH,
-            "-o",
-            tmp_filename,
-            "--auto-file-renaming=false",
-            url,
-        ]
+    proc = await asyncio.to_thread(
+        lambda: subprocess.run(
+            [
+                "aria2c",
+                "-q",
+                "-d",
+                TMP_DIRPATH,
+                "-o",
+                tmp_filename,
+                "--auto-file-renaming=false",
+                url,
+            ]
+        )
     )
 
     if proc.returncode:

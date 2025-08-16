@@ -1,5 +1,5 @@
-from flask import Blueprint
-from flask import request
+from fastapi import APIRouter
+from fastapi import Request
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, VERSION_JSON
@@ -7,12 +7,12 @@ from ..util.const_json_loader import const_json_loader
 from ..util.server_url import get_server_url
 
 
-bp_app = Blueprint("bp_app", __name__)
+router = APIRouter()
 
 
-@bp_app.route("/app/v1/config")
-def app_v1_config():
-    url = get_server_url()
+@router.get("/app/v1/config")
+async def app_v1_config(request: Request):
+    url = get_server_url(request)
 
     response = {
         "data": {

@@ -1,6 +1,9 @@
 import os
 import json
 
+import pytest
+import orjson
+
 from openbachelors.util.const_json_loader import ConstJson
 from openbachelors.const.filepath import TMP_DIRPATH
 from openbachelors.util.player_data import (
@@ -116,8 +119,6 @@ def test_writable_overlay_json():
     assert delta_json.modified_dict == {"k0": {"k1": {}, "k5": 3}}
     assert delta_json.deleted_dict == {"k0": {"k1": None}}
 
-    # print(overlay_json.copy(), delta_json.modified_dict, delta_json.deleted_dict)
-
 
 def is_empty_dict(target_dict: dict):
     for key, value in target_dict.items():
@@ -169,8 +170,6 @@ def test_nested_overlay_json():
     assert is_empty_dict(delta_json.modified_dict)
     assert is_empty_dict(delta_json.deleted_dict)
 
-    # print(overlay_json_2.copy(), delta_json_2.modified_dict, delta_json_2.deleted_dict)
-
 
 def test_player_data_template():
     os.makedirs(TMP_DIRPATH, exist_ok=True)
@@ -180,19 +179,20 @@ def test_player_data_template():
         json.dump(player_data_template.copy(), f, ensure_ascii=False, indent=4)
 
 
-def test_player_data():
-    player_data = PlayerData()
+@pytest.mark.asyncio(loop_scope="session")
+async def test_player_data(db_pool_fixture):
+    player_data = await PlayerData.create()
 
     player_data.reset()
-    player_data.save()
+    await player_data.save()
 
     @player_data_decorator
-    def f(player_data):
+    async def f(player_data):
         player_data["status"]["ap"] = 789
         response = {}
         return response
 
-    response = f()
+    response = orjson.loads((await f()).body)
 
     response.pop("pushMessage", None)
 
@@ -200,10 +200,10 @@ def test_player_data():
         "playerDataDelta": {"modified": {"status": {"ap": 789}}, "deleted": {}}
     }
 
-    player_data = PlayerData()
+    player_data = await PlayerData.create()
 
     assert player_data.sav_delta_json.modified_dict == {"status": {"ap": 789}}
     assert player_data.sav_delta_json.deleted_dict == {"status": {"ap": None}}
 
     assert player_data.sav_pending_delta_json.modified_dict == {}
-    assert player_data.sav_pending_delta_json.deleted_dict == {"status": {}}
+    assert player_data.sav_pending_delta_json.deleted_dict == {}

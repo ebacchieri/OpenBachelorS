@@ -1,64 +1,64 @@
-from flask import Blueprint
-from flask import request
+from fastapi import APIRouter
+from fastapi import Request
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, VERSION_JSON
 from ..util.const_json_loader import const_json_loader
 from ..util.player_data import player_data_decorator
 
-bp_building = Blueprint("bp_building", __name__)
+router = APIRouter()
 
 
-@bp_building.route("/building/sync", methods=["POST"])
+@router.post("/building/sync")
 @player_data_decorator
-def building_sync(player_data):
-    request_json = request.get_json()
+async def building_sync(player_data, request: Request):
+    request_json = await request.json()
     response = {}
     return response
 
 
-@bp_building.route("/building/getRecentVisitors", methods=["POST"])
-def building_getRecentVisitors():
-    request_json = request.get_json()
+@router.post("/building/getRecentVisitors")
+async def building_getRecentVisitors(request: Request):
+    request_json = await request.json()
     response = {"visitors": []}
     return response
 
 
-@bp_building.route("/building/getInfoShareVisitorsNum", methods=["POST"])
-def building_getInfoShareVisitorsNum():
-    request_json = request.get_json()
+@router.post("/building/getInfoShareVisitorsNum")
+async def building_getInfoShareVisitorsNum(request: Request):
+    request_json = await request.json()
     response = {"num": 0}
     return response
 
 
-@bp_building.route("/building/getClueFriendList", methods=["POST"])
+@router.post("/building/getClueFriendList")
 @player_data_decorator
-def building_getClueFriendList(player_data):
-    request_json = request.get_json()
+async def building_getClueFriendList(player_data, request: Request):
+    request_json = await request.json()
     response = {"result": []}
     return response
 
 
-@bp_building.route("/building/getClueBox", methods=["POST"])
+@router.post("/building/getClueBox")
 @player_data_decorator
-def building_getClueBox(player_data):
-    request_json = request.get_json()
+async def building_getClueBox(player_data, request: Request):
+    request_json = await request.json()
     response = {"box": []}
     return response
 
 
-@bp_building.route("/building/getAssistReport", methods=["POST"])
+@router.post("/building/getAssistReport")
 @player_data_decorator
-def building_getAssistReport(player_data):
-    request_json = request.get_json()
+async def building_getAssistReport(player_data, request: Request):
+    request_json = await request.json()
     response = {"reports": []}
     return response
 
 
-@bp_building.route("/building/changeDiySolution", methods=["POST"])
+@router.post("/building/changeDiySolution")
 @player_data_decorator
-def building_changeDiySolution(player_data):
-    request_json = request.get_json()
+async def building_changeDiySolution(player_data, request: Request):
+    request_json = await request.json()
 
     room_id = request_json["roomSlotId"]
     diy_solution = request_json["solution"]
@@ -71,10 +71,10 @@ def building_changeDiySolution(player_data):
     return response
 
 
-@bp_building.route("/building/setBuildingAssist", methods=["POST"])
+@router.post("/building/setBuildingAssist")
 @player_data_decorator
-def building_setBuildingAssist(player_data):
-    request_json = request.get_json()
+async def building_setBuildingAssist(player_data, request: Request):
+    request_json = await request.json()
 
     char_num_id = request_json["charInstId"]
     assist_idx = request_json["type"]
@@ -91,10 +91,10 @@ def building_setBuildingAssist(player_data):
     return response
 
 
-@bp_building.route("/building/assignChar", methods=["POST"])
+@router.post("/building/assignChar")
 @player_data_decorator
-def building_assignChar(player_data):
-    request_json = request.get_json()
+async def building_assignChar(player_data, request: Request):
+    request_json = await request.json()
 
     room_id = request_json["roomSlotId"]
     char_num_id_lst = request_json["charInstIdList"]
@@ -132,10 +132,10 @@ def building_assignChar(player_data):
     return response
 
 
-@bp_building.route("/building/getMessageBoardContent", methods=["POST"])
+@router.post("/building/getMessageBoardContent")
 @player_data_decorator
-def building_getMessageBoardContent(player_data):
-    request_json = request.get_json()
+async def building_getMessageBoardContent(player_data, request: Request):
+    request_json = await request.json()
 
     response = {
         "thisWeekVisitors": [],
@@ -149,10 +149,10 @@ def building_getMessageBoardContent(player_data):
     return response
 
 
-@bp_building.route("/building/changeBGM", methods=["POST"])
+@router.post("/building/changeBGM")
 @player_data_decorator
-def building_changeBGM(player_data):
-    request_json = request.get_json()
+async def building_changeBGM(player_data, request: Request):
+    request_json = await request.json()
 
     music_id = request_json["musicId"]
 
@@ -162,10 +162,10 @@ def building_changeBGM(player_data):
     return response
 
 
-@bp_building.route("/building/setPrivateDormOwner", methods=["POST"])
+@router.post("/building/setPrivateDormOwner")
 @player_data_decorator
-def building_setPrivateDormOwner(player_data):
-    request_json = request.get_json()
+async def building_setPrivateDormOwner(player_data, request: Request):
+    request_json = await request.json()
 
     room_id = request_json["slotId"]
     char_num_id = request_json["charInsId"]
@@ -176,10 +176,10 @@ def building_setPrivateDormOwner(player_data):
     return response
 
 
-@bp_building.route("/building/saveDiyPresetSolution", methods=["POST"])
+@router.post("/building/saveDiyPresetSolution")
 @player_data_decorator
-def building_saveDiyPresetSolution(player_data):
-    request_json = request.get_json()
+async def building_saveDiyPresetSolution(player_data, request: Request):
+    request_json = await request.json()
 
     solution_id = request_json["solutionId"]
 
@@ -194,18 +194,18 @@ def building_saveDiyPresetSolution(player_data):
     return response
 
 
-@bp_building.route("/building/getThumbnailUrl", methods=["POST"])
-def building_getThumbnailUrl():
-    request_json = request.get_json()
+@router.post("/building/getThumbnailUrl")
+async def building_getThumbnailUrl(request: Request):
+    request_json = await request.json()
 
     response = {"url": ["http://127.0.0.1/thumbnail.jpg"]}
     return response
 
 
-@bp_building.route("/building/changePresetName", methods=["POST"])
+@router.post("/building/changePresetName")
 @player_data_decorator
-def building_changePresetName(player_data):
-    request_json = request.get_json()
+async def building_changePresetName(player_data, request: Request):
+    request_json = await request.json()
 
     solution_id = request_json["solutionId"]
 

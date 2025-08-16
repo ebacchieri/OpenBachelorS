@@ -1,7 +1,7 @@
 import json
 
-from flask import Blueprint
-from flask import request
+from fastapi import APIRouter
+from fastapi import Request
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, VERSION_JSON
@@ -9,12 +9,12 @@ from ..util.const_json_loader import const_json_loader
 from ..util.server_url import get_server_url
 
 
-bp_u8 = Blueprint("bp_u8", __name__)
+router = APIRouter()
 
 
-@bp_u8.route("/u8/user/v1/getToken", methods=["POST"])
-def u8_user_v1_getToken():
-    request_json = request.get_json()
+@router.post("/u8/user/v1/getToken")
+async def u8_user_v1_getToken(request: Request):
+    request_json = await request.json()
     extension_obj = json.loads(request_json["extension"])
     if "code" in extension_obj:
         code = extension_obj["code"]
@@ -36,17 +36,17 @@ def u8_user_v1_getToken():
     return response
 
 
-@bp_u8.route("/u8/pay/getAllProductList", methods=["POST"])
-def u8_pay_getAllProductList():
+@router.post("/u8/pay/getAllProductList")
+async def u8_pay_getAllProductList(request: Request):
     response = {"productList": []}
     return response
 
 
-@bp_u8.route("/u8/user/auth/v1/agreement_version", methods=["POST"])
-def u8_user_auth_v1_agreement_version():
-    request_json = request.get_json()
+@router.post("/u8/user/auth/v1/agreement_version")
+async def u8_user_auth_v1_agreement_version(request: Request):
+    request_json = await request.json()
 
-    url = get_server_url()
+    url = get_server_url(request)
 
     response = {
         "data": {
@@ -66,9 +66,9 @@ def u8_user_auth_v1_agreement_version():
     return response
 
 
-@bp_u8.route("/u8/user/auth/v1/update_agreement", methods=["POST"])
-def u8_user_auth_v1_update_agreement():
-    request_json = request.get_json()
+@router.post("/u8/user/auth/v1/update_agreement")
+async def u8_user_auth_v1_update_agreement(request: Request):
+    request_json = await request.json()
 
     response = {"msg": "OK", "status": 0, "type": ""}
     return response
