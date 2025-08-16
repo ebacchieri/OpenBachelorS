@@ -119,8 +119,6 @@ def test_writable_overlay_json():
     assert delta_json.modified_dict == {"k0": {"k1": {}, "k5": 3}}
     assert delta_json.deleted_dict == {"k0": {"k1": None}}
 
-    # print(overlay_json.copy(), delta_json.modified_dict, delta_json.deleted_dict)
-
 
 def is_empty_dict(target_dict: dict):
     for key, value in target_dict.items():
@@ -171,8 +169,6 @@ def test_nested_overlay_json():
     assert delta_json_2.deleted_dict == {"k0": {"k1": None}}
     assert is_empty_dict(delta_json.modified_dict)
     assert is_empty_dict(delta_json.deleted_dict)
-
-    # print(overlay_json_2.copy(), delta_json_2.modified_dict, delta_json_2.deleted_dict)
 
 
 def test_player_data_template():

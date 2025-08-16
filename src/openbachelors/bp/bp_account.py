@@ -13,6 +13,7 @@ from ..util.const_json_loader import const_json_loader
 from ..util.player_data import PlayerData, player_data_decorator
 from ..util.mail_helper import get_player_mailbox
 from ..util.faketime import faketime
+from ..util.log_helper import IS_DEBUG
 
 router = APIRouter()
 
@@ -52,7 +53,7 @@ async def account_syncData(request: Request):
 
     player_data_json_obj = player_data.copy()
 
-    if const_json_loader[CONFIG_JSON]["debug"]:
+    if IS_DEBUG:
         os.makedirs(TMP_DIRPATH, exist_ok=True)
         async with aiofiles.open(
             os.path.join(TMP_DIRPATH, "player_data.json"), "w", encoding="utf-8"

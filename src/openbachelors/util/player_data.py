@@ -5,6 +5,7 @@ import json
 from enum import Enum
 import inspect
 import asyncio
+import logging
 
 from psycopg.types.json import Json
 from fastapi import Response
@@ -58,6 +59,9 @@ from .helper import (
     get_username_by_token,
 )
 from .db_manager import IS_DB_READY, get_db_conn_or_pool, create_user_if_necessary
+from .log_helper import IS_DEBUG
+
+logger = logging.getLogger(__name__)
 
 
 def build_player_data_template():
@@ -1209,9 +1213,9 @@ def player_data_decorator(func):
 
         json_response["playerDataDelta"] = delta_response
 
-        if const_json_loader[CONFIG_JSON]["debug"]:
+        if IS_DEBUG:
             delta_response_str = json.dumps(delta_response, ensure_ascii=False)
-            print(delta_response_str)
+            logger.debug(delta_response_str)
 
         return Response(
             content=orjson.dumps(json_response), media_type="application/json"

@@ -1,5 +1,6 @@
 from enum import IntEnum
 import random
+import logging
 
 from fastapi import APIRouter
 from fastapi import Request
@@ -21,6 +22,8 @@ from ..util.helper import (
     get_char_str_tag_lst,
 )
 from ..util.faketime import faketime
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -767,7 +770,7 @@ class AdvancedGachaDoubleManager(AdvancedGachaSimpleManager):
             self.is_valid_pool = False
 
         if not self.is_valid_pool:
-            print(f"warn: double pool {self.pool_id} misconfigured")
+            logger.warning(f"double pool {self.pool_id} misconfigured")
 
     def get_double_char_id_lst(self):
         double_char_id_lst_key = f"advanced_gacha_double_char_id_lst_{self.pool_id}"
@@ -890,7 +893,7 @@ class AdvancedGachaSingleManager(AdvancedGachaSimpleManager):
             self.is_valid_pool = False
 
         if not self.is_valid_pool:
-            print(f"warn: single pool {self.pool_id} misconfigured")
+            logger.warning(f"single pool {self.pool_id} misconfigured")
 
         if self.is_valid_pool:
             self.single_char_id = up_char_info[CharRarityRank.TIER_6.name][
@@ -1093,7 +1096,7 @@ class AdvancedGachaLimitedManager(AdvancedGachaSimpleManager):
             self.is_valid_pool = False
 
         if not self.is_valid_pool:
-            print(f"warn: limit pool {self.pool_id} misconfigured")
+            logger.warning(f"limit pool {self.pool_id} misconfigured")
 
         if self.is_valid_pool:
             self.limit_info = gacha_data["limit_info"][pool_id]

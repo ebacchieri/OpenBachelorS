@@ -1,3 +1,5 @@
+import logging
+
 import psycopg
 from psycopg.types.json import Json
 from psycopg_pool import AsyncConnectionPool
@@ -6,6 +8,8 @@ from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON
 from .const_json_loader import const_json_loader
 
+
+logger = logging.getLogger(__name__)
 
 DATABASE_NAME = "openbachelor"
 DATABASE_TIMEOUT = 3
@@ -95,7 +99,7 @@ if const_json_loader[CONFIG_JSON]["use_db"]:
         init_db()
         IS_DB_READY = True
     except Exception:
-        print("warn: init db failed, fallback to file save")
+        logger.warning("init db failed, fallback to file save")
         IS_DB_READY = False
 else:
     IS_DB_READY = False
