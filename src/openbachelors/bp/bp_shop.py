@@ -1,34 +1,34 @@
-from flask import Blueprint
-from flask import request
+from fastapi import APIRouter
+from fastapi import Request
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, VERSION_JSON
 from ..util.const_json_loader import const_json_loader
 from ..util.player_data import player_data_decorator
 
-bp_shop = Blueprint("bp_shop", __name__)
+router = APIRouter()
 
 
-@bp_shop.route("/shop/getSkinGoodList", methods=["POST"])
+@router.post("/shop/getSkinGoodList")
 @player_data_decorator
-def shop_getSkinGoodList(player_data):
-    request_json = request.get_json()
+async def shop_getSkinGoodList(player_data, request: Request):
+    request_json = await request.json()
     response = {"goodList": []}
     return response
 
 
-@bp_shop.route("/shop/getFurniGoodList", methods=["POST"])
+@router.post("/shop/getFurniGoodList")
 @player_data_decorator
-def shop_getFurniGoodList(player_data):
-    request_json = request.get_json()
+async def shop_getFurniGoodList(player_data, request: Request):
+    request_json = await request.json()
     response = {"goods": [], "groups": []}
     return response
 
 
-@bp_shop.route("/shop/getSocialGoodList", methods=["POST"])
+@router.post("/shop/getSocialGoodList")
 @player_data_decorator
-def shop_getSocialGoodList(player_data):
-    request_json = request.get_json()
+async def shop_getSocialGoodList(player_data, request: Request):
+    request_json = await request.json()
     response = {
         "goodList": [],
         "charPurchase": {
@@ -42,10 +42,10 @@ def shop_getSocialGoodList(player_data):
     return response
 
 
-@bp_shop.route("/shop/getLowGoodList", methods=["POST"])
+@router.post("/shop/getLowGoodList")
 @player_data_decorator
-def shop_getLowGoodList(player_data):
-    request_json = request.get_json()
+async def shop_getLowGoodList(player_data, request: Request):
+    request_json = await request.json()
     response = {
         "groups": [],
         "goodList": [],
@@ -55,10 +55,10 @@ def shop_getLowGoodList(player_data):
     return response
 
 
-@bp_shop.route("/shop/getHighGoodList", methods=["POST"])
+@router.post("/shop/getHighGoodList")
 @player_data_decorator
-def shop_getHighGoodList(player_data):
-    request_json = request.get_json()
+async def shop_getHighGoodList(player_data, request: Request):
+    request_json = await request.json()
     response = {
         "goodList": [],
         "progressGoodList": {},
@@ -67,10 +67,10 @@ def shop_getHighGoodList(player_data):
     return response
 
 
-@bp_shop.route("/shop/getClassicGoodList", methods=["POST"])
+@router.post("/shop/getClassicGoodList")
 @player_data_decorator
-def shop_getClassicGoodList(player_data):
-    request_json = request.get_json()
+async def shop_getClassicGoodList(player_data, request: Request):
+    request_json = await request.json()
     response = {
         "goodList": [],
         "progressGoodList": {},
@@ -79,10 +79,10 @@ def shop_getClassicGoodList(player_data):
     return response
 
 
-@bp_shop.route("/shop/getExtraGoodList", methods=["POST"])
+@router.post("/shop/getExtraGoodList")
 @player_data_decorator
-def shop_getExtraGoodList(player_data):
-    request_json = request.get_json()
+async def shop_getExtraGoodList(player_data, request: Request):
+    request_json = await request.json()
     response = {
         "goodList": [],
         "newFlag": [],
@@ -91,20 +91,20 @@ def shop_getExtraGoodList(player_data):
     return response
 
 
-@bp_shop.route("/shop/getEPGSGoodList", methods=["POST"])
+@router.post("/shop/getEPGSGoodList")
 @player_data_decorator
-def shop_getEPGSGoodList(player_data):
-    request_json = request.get_json()
+async def shop_getEPGSGoodList(player_data, request: Request):
+    request_json = await request.json()
     response = {
         "goodList": [],
     }
     return response
 
 
-@bp_shop.route("/shop/getRepGoodList", methods=["POST"])
+@router.post("/shop/getRepGoodList")
 @player_data_decorator
-def shop_getRepGoodList(player_data):
-    request_json = request.get_json()
+async def shop_getRepGoodList(player_data, request: Request):
+    request_json = await request.json()
     response = {
         "goodList": [],
         "newFlag": [],
@@ -112,20 +112,20 @@ def shop_getRepGoodList(player_data):
     return response
 
 
-@bp_shop.route("/shop/getCashGoodList", methods=["POST"])
+@router.post("/shop/getCashGoodList")
 @player_data_decorator
-def shop_getCashGoodList(player_data):
-    request_json = request.get_json()
+async def shop_getCashGoodList(player_data, request: Request):
+    request_json = await request.json()
     response = {
         "goodList": [],
     }
     return response
 
 
-@bp_shop.route("/shop/getGPGoodList", methods=["POST"])
+@router.post("/shop/getGPGoodList")
 @player_data_decorator
-def shop_getGPGoodList(player_data):
-    request_json = request.get_json()
+async def shop_getGPGoodList(player_data, request: Request):
+    request_json = await request.json()
     response = {
         "weeklyGroup": {},
         "monthlyGroup": {},
@@ -138,20 +138,20 @@ def shop_getGPGoodList(player_data):
     return response
 
 
-@bp_shop.route("/shop/getGoodPurchaseState", methods=["POST"])
+@router.post("/shop/getGoodPurchaseState")
 @player_data_decorator
-def shop_getGoodPurchaseState(player_data):
-    request_json = request.get_json()
+async def shop_getGoodPurchaseState(player_data, request: Request):
+    request_json = await request.json()
     response = {
         "result": {},
     }
     return response
 
 
-@bp_shop.route("/shop/getLMTGSGoodList", methods=["POST"])
+@router.post("/shop/getLMTGSGoodList")
 @player_data_decorator
-def shop_getLMTGSGoodList(player_data):
-    request_json = request.get_json()
+async def shop_getLMTGSGoodList(player_data, request: Request):
+    request_json = await request.json()
     response = {
         "goodList": [],
     }

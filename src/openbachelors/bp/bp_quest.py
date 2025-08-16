@@ -1,5 +1,5 @@
-from flask import Blueprint
-from flask import request
+from fastapi import APIRouter
+from fastapi import Request
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, VERSION_JSON, ASSIST_JSON
@@ -14,13 +14,13 @@ from ..util.helper import (
 from ..util.battle_log_logger import log_battle_log_if_necessary
 
 
-bp_quest = Blueprint("bp_quest", __name__)
+router = APIRouter()
 
 
-@bp_quest.route("/quest/squadFormation", methods=["POST"])
+@router.post("/quest/squadFormation")
 @player_data_decorator
-def quest_squadFormation(player_data):
-    request_json = request.get_json()
+async def quest_squadFormation(player_data, request: Request):
+    request_json = await request.json()
 
     squad_id = request_json["squadId"]
     player_data["troop"]["squads"][squad_id]["slots"] = request_json["slots"]
@@ -29,10 +29,10 @@ def quest_squadFormation(player_data):
     return response
 
 
-@bp_quest.route("/quest/changeSquadName", methods=["POST"])
+@router.post("/quest/changeSquadName")
 @player_data_decorator
-def quest_changeSquadName(player_data):
-    request_json = request.get_json()
+async def quest_changeSquadName(player_data, request: Request):
+    request_json = await request.json()
 
     squad_id = request_json["squadId"]
     player_data["troop"]["squads"][squad_id]["name"] = request_json["name"]
@@ -41,10 +41,10 @@ def quest_changeSquadName(player_data):
     return response
 
 
-@bp_quest.route("/quest/battleStart", methods=["POST"])
+@router.post("/quest/battleStart")
 @player_data_decorator
-def quest_battleStart(player_data):
-    request_json = request.get_json()
+async def quest_battleStart(player_data, request: Request):
+    request_json = await request.json()
 
     stage_id = request_json["stageId"]
     player_data.extra_save.save_obj["cur_stage_id"] = stage_id
@@ -60,10 +60,10 @@ def quest_battleStart(player_data):
     return response
 
 
-@bp_quest.route("/quest/battleFinish", methods=["POST"])
+@router.post("/quest/battleFinish")
 @player_data_decorator
-def quest_battleFinish(player_data):
-    request_json = request.get_json()
+async def quest_battleFinish(player_data, request: Request):
+    request_json = await request.json()
 
     log_battle_log_if_necessary(player_data, request_json["data"])
 
@@ -95,10 +95,10 @@ def quest_battleFinish(player_data):
     return response
 
 
-@bp_quest.route("/quest/battleContinue", methods=["POST"])
+@router.post("/quest/battleContinue")
 @player_data_decorator
-def quest_battleContinue(player_data):
-    request_json = request.get_json()
+async def quest_battleContinue(player_data, request: Request):
+    request_json = await request.json()
 
     log_battle_log_if_necessary(player_data, request_json["data"])
 
@@ -110,10 +110,10 @@ def quest_battleContinue(player_data):
     return response
 
 
-@bp_quest.route("/quest/getAssistList", methods=["POST"])
+@router.post("/quest/getAssistList")
 @player_data_decorator
-def quest_getAssistList(player_data):
-    request_json = request.get_json()
+async def quest_getAssistList(player_data, request: Request):
+    request_json = await request.json()
 
     assist_lst = const_json_loader[ASSIST_JSON]["assist_lst"].copy()
 
@@ -148,10 +148,10 @@ def quest_getAssistList(player_data):
     return response
 
 
-@bp_quest.route("/quest/saveBattleReplay", methods=["POST"])
+@router.post("/quest/saveBattleReplay")
 @player_data_decorator
-def quest_saveBattleReplay(player_data):
-    request_json = request.get_json()
+async def quest_saveBattleReplay(player_data, request: Request):
+    request_json = await request.json()
 
     response = {}
 
@@ -162,30 +162,30 @@ def quest_saveBattleReplay(player_data):
 
     battle_replay = request_json["battleReplay"]
 
-    player_data.battle_replay_manager.save_battle_replay(stage_id, battle_replay)
+    await player_data.battle_replay_manager.save_battle_replay(stage_id, battle_replay)
 
     player_data["dungeon"]["stages"][stage_id]["hasBattleReplay"] = 1
 
     return response
 
 
-@bp_quest.route("/quest/getBattleReplay", methods=["POST"])
+@router.post("/quest/getBattleReplay")
 @player_data_decorator
-def quest_getBattleReplay(player_data):
-    request_json = request.get_json()
+async def quest_getBattleReplay(player_data, request: Request):
+    request_json = await request.json()
 
     stage_id = request_json["stageId"]
 
-    battle_replay = player_data.battle_replay_manager.load_battle_replay(stage_id)
+    battle_replay = await player_data.battle_replay_manager.load_battle_replay(stage_id)
 
     response = {"battleReplay": battle_replay}
     return response
 
 
-@bp_quest.route("/quest/finishStoryStage", methods=["POST"])
+@router.post("/quest/finishStoryStage")
 @player_data_decorator
-def quest_finishStoryStage(player_data):
-    request_json = request.get_json()
+async def quest_finishStoryStage(player_data, request: Request):
+    request_json = await request.json()
 
     response = {
         "result": 0,
@@ -196,10 +196,10 @@ def quest_finishStoryStage(player_data):
     return response
 
 
-@bp_quest.route("/quest/editStageSixStarTag", methods=["POST"])
+@router.post("/quest/editStageSixStarTag")
 @player_data_decorator
-def quest_editStageSixStarTag(player_data):
-    request_json = request.get_json()
+async def quest_editStageSixStarTag(player_data, request: Request):
+    request_json = await request.json()
 
     stage_id = request_json["stageId"]
     tag_lst = request_json["selected"]

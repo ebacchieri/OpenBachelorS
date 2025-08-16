@@ -1,5 +1,5 @@
-from flask import Blueprint
-from flask import request
+from fastapi import APIRouter
+from fastapi import Request
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, VERSION_JSON
@@ -7,7 +7,7 @@ from ..util.const_json_loader import const_json_loader
 from ..util.player_data import player_data_decorator
 from ..util.helper import get_char_id_from_skin_id
 
-bp_charRotation = Blueprint("bp_charRotation", __name__)
+router = APIRouter()
 
 
 def update_player_data_based_on_preset(player_data):
@@ -28,10 +28,10 @@ def update_player_data_based_on_preset(player_data):
         player_data["status"]["secretarySkinSp"] = False
 
 
-@bp_charRotation.route("/charRotation/createPreset", methods=["POST"])
+@router.post("/charRotation/createPreset")
 @player_data_decorator
-def charRotation_createPreset(player_data):
-    request_json = request.get_json()
+async def charRotation_createPreset(player_data, request: Request):
+    request_json = await request.json()
 
     max_preset_id = 1
     for i, _ in player_data["charRotation"]["preset"]:
@@ -52,10 +52,10 @@ def charRotation_createPreset(player_data):
     return response
 
 
-@bp_charRotation.route("/charRotation/setCurrent", methods=["POST"])
+@router.post("/charRotation/setCurrent")
 @player_data_decorator
-def charRotation_setCurrent(player_data):
-    request_json = request.get_json()
+async def charRotation_setCurrent(player_data, request: Request):
+    request_json = await request.json()
 
     preset_id = request_json["instId"]
     player_data["charRotation"]["current"] = preset_id
@@ -66,10 +66,10 @@ def charRotation_setCurrent(player_data):
     return response
 
 
-@bp_charRotation.route("/charRotation/deletePreset", methods=["POST"])
+@router.post("/charRotation/deletePreset")
 @player_data_decorator
-def charRotation_deletePreset(player_data):
-    request_json = request.get_json()
+async def charRotation_deletePreset(player_data, request: Request):
+    request_json = await request.json()
 
     preset_id = request_json["instId"]
     del player_data["charRotation"]["preset"][preset_id]
@@ -78,10 +78,10 @@ def charRotation_deletePreset(player_data):
     return response
 
 
-@bp_charRotation.route("/charRotation/updatePreset", methods=["POST"])
+@router.post("/charRotation/updatePreset")
 @player_data_decorator
-def charRotation_updatePreset(player_data):
-    request_json = request.get_json()
+async def charRotation_updatePreset(player_data, request: Request):
+    request_json = await request.json()
 
     preset_id = request_json["instId"]
     preset = request_json["data"]

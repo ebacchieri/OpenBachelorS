@@ -2,9 +2,10 @@ import os
 import json
 
 from psycopg.types.json import Json
+import aiofiles
 
 from ..const.json_const import true, false, null
-from .db_manager import IS_DB_READY, get_db_conn, create_user_if_necessary
+from .db_manager import IS_DB_READY, get_db_conn_or_pool, create_user_if_necessary
 from .const_json_loader import SavableThing
 
 
@@ -22,52 +23,75 @@ class BasicExtraSave:
 
 
 class ExtraSave(BasicExtraSave, SavableThing):
-    def __init__(self, filepath: str):
-        self.filepath = filepath
+    @classmethod
+    async def create(cls, filepath: str):
+        extra_save = cls()
+        extra_save.filepath = filepath
 
-        if os.path.isfile(self.filepath):
-            with open(self.filepath, encoding="utf-8") as f:
-                self.save_obj = json.load(f)
+        if os.path.isfile(extra_save.filepath):
+            async with aiofiles.open(extra_save.filepath, encoding="utf-8") as f:
+                extra_save.save_obj = json.loads(await f.read())
         else:
-            self.save_obj = ExtraSave.get_default_save_obj()
+            extra_save.save_obj = ExtraSave.get_default_save_obj()
 
-    def save(self):
+        return extra_save
+
+    async def save(self):
         dirpath = os.path.dirname(self.filepath)
         os.makedirs(dirpath, exist_ok=True)
 
-        with open(self.filepath, "w", encoding="utf-8") as f:
-            json.dump(self.save_obj, f, ensure_ascii=False, indent=4)
+        async with aiofiles.open(self.filepath, "w", encoding="utf-8") as f:
+            await f.write(json.dumps(self.save_obj, ensure_ascii=False, indent=4))
 
 
 class DBExtraSave(BasicExtraSave, SavableThing):
-    def __init__(self, username: str):
-        self.username = username
+    @classmethod
+    async def create(
+        cls,
+        username: str,
+        save_aggregator=None,
+    ):
+        extra_save = cls()
+        extra_save.username = username
 
-        create_user_if_necessary(self.username)
-
-        save_obj = self.load_save_obj_from_db()
+        if save_aggregator is None:
+            save_obj = await extra_save.load_save_obj_from_db()
+        else:
+            save_obj = save_aggregator.get("extra")
         if not save_obj:
             save_obj = ExtraSave.get_default_save_obj()
 
-        self.save_obj = save_obj
+        extra_save.save_obj = save_obj
+        extra_save.save_aggregator = save_aggregator
 
-    def load_save_obj_from_db(self):
-        with get_db_conn() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
+        return extra_save
+
+    async def load_save_obj_from_db(self):
+        pool = get_db_conn_or_pool()
+        async with pool.connection() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute(
                     "SELECT extra FROM player_data WHERE username = %s",
                     (self.username,),
                 )
-                return cur.fetchone()[0]
+                return (await cur.fetchone())[0]
 
-    def save(self):
-        with get_db_conn() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
+    async def save(self):
+        save_obj = Json(self.save_obj)
+        if self.save_aggregator is not None:
+            self.save_aggregator.set(
+                "extra",
+                save_obj,
+            )
+            return
+        pool = get_db_conn_or_pool()
+        async with pool.connection() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute(
                     "UPDATE player_data SET extra = %s WHERE username = %s",
                     (
-                        Json(self.save_obj),
+                        save_obj,
                         self.username,
                     ),
                 )
-                conn.commit()
+                await conn.commit()

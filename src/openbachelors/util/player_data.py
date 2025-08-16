@@ -3,10 +3,14 @@ from functools import wraps
 import os
 import json
 from enum import Enum
+import inspect
+import asyncio
+import logging
 
-import flask
-from flask import request
 from psycopg.types.json import Json
+from fastapi import Response
+import orjson
+from psycopg import sql
 
 from ..const.json_const import true, false, null
 from ..const.filepath import (
@@ -54,7 +58,10 @@ from .helper import (
     save_delta_json_obj,
     get_username_by_token,
 )
-from .db_manager import IS_DB_READY, get_db_conn, create_user_if_necessary
+from .db_manager import IS_DB_READY, get_db_conn_or_pool, create_user_if_necessary
+from .log_helper import IS_DEBUG
+
+logger = logging.getLogger(__name__)
 
 
 def build_player_data_template():
@@ -899,114 +906,236 @@ def recursive_collapse_deleted_dict(target_dict: dict):
 
 
 class FileBasedDeltaJson(DeltaJson, SavableThing):
-    def __init__(self, path: str):
-        self.path = path
-        json_obj = load_delta_json_obj(path)
+    @classmethod
+    async def create(cls, path: str):
+        json_obj = await load_delta_json_obj(path)
 
-        super().__init__(
+        delta_json = cls(
             modified_dict=json_obj["modified"], deleted_dict=json_obj["deleted"]
         )
 
-    def save(self):
-        save_delta_json_obj(self.path, self.modified_dict, self.deleted_dict)
+        delta_json.path = path
+
+        return delta_json
+
+    async def save(self):
+        await save_delta_json_obj(self.path, self.modified_dict, self.deleted_dict)
 
 
 class DBBasedDeltaJson(DeltaJson, SavableThing):
-    def __init__(self, column_name: str, username: str):
-        self.column_name = column_name
-        self.username = username
-
-        create_user_if_necessary(self.username)
-
-        json_obj = self.load_delta_json_obj_from_db()
+    @classmethod
+    async def create(
+        cls,
+        column_name: str,
+        username: str,
+        save_aggregator=None,
+    ):
+        if save_aggregator is None:
+            json_obj = await cls.load_delta_json_obj_from_db(column_name, username)
+        else:
+            json_obj = save_aggregator.get(column_name)
         if not json_obj:
             json_obj = {"modified": {}, "deleted": {}}
 
-        super().__init__(
+        delta_json = cls(
             modified_dict=json_obj["modified"], deleted_dict=json_obj["deleted"]
         )
 
-    def load_delta_json_obj_from_db(self):
-        with get_db_conn() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    f"SELECT {self.column_name} FROM player_data WHERE username = %s",
-                    (self.username,),
-                )
-                return cur.fetchone()[0]
+        delta_json.column_name = column_name
+        delta_json.username = username
+        delta_json.save_aggregator = save_aggregator
 
-    def save(self):
-        with get_db_conn() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    f"UPDATE player_data SET {self.column_name} = %s WHERE username = %s",
+        return delta_json
+
+    @classmethod
+    async def load_delta_json_obj_from_db(cls, column_name: str, username: str):
+        pool = get_db_conn_or_pool()
+        async with pool.connection() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute(
+                    sql.SQL(
+                        "SELECT {column_name} FROM player_data WHERE username = %s",
+                    ).format(column_name=sql.Identifier(column_name)),
+                    (username,),
+                )
+                return (await cur.fetchone())[0]
+
+    async def save(self):
+        save_obj = Json(
+            {
+                "modified": self.modified_dict,
+                "deleted": self.deleted_dict,
+            }
+        )
+        if self.save_aggregator is not None:
+            self.save_aggregator.set(
+                self.column_name,
+                save_obj,
+            )
+            return
+        pool = get_db_conn_or_pool()
+        async with pool.connection() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute(
+                    sql.SQL(
+                        "UPDATE player_data SET {column_name} = %s WHERE username = %s",
+                    ).format(column_name=sql.Identifier(self.column_name)),
                     (
-                        Json(
-                            {
-                                "modified": self.modified_dict,
-                                "deleted": self.deleted_dict,
-                            }
-                        ),
+                        save_obj,
                         self.username,
                     ),
                 )
-                conn.commit()
+                await conn.commit()
+
+
+class DBSaveAggregator:
+    def __init__(self, username):
+        self.username = username
+        self.kv_dict = {}
+
+    def get(self, key):
+        return self.kv_dict.pop(key)
+
+    def set(self, key, value):
+        self.kv_dict[key] = value
+
+    async def load(self):
+        pool = get_db_conn_or_pool()
+        async with pool.connection() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute(
+                    "SELECT delta, pending_delta, extra FROM player_data WHERE username = %s",
+                    (self.username,),
+                )
+                delta, pending_delta, extra = await cur.fetchone()
+
+                self.set("delta", delta)
+                self.set("pending_delta", pending_delta)
+                self.set("extra", extra)
+
+    async def save(self):
+        pool = get_db_conn_or_pool()
+        async with pool.connection() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute(
+                    "UPDATE player_data SET delta = %s, pending_delta = %s, extra = %s WHERE username = %s",
+                    (
+                        self.get("delta"),
+                        self.get("pending_delta"),
+                        self.get("extra"),
+                        self.username,
+                    ),
+                )
+                await conn.commit()
 
 
 class PlayerData(OverlayJson, SavableThing):
-    def __init__(self, player_id=None):
-        if flask.has_request_context():
+    @classmethod
+    async def create(cls, player_id=None, request=None):
+        if request is not None:
             token = request.headers.get("secret", "")
         else:
             if player_id is not None:
                 token = player_id
             else:
                 token = ""
-        self.username = get_username_by_token(token)
+        if not token:
+            token = "_"
+        username = get_username_by_token(token)
 
         config = const_json_loader[CONFIG_JSON]
         if config["multi_user"]:
             if IS_DB_READY:
-                self.sav_delta_json = DBBasedDeltaJson(
-                    "delta",
-                    self.username,
+                await create_user_if_necessary(username)
+
+                save_aggregator = DBSaveAggregator(username)
+
+                await save_aggregator.load()
+
+                (
+                    sav_delta_json,
+                    sav_pending_delta_json,
+                    extra_save,
+                ) = await asyncio.gather(
+                    DBBasedDeltaJson.create(
+                        "delta",
+                        username,
+                        save_aggregator,
+                    ),
+                    DBBasedDeltaJson.create(
+                        "pending_delta",
+                        username,
+                        save_aggregator,
+                    ),
+                    DBExtraSave.create(
+                        username,
+                        save_aggregator,
+                    ),
                 )
-                self.sav_pending_delta_json = DBBasedDeltaJson(
-                    "pending_delta",
-                    self.username,
+
+                battle_replay_manager = DBBattleReplayManager(
+                    username,
                 )
-                self.battle_replay_manager = DBBattleReplayManager(
-                    self.username,
-                )
-                self.extra_save = DBExtraSave(self.username)
             else:
-                self.sav_delta_json = FileBasedDeltaJson(
-                    os.path.join(MULTI_USER_SAV_DIRPATH, self.username, "delta.json")
+                save_aggregator = None
+
+                (
+                    sav_delta_json,
+                    sav_pending_delta_json,
+                    extra_save,
+                ) = await asyncio.gather(
+                    FileBasedDeltaJson.create(
+                        os.path.join(MULTI_USER_SAV_DIRPATH, username, "delta.json")
+                    ),
+                    FileBasedDeltaJson.create(
+                        os.path.join(
+                            MULTI_USER_SAV_DIRPATH, username, "pending_delta.json"
+                        )
+                    ),
+                    ExtraSave.create(
+                        os.path.join(MULTI_EXTRA_SAVE_DIRPATH, username, "extra.json")
+                    ),
                 )
-                self.sav_pending_delta_json = FileBasedDeltaJson(
-                    os.path.join(
-                        MULTI_USER_SAV_DIRPATH, self.username, "pending_delta.json"
-                    )
-                )
-                self.battle_replay_manager = BattleReplayManager(
-                    os.path.join(MULTI_REPLAY_DIRPATH, self.username)
-                )
-                self.extra_save = ExtraSave(
-                    os.path.join(MULTI_EXTRA_SAVE_DIRPATH, self.username, "extra.json")
+
+                battle_replay_manager = BattleReplayManager(
+                    os.path.join(MULTI_REPLAY_DIRPATH, username)
                 )
         else:
-            self.sav_delta_json = FileBasedDeltaJson(SAV_DELTA_JSON)
-            self.sav_pending_delta_json = FileBasedDeltaJson(SAV_PENDING_DELTA_JSON)
-            self.battle_replay_manager = BattleReplayManager(REPLAY_DIRPATH)
-            self.extra_save = ExtraSave(EXTRA_SAVE_FILEPATH)
+            save_aggregator = None
 
-        self.json_with_delta = OverlayJson(player_data_template, self.sav_delta_json)
-        super().__init__(self.json_with_delta, self.sav_pending_delta_json)
+            (
+                sav_delta_json,
+                sav_pending_delta_json,
+                extra_save,
+            ) = await asyncio.gather(
+                FileBasedDeltaJson.create(SAV_DELTA_JSON),
+                FileBasedDeltaJson.create(SAV_PENDING_DELTA_JSON),
+                ExtraSave.create(EXTRA_SAVE_FILEPATH),
+            )
 
-    def save(self):
-        self.sav_delta_json.save()
-        self.sav_pending_delta_json.save()
-        self.extra_save.save()
+            battle_replay_manager = BattleReplayManager(REPLAY_DIRPATH)
+
+        json_with_delta = OverlayJson(player_data_template, sav_delta_json)
+        player_data = cls(json_with_delta, sav_pending_delta_json)
+
+        player_data.save_aggregator = save_aggregator
+        player_data.sav_delta_json = sav_delta_json
+        player_data.sav_pending_delta_json = sav_pending_delta_json
+        player_data.battle_replay_manager = battle_replay_manager
+        player_data.extra_save = extra_save
+        player_data.json_with_delta = json_with_delta
+
+        return player_data
+
+    async def save(self):
+        await asyncio.gather(
+            self.sav_delta_json.save(),
+            self.sav_pending_delta_json.save(),
+            self.extra_save.save(),
+        )
+
+        if self.save_aggregator is not None:
+            await self.save_aggregator.save()
 
     def reset(self):
         self.sav_delta_json.reset()
@@ -1039,10 +1168,16 @@ class PlayerData(OverlayJson, SavableThing):
 
 
 def player_data_decorator(func):
+    func_sig = inspect.signature(func)
+    func_param_lst = [
+        i for i in func_sig.parameters.values() if i.name != "player_data"
+    ]
+
     @wraps(func)
-    def wrapper(*args, **kwargs):
-        player_data = PlayerData()
-        json_response = func(player_data, *args, **kwargs)
+    async def wrapper(*args, **kwargs):
+        request = kwargs.get("request")
+        player_data = await PlayerData.create(request=request)
+        json_response = await func(player_data, *args, **kwargs)
 
         if not isinstance(json_response, dict):
             return json_response
@@ -1074,17 +1209,18 @@ def player_data_decorator(func):
                 break
 
         delta_response = player_data.build_delta_response()
-        player_data.save()
+        await player_data.save()
 
         json_response["playerDataDelta"] = delta_response
 
-        if const_json_loader[CONFIG_JSON]["debug"]:
+        if IS_DEBUG:
             delta_response_str = json.dumps(delta_response, ensure_ascii=False)
-            if flask.has_app_context():
-                flask.current_app.logger.debug(delta_response_str)
-            else:
-                print(delta_response_str)
+            logger.debug(delta_response_str)
 
-        return json_response
+        return Response(
+            content=orjson.dumps(json_response), media_type="application/json"
+        )
+
+    wrapper.__signature__ = func_sig.replace(parameters=func_param_lst)
 
     return wrapper

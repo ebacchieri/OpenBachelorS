@@ -3,12 +3,14 @@ import zipfile
 from zipfile import ZipFile
 from hashlib import md5
 from collections import namedtuple
+import logging
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, MOD_DIRPATH
 from ..util.const_json_loader import const_json_loader, ConstJson
 from ..util.helper import get_asset_filename
 
+logger = logging.getLogger(__name__)
 
 ModInfo = namedtuple("ModInfo", ["mod_filename", "mod_filesize"])
 
@@ -64,10 +66,9 @@ class ModLoader:
                         mod_filesize=mod_filesize,
                     )
                     if ab_filepath in self.ab_dict:
-                        print("warn: duplicate ab file detected")
-                        print(
-                            ab_info,
-                            self.ab_dict[ab_filepath],
+                        logger.warning("duplicate ab file detected")
+                        logger.warning(
+                            f"{ab_info}, {self.ab_dict[ab_filepath]}",
                         )
                     self.ab_dict[ab_filepath] = ab_info
 

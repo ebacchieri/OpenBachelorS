@@ -1,8 +1,8 @@
 import json
 from uuid import uuid4
 
-from flask import Blueprint
-from flask import request
+from fastapi import APIRouter
+from fastapi import Request
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, VERSION_JSON
@@ -10,12 +10,12 @@ from ..util.const_json_loader import const_json_loader
 from ..util.server_url import get_server_url
 
 
-bp_config = Blueprint("bp_config", __name__)
+router = APIRouter()
 
 
-@bp_config.route("/config/prod/official/network_config")
-def config_prod_official_network_config():
-    url = get_server_url()
+@router.get("/config/prod/official/network_config")
+async def config_prod_official_network_config(request: Request):
+    url = get_server_url(request)
 
     funcVer = const_json_loader[VERSION_JSON]["funcVer"]
 
@@ -28,7 +28,7 @@ def config_prod_official_network_config():
     funcVer_num = int(funcVer[1:])
 
     for i in range(10):
-        cur_funcVer = f"V{funcVer_num-i:03}"
+        cur_funcVer = f"V{funcVer_num - i:03}"
         content_obj["configs"][cur_funcVer] = {
             "override": true,
             "network": {
@@ -56,13 +56,13 @@ def config_prod_official_network_config():
     return response
 
 
-@bp_config.route("/config/prod/official/remote_config")
-def config_prod_official_remote_config():
+@router.get("/config/prod/official/remote_config")
+async def config_prod_official_remote_config(request: Request):
     return {}
 
 
-@bp_config.route("/config/prod/official/Android/version")
-def config_prod_official_Android_version():
+@router.get("/config/prod/official/Android/version")
+async def config_prod_official_Android_version(request: Request):
     version = const_json_loader[VERSION_JSON]["version"].copy()
     if const_json_loader[CONFIG_JSON]["mod"]:
         src_res_version = version["resVersion"]
@@ -75,9 +75,9 @@ def config_prod_official_Android_version():
     return version
 
 
-@bp_config.route("/config/prod/announce_meta/Android/preannouncement.meta.json")
-def config_prod_announce_meta_Android_preannouncement_meta_json():
-    url = get_server_url()
+@router.get("/config/prod/announce_meta/Android/preannouncement.meta.json")
+async def config_prod_announce_meta_Android_preannouncement_meta_json(request: Request):
+    url = get_server_url(request)
 
     response = {
         "preAnnounceId": "478",

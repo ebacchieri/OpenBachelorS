@@ -15,6 +15,13 @@ dependencies = [
     "prompt-toolkit (>=3.0.51,<4.0.0)",
     "psycopg[binary] (>=3.2.9,<4.0.0)",
     "psycopg-pool (>=3.2.6,<4.0.0)",
+    "fastapi (>=0.116.1,<0.117.0)",
+    "uvicorn (>=0.35.0,<0.36.0)",
+    "pytest-asyncio (>=1.1.0,<2.0.0)",
+    "hypercorn (>=0.17.3,<0.18.0)",
+    "aiofiles (>=24.1.0,<25.0.0)",
+    "httpx (>=0.28.1,<0.29.0)",
+    "orjson (>=3.11.2,<4.0.0)",
 ]
 
 [tool.poetry]
@@ -32,8 +39,8 @@ poethepoet = "^0.36.0"
 
 [tool.poe.tasks]
 test = "pytest"
-dev = "flask --debug --app openbachelors.app:app run -p 8443"
-prod = "waitress-serve --port=8443 openbachelors.app:app"
+dev = "uvicorn --port 8443 --reload openbachelors.app:app"
+prod = "hypercorn -b 127.0.0.1:8443 -w 16 openbachelors.app:app"
 
 
 [tool.poetry.scripts]

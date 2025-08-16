@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 
 class SavableThing(ABC):
     @abstractmethod
-    def save(self):
+    async def save(self):
         pass
 
     @abstractmethod

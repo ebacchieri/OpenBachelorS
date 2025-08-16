@@ -1,5 +1,5 @@
-from flask import Blueprint
-from flask import request
+from fastapi import APIRouter
+from fastapi import Request
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, VERSION_JSON, CHARWORD_TABLE
@@ -8,13 +8,13 @@ from ..util.player_data import player_data_decorator, char_id_lst, player_data_t
 from ..util.helper import get_char_num_id
 from ..util.battle_log_logger import log_battle_log_if_necessary
 
-bp_charBuild = Blueprint("bp_charBuild", __name__)
+router = APIRouter()
 
 
-@bp_charBuild.route("/charBuild/setDefaultSkill", methods=["POST"])
+@router.post("/charBuild/setDefaultSkill")
 @player_data_decorator
-def charBuild_setDefaultSkill(player_data):
-    request_json = request.get_json()
+async def charBuild_setDefaultSkill(player_data, request: Request):
+    request_json = await request.json()
 
     char_num_id = request_json["charInstId"]
     default_skill_index = request_json["defaultSkillIndex"]
@@ -36,10 +36,10 @@ def charBuild_setDefaultSkill(player_data):
     return response
 
 
-@bp_charBuild.route("/charBuild/setEquipment", methods=["POST"])
+@router.post("/charBuild/setEquipment")
 @player_data_decorator
-def charBuild_setEquipment(player_data):
-    request_json = request.get_json()
+async def charBuild_setEquipment(player_data, request: Request):
+    request_json = await request.json()
 
     char_num_id = request_json["charInstId"]
     equip_id = request_json["equipId"]
@@ -59,10 +59,10 @@ def charBuild_setEquipment(player_data):
     return response
 
 
-@bp_charBuild.route("/charBuild/setCharVoiceLan", methods=["POST"])
+@router.post("/charBuild/setCharVoiceLan")
 @player_data_decorator
-def charBuild_setCharVoiceLan(player_data):
-    request_json = request.get_json()
+async def charBuild_setCharVoiceLan(player_data, request: Request):
+    request_json = await request.json()
 
     for char_num_id in request_json["charList"]:
         player_data["troop"]["chars"][str(char_num_id)]["voiceLan"] = request_json[
@@ -73,10 +73,10 @@ def charBuild_setCharVoiceLan(player_data):
     return response
 
 
-@bp_charBuild.route("/charBuild/changeCharSkin", methods=["POST"])
+@router.post("/charBuild/changeCharSkin")
 @player_data_decorator
-def charBuild_changeCharSkin(player_data):
-    request_json = request.get_json()
+async def charBuild_changeCharSkin(player_data, request: Request):
+    request_json = await request.json()
 
     char_num_id = request_json["charInstId"]
     skin_id = request_json["skinId"]
@@ -96,10 +96,10 @@ def charBuild_changeCharSkin(player_data):
     return response
 
 
-@bp_charBuild.route("/charBuild/batchSetCharVoiceLan", methods=["POST"])
+@router.post("/charBuild/batchSetCharVoiceLan")
 @player_data_decorator
-def charBuild_batchSetCharVoiceLan(player_data):
-    request_json = request.get_json()
+async def charBuild_batchSetCharVoiceLan(player_data, request: Request):
+    request_json = await request.json()
     target_voice_lan = request_json["voiceLan"]
 
     charword_table = const_json_loader[CHARWORD_TABLE]
@@ -125,10 +125,10 @@ def charBuild_batchSetCharVoiceLan(player_data):
     return response
 
 
-@bp_charBuild.route("/charBuild/changeCharTemplate", methods=["POST"])
+@router.post("/charBuild/changeCharTemplate")
 @player_data_decorator
-def charBuild_changeCharTemplate(player_data):
-    request_json = request.get_json()
+async def charBuild_changeCharTemplate(player_data, request: Request):
+    request_json = await request.json()
 
     char_num_id = request_json["charInstId"]
     tmpl_id = request_json["templateId"]
@@ -139,10 +139,10 @@ def charBuild_changeCharTemplate(player_data):
     return response
 
 
-@bp_charBuild.route("/charBuild/addonStage/battleStart", methods=["POST"])
+@router.post("/charBuild/addonStage/battleStart")
 @player_data_decorator
-def charBuild_addonStage_battleStart(player_data):
-    request_json = request.get_json()
+async def charBuild_addonStage_battleStart(player_data, request: Request):
+    request_json = await request.json()
 
     response = {
         "result": 0,
@@ -151,10 +151,10 @@ def charBuild_addonStage_battleStart(player_data):
     return response
 
 
-@bp_charBuild.route("/charBuild/addonStage/battleFinish", methods=["POST"])
+@router.post("/charBuild/addonStage/battleFinish")
 @player_data_decorator
-def charBuild_addonStage_battleFinish(player_data):
-    request_json = request.get_json()
+async def charBuild_addonStage_battleFinish(player_data, request: Request):
+    request_json = await request.json()
 
     log_battle_log_if_necessary(player_data, request_json["data"])
 
@@ -165,10 +165,10 @@ def charBuild_addonStage_battleFinish(player_data):
     return response
 
 
-@bp_charBuild.route("/charBuild/changeSkinSpState", methods=["POST"])
+@router.post("/charBuild/changeSkinSpState")
 @player_data_decorator
-def charBuild_changeSkinSpState(player_data):
-    request_json = request.get_json()
+async def charBuild_changeSkinSpState(player_data, request: Request):
+    request_json = await request.json()
 
     skin_id = request_json["skinId"]
 

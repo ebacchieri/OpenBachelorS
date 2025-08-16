@@ -1,5 +1,5 @@
-from flask import Blueprint
-from flask import request
+from fastapi import APIRouter
+from fastapi import Request
 
 from ..const.json_const import true, false, null
 from ..const.filepath import CONFIG_JSON, VERSION_JSON, ACTIVITY_TABLE
@@ -7,13 +7,13 @@ from ..util.const_json_loader import const_json_loader
 from ..util.player_data import player_data_decorator
 from ..util.battle_log_logger import log_battle_log_if_necessary
 
-bp_aprilFool = Blueprint("bp_aprilFool", __name__)
+router = APIRouter()
 
 
-@bp_aprilFool.route("/aprilFool/act6fun/battleStart", methods=["POST"])
+@router.post("/aprilFool/act6fun/battleStart")
 @player_data_decorator
-def aprilFool_act6fun_battleStart(player_data):
-    request_json = request.get_json()
+async def aprilFool_act6fun_battleStart(player_data, request: Request):
+    request_json = await request.json()
     response = {
         "result": 0,
         "battleId": "00000000-0000-0000-0000-000000000000",
@@ -21,10 +21,10 @@ def aprilFool_act6fun_battleStart(player_data):
     return response
 
 
-@bp_aprilFool.route("/aprilFool/act6fun/battleFinish", methods=["POST"])
+@router.post("/aprilFool/act6fun/battleFinish")
 @player_data_decorator
-def aprilFool_act6fun_battleFinish(player_data):
-    request_json = request.get_json()
+async def aprilFool_act6fun_battleFinish(player_data, request: Request):
+    request_json = await request.json()
 
     log_battle_log_if_necessary(player_data, request_json["data"])
 
@@ -37,10 +37,10 @@ def aprilFool_act6fun_battleFinish(player_data):
     return response
 
 
-@bp_aprilFool.route("/aprilFool/act5fun/battleStart", methods=["POST"])
+@router.post("/aprilFool/act5fun/battleStart")
 @player_data_decorator
-def aprilFool_act5fun_battleStart(player_data):
-    request_json = request.get_json()
+async def aprilFool_act5fun_battleStart(player_data, request: Request):
+    request_json = await request.json()
     response = {
         "result": 0,
         "battleId": "00000000-0000-0000-0000-000000000000",
@@ -48,10 +48,10 @@ def aprilFool_act5fun_battleStart(player_data):
     return response
 
 
-@bp_aprilFool.route("/aprilFool/act5fun/battleFinish", methods=["POST"])
+@router.post("/aprilFool/act5fun/battleFinish")
 @player_data_decorator
-def aprilFool_act5fun_battleFinish(player_data):
-    request_json = request.get_json()
+async def aprilFool_act5fun_battleFinish(player_data, request: Request):
+    request_json = await request.json()
 
     log_battle_log_if_necessary(player_data, request_json["data"])
 
@@ -72,10 +72,10 @@ def aprilFool_act5fun_battleFinish(player_data):
     return response
 
 
-@bp_aprilFool.route("/aprilFool/act4fun/battleStart", methods=["POST"])
+@router.post("/aprilFool/act4fun/battleStart")
 @player_data_decorator
-def aprilFool_act4fun_battleStart(player_data):
-    request_json = request.get_json()
+async def aprilFool_act4fun_battleStart(player_data, request: Request):
+    request_json = await request.json()
     response = {
         "result": 0,
         "battleId": "00000000-0000-0000-0000-000000000000",
@@ -83,10 +83,10 @@ def aprilFool_act4fun_battleStart(player_data):
     return response
 
 
-@bp_aprilFool.route("/aprilFool/act4fun/battleFinish", methods=["POST"])
+@router.post("/aprilFool/act4fun/battleFinish")
 @player_data_decorator
-def aprilFool_act4fun_battleFinish(player_data):
-    request_json = request.get_json()
+async def aprilFool_act4fun_battleFinish(player_data, request: Request):
+    request_json = await request.json()
 
     log_battle_log_if_necessary(player_data, request_json["data"])
 
@@ -116,10 +116,10 @@ def aprilFool_act4fun_battleFinish(player_data):
     return response
 
 
-@bp_aprilFool.route("/aprilFool/act4fun/liveSettle", methods=["POST"])
+@router.post("/aprilFool/act4fun/liveSettle")
 @player_data_decorator
-def aprilFool_act4fun_liveSettle(player_data):
-    request_json = request.get_json()
+async def aprilFool_act4fun_liveSettle(player_data, request: Request):
+    request_json = await request.json()
 
     response = {
         "ending": "goodending_1",
@@ -127,10 +127,10 @@ def aprilFool_act4fun_liveSettle(player_data):
     return response
 
 
-@bp_aprilFool.route("/aprilFool/act3fun/battleStart", methods=["POST"])
+@router.post("/aprilFool/act3fun/battleStart")
 @player_data_decorator
-def aprilFool_act3fun_battleStart(player_data):
-    request_json = request.get_json()
+async def aprilFool_act3fun_battleStart(player_data, request: Request):
+    request_json = await request.json()
     response = {
         "result": 0,
         "battleId": "00000000-0000-0000-0000-000000000000",
@@ -139,10 +139,10 @@ def aprilFool_act3fun_battleStart(player_data):
     return response
 
 
-@bp_aprilFool.route("/aprilFool/act3fun/battleFinish", methods=["POST"])
+@router.post("/aprilFool/act3fun/battleFinish")
 @player_data_decorator
-def aprilFool_act3fun_battleFinish(player_data):
-    request_json = request.get_json()
+async def aprilFool_act3fun_battleFinish(player_data, request: Request):
+    request_json = await request.json()
 
     log_battle_log_if_necessary(player_data, request_json["data"])
 
