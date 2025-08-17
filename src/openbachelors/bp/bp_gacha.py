@@ -466,6 +466,19 @@ class AdvancedGachaBasicManager:
 
 
 class AdvancedGachaSimpleManager(AdvancedGachaBasicManager):
+    def __init__(self, player_data, request_json, response, pool_id, gacha_type):
+        super().__init__(player_data, request_json, response, pool_id, gacha_type)
+
+        gacha_data = const_json_loader[GACHA_DATA]
+        if self.pool_id in gacha_data["override_avail_char_info"]:
+            avail_char_info = self.get_basic_avail_char_info().copy()
+            avail_char_info.update(
+                gacha_data["override_avail_char_info"][self.pool_id].copy()
+            )
+            self.override_avail_char_info = ConstJson(avail_char_info)
+        else:
+            self.override_avail_char_info = None
+
     def get_basic_tier_6_pity_key(self):
         if self.is_classic:
             return "advanced_gacha_classic_basic_tier_6_pity"
@@ -494,12 +507,18 @@ class AdvancedGachaSimpleManager(AdvancedGachaBasicManager):
             basic_tier_6_pity - self.BASIC_TIER_6_PITY_THRESHOLD + 1
         )
 
-    def get_avail_char_info(self):
+    def get_basic_avail_char_info(self):
         gacha_data = const_json_loader[GACHA_DATA]
+
         if self.is_classic:
             return gacha_data["classic_avail_char_info"]
         else:
             return gacha_data["normal_avail_char_info"]
+
+    def get_avail_char_info(self):
+        if self.override_avail_char_info is not None:
+            return self.override_avail_char_info
+        return self.get_basic_avail_char_info()
 
     def get_up_char_info(self):
         gacha_data = const_json_loader[GACHA_DATA]
