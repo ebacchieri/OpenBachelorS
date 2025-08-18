@@ -8066,7 +8066,7 @@
                                 "blackboard": [
                                     {
                                         "key": "key",
-                                        "valueStr": "gx_cbsisy_6"
+                                        "valueStr": "gx_cbsisy_7"
                                     }
                                 ]
                             }
@@ -8110,7 +8110,7 @@
                                 "blackboard": [
                                     {
                                         "key": "key",
-                                        "valueStr": "gx_cbsisy_7"
+                                        "valueStr": "gx_cbsisy_6"
                                     }
                                 ]
                             }
@@ -12677,6 +12677,2544 @@
                         ]
                     },
                     "sortId": 39
+                }
+            }
+        },
+        "crisis_v2_04-03": {
+            "commentDataMap": {},
+            "challengeNodeDataMap": {
+                "keypoint_1": {
+                    "missionType": "PassWithDimScore",
+                    "missionParamList": [
+                        "0;1;2;3;4;5",
+                        "200"
+                    ],
+                    "slotId": "keypoint_1",
+                    "previewTitle": "标准能力测试",
+                    "previewDesc": "完成一次作战，同时评分大于等于200分",
+                    "missionSortId": 7,
+                    "rewardList": [
+                        {
+                            "reward": {
+                                "id": "CRISIS_SHOP_COIN_V2",
+                                "count": 100,
+                                "type": "CRS_SHOP_COIN_V2"
+                            },
+                            "isTimeLimit": true
+                        },
+                        {
+                            "reward": {
+                                "id": "4001",
+                                "count": 5000,
+                                "type": "GOLD"
+                            },
+                            "isTimeLimit": false
+                        }
+                    ],
+                    "requiredSlotCount": 0,
+                    "slotIdList": []
+                },
+                "keypoint_2": {
+                    "missionType": "PassWithRunes",
+                    "missionParamList": [
+                        "node_3;node_4",
+                        "2"
+                    ],
+                    "slotId": "keypoint_2",
+                    "previewTitle": "索道作业测试",
+                    "previewDesc": "完成一次作战，并同时携带【反装甲I】【目标：效率低下I】通关",
+                    "missionSortId": 8,
+                    "rewardList": [
+                        {
+                            "reward": {
+                                "id": "CRISIS_SHOP_COIN_V2",
+                                "count": 100,
+                                "type": "CRS_SHOP_COIN_V2"
+                            },
+                            "isTimeLimit": true
+                        },
+                        {
+                            "reward": {
+                                "id": "2002",
+                                "count": 10,
+                                "type": "CARD_EXP"
+                            },
+                            "isTimeLimit": false
+                        }
+                    ],
+                    "requiredSlotCount": 2,
+                    "slotIdList": [
+                        "node_3",
+                        "node_4"
+                    ]
+                },
+                "keypoint_3": {
+                    "missionType": "PassWithRunes",
+                    "missionParamList": [
+                        "node_7;node_10;node_6",
+                        "3"
+                    ],
+                    "slotId": "keypoint_3",
+                    "previewTitle": "佣兵抵抗测试",
+                    "previewDesc": "完成一次作战，并同时携带【自由佣兵“贝斯”：节拍器】【自由佣兵“贝斯”：扬声器】【自由佣兵“贝斯”：保温杯】通关",
+                    "missionSortId": 9,
+                    "rewardList": [
+                        {
+                            "reward": {
+                                "id": "CRISIS_SHOP_COIN_V2",
+                                "count": 100,
+                                "type": "CRS_SHOP_COIN_V2"
+                            },
+                            "isTimeLimit": true
+                        },
+                        {
+                            "reward": {
+                                "id": "3302",
+                                "count": 5,
+                                "type": "MATERIAL"
+                            },
+                            "isTimeLimit": false
+                        }
+                    ],
+                    "requiredSlotCount": 3,
+                    "slotIdList": [
+                        "node_7",
+                        "node_10",
+                        "node_6"
+                    ]
+                }
+            },
+            "groupDescDataMap": {
+                "global_lifepoint_1": {
+                    "desc": "我方防御点可承受的敌方数量变为<@crisisv2.nag>{value}</>",
+                    "sortId": 2
+                },
+                "enemy_def_1": {
+                    "desc": "所有敌人的防御力<@crisisv2.nag>+{def}</>",
+                    "sortId": 3
+                },
+                "char_blockcnt_1": {
+                    "desc": "所有我方单位阻挡数<@crisisv2.nag>{value}</>",
+                    "sortId": 3
+                },
+                "char_atk_1": {
+                    "desc": "所有我方单位的攻击力降低<@crisisv2.nag>15%</>",
+                    "sortId": 7
+                },
+                "char_atk_2": {
+                    "desc": "所有我方单位的攻击力降低<@crisisv2.nag>20%</>",
+                    "sortId": 6
+                },
+                "char_atk_3": {
+                    "desc": "所有我方单位的攻击力<@crisisv2.nag>-30%</>（同类效果叠加）",
+                    "sortId": 5
+                },
+                "gx_char_attackspeed": {
+                    "desc": "所有我方单位攻击速度<@crisisv2.nag>{attack_speed}</>",
+                    "sortId": 0
+                },
+                "char_cost_casterspecial_5": {
+                    "desc": "辅助、狙击和术师干员的部署费用提升至<@crisisv2.nag>{scale}</>倍",
+                    "sortId": 8
+                },
+                "enemy_atk_3": {
+                    "desc": "所有敌人的攻击力<@crisisv2.nag>+{atk:0%}</>",
+                    "sortId": 9
+                },
+                "enemy_hp_1": {
+                    "desc": "所有敌人的最大生命值<@crisisv2.nag>+{max_hp:0%}</>",
+                    "sortId": 10
+                },
+                "mmdudu_atkrange": {
+                    "desc": "<自由佣兵“贝斯”>的攻击范围变为<@crisisv2.nag>{scale:0.0}</>倍",
+                    "sortId": 16
+                },
+                "mmdudu_hp": {
+                    "desc": "<自由佣兵“贝斯>的生命值<@crisisv2.nag>+{max_hp:0%}</>",
+                    "sortId": 18
+                },
+                "mmdudu_def": {
+                    "desc": "<自由佣兵“贝斯>的防御力<@crisisv2.nag>+{def:0%}</>",
+                    "sortId": 18
+                },
+                "mmdudu_atk": {
+                    "desc": "<自由佣兵“贝斯>的攻击力<@crisisv2.nag>+{atk:0%}</>",
+                    "sortId": 18
+                },
+                "mmdudu_tal_1": {
+                    "desc": "<自由佣兵“贝斯>持续施法的技能冷却时间<@crisisv2.nag>-{scale:0%}</>",
+                    "sortId": 11
+                },
+                "mmkabi_tal_1": {
+                    "desc": "<温顺的武装大驮兽>大摔一跤造成的伤害变为攻击力的<@crisisv2.pos>24</>倍",
+                    "sortId": 13
+                },
+                "mmkabi_resist": {
+                    "desc": "<温顺的武装大驮兽>获得晕眩和冰冻抗性",
+                    "sortId": 12
+                },
+                "mmkabi_atk": {
+                    "desc": "<温顺的武装大驮兽>的攻击力<@crisisv2.nag>+{atk:0%}</>",
+                    "sortId": 12
+                },
+                "mmstck_repalce": {
+                    "desc": "部分<“飞鞋党”佣兵>被替换为<赏金猎人“大骑士”>",
+                    "sortId": 14
+                },
+                "mmstck_def": {
+                    "desc": "<赏金猎人“大骑士>防御力<@crisisv2.nag>+{def:0%}</>",
+                    "sortId": 16
+                },
+                "mmstck_hp": {
+                    "desc": "<赏金猎人“大骑士>生命值<@crisisv2.nag>+{max_hp:0%}</>",
+                    "sortId": 17
+                },
+                "char_respawntime_p2": {
+                    "desc": "我方所有单位再部署时间延长<@crisisv2.nag>75%</>",
+                    "sortId": 24
+                },
+                "nhkodo_atk": {
+                    "desc": "<萨卡兹枯朽吞噬者>的攻击力<@crisisv2.nag>+{atk:0%}</>",
+                    "sortId": 24
+                }
+            },
+            "roadRelationDataMap": {
+                "road_2": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_12"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_1"
+                    }
+                },
+                "road_10": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_8"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_4"
+                    }
+                },
+                "road_4": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_1"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_2"
+                    }
+                },
+                "road_0": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_0"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_12"
+                    }
+                },
+                "road_1": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_0"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_14"
+                    }
+                },
+                "road_5": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_17"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_7"
+                    }
+                },
+                "road_11": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_9"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "keypoint_1"
+                    }
+                },
+                "road_8": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_2"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_21"
+                    }
+                },
+                "road_7": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_7"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_10"
+                    }
+                },
+                "road_18": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_3"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "keypoint_2"
+                    }
+                },
+                "road_13": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_4"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_3"
+                    }
+                },
+                "road_19": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_15"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "keypoint_2"
+                    }
+                },
+                "road_3": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_14"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_1"
+                    }
+                },
+                "road_14": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_18"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_24"
+                    }
+                },
+                "road_6": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_24"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_20"
+                    }
+                },
+                "road_17": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "keypoint_3"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_6"
+                    }
+                },
+                "road_9": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_2"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_9"
+                    }
+                },
+                "road_23": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "keypoint_3"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_11"
+                    }
+                },
+                "road_16": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_20"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_19"
+                    }
+                },
+                "road_15": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_4"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_15"
+                    }
+                },
+                "road_22": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_10"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_11"
+                    }
+                },
+                "road_20": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_5"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_10"
+                    }
+                },
+                "road_12": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_17"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_5"
+                    }
+                },
+                "road_21": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_10"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_6"
+                    }
+                },
+                "road_24": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_21"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "keypoint_1"
+                    }
+                },
+                "road_25": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "keypoint_2"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_13"
+                    }
+                },
+                "road_26": {
+                    "start": {
+                        "type": "NODE",
+                        "id": "node_2"
+                    },
+                    "end": {
+                        "type": "NODE",
+                        "id": "node_16"
+                    }
+                }
+            },
+            "bagRoadDataMap": {},
+            "nodeViewData": {
+                "width": 885,
+                "height": 1045,
+                "bagPosMap": null,
+                "roadPosMap": {
+                    "road_2": {
+                        "id": "road_2",
+                        "centerPos": {
+                            "x": 210,
+                            "y": -217.5
+                        },
+                        "size": {
+                            "x": 69,
+                            "y": 54.0000153
+                        },
+                        "startPos": {
+                            "x": -30,
+                            "y": 22.5
+                        },
+                        "endPos": {
+                            "x": 30,
+                            "y": -22.5000153
+                        },
+                        "inflectionList": [
+                            {
+                                "cornerPos": {
+                                    "x": 0,
+                                    "y": 22.5
+                                },
+                                "radius": 10
+                            },
+                            {
+                                "cornerPos": {
+                                    "x": 0,
+                                    "y": -22.5
+                                },
+                                "radius": 10
+                            }
+                        ]
+                    },
+                    "road_10": {
+                        "id": "road_10",
+                        "centerPos": {
+                            "x": 90,
+                            "y": -435
+                        },
+                        "size": {
+                            "x": 39,
+                            "y": 9
+                        },
+                        "startPos": {
+                            "x": -15,
+                            "y": 0
+                        },
+                        "endPos": {
+                            "x": 15,
+                            "y": 0
+                        },
+                        "inflectionList": []
+                    },
+                    "road_4": {
+                        "id": "road_4",
+                        "centerPos": {
+                            "x": 315,
+                            "y": -240
+                        },
+                        "size": {
+                            "x": 39,
+                            "y": 9
+                        },
+                        "startPos": {
+                            "x": -15,
+                            "y": 0
+                        },
+                        "endPos": {
+                            "x": 15,
+                            "y": 0
+                        },
+                        "inflectionList": []
+                    },
+                    "road_0": {
+                        "id": "road_0",
+                        "centerPos": {
+                            "x": 97.5,
+                            "y": -217.5
+                        },
+                        "size": {
+                            "x": 54,
+                            "y": 54
+                        },
+                        "startPos": {
+                            "x": -22.5,
+                            "y": -22.5
+                        },
+                        "endPos": {
+                            "x": 22.5,
+                            "y": 22.5
+                        },
+                        "inflectionList": [
+                            {
+                                "cornerPos": {
+                                    "x": -7.5,
+                                    "y": -22.5
+                                },
+                                "radius": 10
+                            },
+                            {
+                                "cornerPos": {
+                                    "x": -7.5,
+                                    "y": 22.5
+                                },
+                                "radius": 10
+                            }
+                        ]
+                    },
+                    "road_1": {
+                        "id": "road_1",
+                        "centerPos": {
+                            "x": 97.5,
+                            "y": -262.5
+                        },
+                        "size": {
+                            "x": 54,
+                            "y": 54
+                        },
+                        "startPos": {
+                            "x": -22.5,
+                            "y": 22.5
+                        },
+                        "endPos": {
+                            "x": 22.5,
+                            "y": -22.5
+                        },
+                        "inflectionList": [
+                            {
+                                "cornerPos": {
+                                    "x": -7.5,
+                                    "y": 22.5
+                                },
+                                "radius": 10
+                            },
+                            {
+                                "cornerPos": {
+                                    "x": -7.5,
+                                    "y": -22.5
+                                },
+                                "radius": 10
+                            }
+                        ]
+                    },
+                    "road_5": {
+                        "id": "road_5",
+                        "centerPos": {
+                            "x": 82.5,
+                            "y": -630
+                        },
+                        "size": {
+                            "x": 53.9999962,
+                            "y": 9
+                        },
+                        "startPos": {
+                            "x": -22.4999962,
+                            "y": 0
+                        },
+                        "endPos": {
+                            "x": 22.5,
+                            "y": 0
+                        },
+                        "inflectionList": []
+                    },
+                    "road_11": {
+                        "id": "road_11",
+                        "centerPos": {
+                            "x": 540,
+                            "y": -217.5
+                        },
+                        "size": {
+                            "x": 69,
+                            "y": 54
+                        },
+                        "startPos": {
+                            "x": -30,
+                            "y": 22.5
+                        },
+                        "endPos": {
+                            "x": 30,
+                            "y": -22.5
+                        },
+                        "inflectionList": [
+                            {
+                                "cornerPos": {
+                                    "x": 0,
+                                    "y": 22.5
+                                },
+                                "radius": 10
+                            },
+                            {
+                                "cornerPos": {
+                                    "x": 0,
+                                    "y": -22.5
+                                },
+                                "radius": 10
+                            }
+                        ]
+                    },
+                    "road_8": {
+                        "id": "road_8",
+                        "centerPos": {
+                            "x": 420,
+                            "y": -262.5
+                        },
+                        "size": {
+                            "x": 69,
+                            "y": 54
+                        },
+                        "startPos": {
+                            "x": -30,
+                            "y": 22.5
+                        },
+                        "endPos": {
+                            "x": 30,
+                            "y": -22.5
+                        },
+                        "inflectionList": [
+                            {
+                                "cornerPos": {
+                                    "x": 0,
+                                    "y": 22.5
+                                },
+                                "radius": 10
+                            },
+                            {
+                                "cornerPos": {
+                                    "x": 0,
+                                    "y": -22.5
+                                },
+                                "radius": 10
+                            }
+                        ]
+                    },
+                    "road_7": {
+                        "id": "road_7",
+                        "centerPos": {
+                            "x": 210,
+                            "y": -630
+                        },
+                        "size": {
+                            "x": 39,
+                            "y": 9
+                        },
+                        "startPos": {
+                            "x": -15,
+                            "y": 0
+                        },
+                        "endPos": {
+                            "x": 15,
+                            "y": 0
+                        },
+                        "inflectionList": []
+                    },
+                    "road_18": {
+                        "id": "road_18",
+                        "centerPos": {
+                            "x": 300,
+                            "y": -435
+                        },
+                        "size": {
+                            "x": 39,
+                            "y": 9
+                        },
+                        "startPos": {
+                            "x": -15,
+                            "y": 0
+                        },
+                        "endPos": {
+                            "x": 15,
+                            "y": 0
+                        },
+                        "inflectionList": []
+                    },
+                    "road_13": {
+                        "id": "road_13",
+                        "centerPos": {
+                            "x": 180,
+                            "y": -435
+                        },
+                        "size": {
+                            "x": 39,
+                            "y": 9
+                        },
+                        "startPos": {
+                            "x": -15,
+                            "y": 0
+                        },
+                        "endPos": {
+                            "x": 15,
+                            "y": 0
+                        },
+                        "inflectionList": []
+                    },
+                    "road_19": {
+                        "id": "road_19",
+                        "centerPos": {
+                            "x": 300,
+                            "y": -435
+                        },
+                        "size": {
+                            "x": 39,
+                            "y": 9
+                        },
+                        "startPos": {
+                            "x": -15,
+                            "y": 0
+                        },
+                        "endPos": {
+                            "x": 15,
+                            "y": 0
+                        },
+                        "inflectionList": []
+                    },
+                    "road_3": {
+                        "id": "road_3",
+                        "centerPos": {
+                            "x": 210,
+                            "y": -262.5
+                        },
+                        "size": {
+                            "x": 69,
+                            "y": 53.9999847
+                        },
+                        "startPos": {
+                            "x": -30,
+                            "y": -22.5
+                        },
+                        "endPos": {
+                            "x": 30,
+                            "y": 22.4999847
+                        },
+                        "inflectionList": [
+                            {
+                                "cornerPos": {
+                                    "x": 0,
+                                    "y": -22.5
+                                },
+                                "radius": 10
+                            },
+                            {
+                                "cornerPos": {
+                                    "x": 0,
+                                    "y": 22.5
+                                },
+                                "radius": 10
+                            }
+                        ]
+                    },
+                    "road_14": {
+                        "id": "road_14",
+                        "centerPos": {
+                            "x": 82.5,
+                            "y": -795
+                        },
+                        "size": {
+                            "x": 54,
+                            "y": 9
+                        },
+                        "startPos": {
+                            "x": -22.5,
+                            "y": 0
+                        },
+                        "endPos": {
+                            "x": 22.5,
+                            "y": 0
+                        },
+                        "inflectionList": []
+                    },
+                    "road_6": {
+                        "id": "road_6",
+                        "centerPos": {
+                            "x": 180,
+                            "y": -795
+                        },
+                        "size": {
+                            "x": 39.0000153,
+                            "y": 9
+                        },
+                        "startPos": {
+                            "x": -15,
+                            "y": 0
+                        },
+                        "endPos": {
+                            "x": 15.0000153,
+                            "y": 0
+                        },
+                        "inflectionList": []
+                    },
+                    "road_17": {
+                        "id": "road_17",
+                        "centerPos": {
+                            "x": 420,
+                            "y": -630
+                        },
+                        "size": {
+                            "x": 39,
+                            "y": 9
+                        },
+                        "startPos": {
+                            "x": 15,
+                            "y": 0
+                        },
+                        "endPos": {
+                            "x": -15,
+                            "y": 0
+                        },
+                        "inflectionList": []
+                    },
+                    "road_9": {
+                        "id": "road_9",
+                        "centerPos": {
+                            "x": 420,
+                            "y": -217.5
+                        },
+                        "size": {
+                            "x": 69,
+                            "y": 54
+                        },
+                        "startPos": {
+                            "x": -30,
+                            "y": -22.5
+                        },
+                        "endPos": {
+                            "x": 30,
+                            "y": 22.5
+                        },
+                        "inflectionList": [
+                            {
+                                "cornerPos": {
+                                    "x": 0,
+                                    "y": -22.5
+                                },
+                                "radius": 10
+                            },
+                            {
+                                "cornerPos": {
+                                    "x": 0,
+                                    "y": 22.5
+                                },
+                                "radius": 10
+                            }
+                        ]
+                    },
+                    "road_23": {
+                        "id": "road_23",
+                        "centerPos": {
+                            "x": 420,
+                            "y": -630
+                        },
+                        "size": {
+                            "x": 39,
+                            "y": 9
+                        },
+                        "startPos": {
+                            "x": 15,
+                            "y": 0
+                        },
+                        "endPos": {
+                            "x": -15,
+                            "y": 0
+                        },
+                        "inflectionList": []
+                    },
+                    "road_16": {
+                        "id": "road_16",
+                        "centerPos": {
+                            "x": 270,
+                            "y": -795
+                        },
+                        "size": {
+                            "x": 38.9999847,
+                            "y": 9
+                        },
+                        "startPos": {
+                            "x": -14.9999847,
+                            "y": 0
+                        },
+                        "endPos": {
+                            "x": 15,
+                            "y": 0
+                        },
+                        "inflectionList": []
+                    },
+                    "road_15": {
+                        "id": "road_15",
+                        "centerPos": {
+                            "x": 180,
+                            "y": -435
+                        },
+                        "size": {
+                            "x": 39,
+                            "y": 9
+                        },
+                        "startPos": {
+                            "x": -15,
+                            "y": 0
+                        },
+                        "endPos": {
+                            "x": 15,
+                            "y": 0
+                        },
+                        "inflectionList": []
+                    },
+                    "road_22": {
+                        "id": "road_22",
+                        "centerPos": {
+                            "x": 300,
+                            "y": -630
+                        },
+                        "size": {
+                            "x": 39,
+                            "y": 9
+                        },
+                        "startPos": {
+                            "x": -15,
+                            "y": 0
+                        },
+                        "endPos": {
+                            "x": 15,
+                            "y": 0
+                        },
+                        "inflectionList": []
+                    },
+                    "road_20": {
+                        "id": "road_20",
+                        "centerPos": {
+                            "x": 210,
+                            "y": -630
+                        },
+                        "size": {
+                            "x": 39,
+                            "y": 9
+                        },
+                        "startPos": {
+                            "x": -15,
+                            "y": 0
+                        },
+                        "endPos": {
+                            "x": 15,
+                            "y": 0
+                        },
+                        "inflectionList": []
+                    },
+                    "road_12": {
+                        "id": "road_12",
+                        "centerPos": {
+                            "x": 90,
+                            "y": -630
+                        },
+                        "size": {
+                            "x": 39,
+                            "y": 9
+                        },
+                        "startPos": {
+                            "x": -15,
+                            "y": 0
+                        },
+                        "endPos": {
+                            "x": 15,
+                            "y": 0
+                        },
+                        "inflectionList": []
+                    },
+                    "road_21": {
+                        "id": "road_21",
+                        "centerPos": {
+                            "x": 300,
+                            "y": -630
+                        },
+                        "size": {
+                            "x": 39,
+                            "y": 9
+                        },
+                        "startPos": {
+                            "x": -15,
+                            "y": 0
+                        },
+                        "endPos": {
+                            "x": 15,
+                            "y": 0
+                        },
+                        "inflectionList": []
+                    },
+                    "road_24": {
+                        "id": "road_24",
+                        "centerPos": {
+                            "x": 540,
+                            "y": -262.5
+                        },
+                        "size": {
+                            "x": 69,
+                            "y": 54
+                        },
+                        "startPos": {
+                            "x": -30,
+                            "y": -22.5
+                        },
+                        "endPos": {
+                            "x": 30,
+                            "y": 22.5
+                        },
+                        "inflectionList": [
+                            {
+                                "cornerPos": {
+                                    "x": 0,
+                                    "y": -22.5
+                                },
+                                "radius": 10
+                            },
+                            {
+                                "cornerPos": {
+                                    "x": 0,
+                                    "y": 22.5
+                                },
+                                "radius": 10
+                            }
+                        ]
+                    },
+                    "road_25": {
+                        "id": "road_25",
+                        "centerPos": {
+                            "x": 390,
+                            "y": -435
+                        },
+                        "size": {
+                            "x": 39,
+                            "y": 9
+                        },
+                        "startPos": {
+                            "x": -15,
+                            "y": 0
+                        },
+                        "endPos": {
+                            "x": 15,
+                            "y": 0
+                        },
+                        "inflectionList": []
+                    },
+                    "road_26": {
+                        "id": "road_26",
+                        "centerPos": {
+                            "x": 360,
+                            "y": -195
+                        },
+                        "size": {
+                            "x": 9,
+                            "y": 39
+                        },
+                        "startPos": {
+                            "x": 0,
+                            "y": -15
+                        },
+                        "endPos": {
+                            "x": 0,
+                            "y": 15
+                        },
+                        "inflectionList": []
+                    }
+                },
+                "nodePosMap": {
+                    "node_0": {
+                        "position": {
+                            "x": 60,
+                            "y": -240
+                        }
+                    },
+                    "node_1": {
+                        "position": {
+                            "x": 270,
+                            "y": -240
+                        }
+                    },
+                    "node_2": {
+                        "position": {
+                            "x": 360,
+                            "y": -240
+                        }
+                    },
+                    "node_3": {
+                        "position": {
+                            "x": 240,
+                            "y": -405
+                        }
+                    },
+                    "node_6": {
+                        "position": {
+                            "x": 360,
+                            "y": -600
+                        }
+                    },
+                    "node_7": {
+                        "position": {
+                            "x": 150,
+                            "y": -600
+                        }
+                    },
+                    "node_8": {
+                        "position": {
+                            "x": 60,
+                            "y": -435
+                        }
+                    },
+                    "node_9": {
+                        "position": {
+                            "x": 480,
+                            "y": -195
+                        }
+                    },
+                    "node_10": {
+                        "position": {
+                            "x": 255,
+                            "y": -630
+                        }
+                    },
+                    "node_11": {
+                        "position": {
+                            "x": 360,
+                            "y": -675
+                        }
+                    },
+                    "node_12": {
+                        "position": {
+                            "x": 150,
+                            "y": -195
+                        }
+                    },
+                    "node_14": {
+                        "position": {
+                            "x": 150,
+                            "y": -285
+                        }
+                    },
+                    "node_15": {
+                        "position": {
+                            "x": 240,
+                            "y": -480
+                        }
+                    },
+                    "node_17": {
+                        "position": {
+                            "x": 60,
+                            "y": -630
+                        }
+                    },
+                    "node_18": {
+                        "position": {
+                            "x": 60,
+                            "y": -795
+                        }
+                    },
+                    "node_20": {
+                        "position": {
+                            "x": 225.000015,
+                            "y": -795
+                        }
+                    },
+                    "node_21": {
+                        "position": {
+                            "x": 480,
+                            "y": -285
+                        }
+                    },
+                    "node_19": {
+                        "position": {
+                            "x": 315,
+                            "y": -795
+                        }
+                    },
+                    "node_24": {
+                        "position": {
+                            "x": 135,
+                            "y": -795
+                        }
+                    },
+                    "keypoint_1": {
+                        "position": {
+                            "x": 600,
+                            "y": -240
+                        }
+                    },
+                    "node_4": {
+                        "position": {
+                            "x": 135,
+                            "y": -435
+                        }
+                    },
+                    "keypoint_2": {
+                        "position": {
+                            "x": 345,
+                            "y": -435
+                        }
+                    },
+                    "keypoint_3": {
+                        "position": {
+                            "x": 465,
+                            "y": -630
+                        }
+                    },
+                    "node_5": {
+                        "position": {
+                            "x": 150,
+                            "y": -675
+                        }
+                    },
+                    "node_13": {
+                        "position": {
+                            "x": 435,
+                            "y": -435
+                        }
+                    },
+                    "node_16": {
+                        "position": {
+                            "x": 360,
+                            "y": -150
+                        }
+                    }
+                },
+                "exclusionDataMap": {
+                    "global_enemy_buff": {
+                        "id": "global_enemy_buff",
+                        "pos": {
+                            "x": 240,
+                            "y": -435
+                        },
+                        "size": {
+                            "x": 90,
+                            "y": 180
+                        }
+                    },
+                    "sotidp_buff_2": {
+                        "id": "sotidp_buff_2",
+                        "pos": {
+                            "x": 360,
+                            "y": -637.5
+                        },
+                        "size": {
+                            "x": 90,
+                            "y": 165
+                        }
+                    },
+                    "mmdudu_tal": {
+                        "id": "mmdudu_tal",
+                        "pos": {
+                            "x": 150,
+                            "y": -637.5
+                        },
+                        "size": {
+                            "x": 90,
+                            "y": 165
+                        }
+                    }
+                }
+            },
+            "bagViewData": null,
+            "bagDataMap": {},
+            "exclusionDataMap": {
+                "global_enemy_buff": {
+                    "defaultSlotId": null
+                },
+                "sotidp_buff_2": {
+                    "defaultSlotId": null
+                },
+                "mmdudu_tal": {
+                    "defaultSlotId": null
+                }
+            },
+            "dimensionItemList": [
+                {
+                    "desc": "战略",
+                    "maxScore": 40
+                },
+                {
+                    "desc": "技巧",
+                    "maxScore": 120
+                },
+                {
+                    "desc": "调遣",
+                    "maxScore": 50
+                },
+                {
+                    "desc": "应变",
+                    "maxScore": 45
+                },
+                {
+                    "desc": "洞察",
+                    "maxScore": 40
+                },
+                {
+                    "desc": "筹划",
+                    "maxScore": 1
+                }
+            ],
+            "rewardNodeDataMap": {},
+            "dailyRuneUnlcokDataMap": {},
+            "nodeDataMap": {
+                "node_0": {
+                    "runeId": null,
+                    "slotPackId": null,
+                    "nodeType": "START",
+                    "mutualExclusionGroup": null,
+                    "adjacentNodeList": [
+                        "node_12",
+                        "node_14"
+                    ]
+                },
+                "node_1": {
+                    "runeId": "gx_char_attackspeed_1",
+                    "slotPackId": null,
+                    "nodeType": "NORMAL",
+                    "mutualExclusionGroup": null,
+                    "adjacentNodeList": [
+                        "node_12",
+                        "node_2",
+                        "node_14"
+                    ]
+                },
+                "node_2": {
+                    "runeId": "mmkabi_tal_1",
+                    "slotPackId": null,
+                    "nodeType": "NORMAL",
+                    "mutualExclusionGroup": null,
+                    "adjacentNodeList": [
+                        "node_1",
+                        "node_21",
+                        "node_9",
+                        "node_16"
+                    ]
+                },
+                "node_3": {
+                    "runeId": "enemy_def_1",
+                    "slotPackId": null,
+                    "nodeType": "NORMAL",
+                    "mutualExclusionGroup": "global_enemy_buff",
+                    "adjacentNodeList": [
+                        "keypoint_2",
+                        "node_4"
+                    ]
+                },
+                "node_6": {
+                    "runeId": "mmdudu_hp",
+                    "slotPackId": null,
+                    "nodeType": "NORMAL",
+                    "mutualExclusionGroup": "sotidp_buff_2",
+                    "adjacentNodeList": [
+                        "keypoint_3",
+                        "node_10"
+                    ]
+                },
+                "node_7": {
+                    "runeId": "mmdudu_tal_1",
+                    "slotPackId": null,
+                    "nodeType": "NORMAL",
+                    "mutualExclusionGroup": "mmdudu_tal",
+                    "adjacentNodeList": [
+                        "node_17",
+                        "node_10"
+                    ]
+                },
+                "node_8": {
+                    "runeId": null,
+                    "slotPackId": null,
+                    "nodeType": "START",
+                    "mutualExclusionGroup": null,
+                    "adjacentNodeList": [
+                        "node_4"
+                    ]
+                },
+                "node_9": {
+                    "runeId": "global_lifepoint_1",
+                    "slotPackId": null,
+                    "nodeType": "NORMAL",
+                    "mutualExclusionGroup": null,
+                    "adjacentNodeList": [
+                        "keypoint_1",
+                        "node_2"
+                    ]
+                },
+                "node_10": {
+                    "runeId": "mmdudu_atkrange",
+                    "slotPackId": null,
+                    "nodeType": "NORMAL",
+                    "mutualExclusionGroup": null,
+                    "adjacentNodeList": [
+                        "node_7",
+                        "node_11",
+                        "node_5",
+                        "node_6"
+                    ]
+                },
+                "node_11": {
+                    "runeId": "mmdudu_def",
+                    "slotPackId": null,
+                    "nodeType": "NORMAL",
+                    "mutualExclusionGroup": "sotidp_buff_2",
+                    "adjacentNodeList": [
+                        "keypoint_3",
+                        "node_10"
+                    ]
+                },
+                "node_12": {
+                    "runeId": "char_atk_3",
+                    "slotPackId": null,
+                    "nodeType": "NORMAL",
+                    "mutualExclusionGroup": null,
+                    "adjacentNodeList": [
+                        "node_1",
+                        "node_0"
+                    ]
+                },
+                "keypoint_1": {
+                    "runeId": null,
+                    "slotPackId": null,
+                    "nodeType": "KEYPOINT",
+                    "mutualExclusionGroup": null,
+                    "adjacentNodeList": [
+                        "node_9",
+                        "node_21"
+                    ]
+                },
+                "node_14": {
+                    "runeId": "enemy_atk_3",
+                    "slotPackId": null,
+                    "nodeType": "NORMAL",
+                    "mutualExclusionGroup": null,
+                    "adjacentNodeList": [
+                        "node_0",
+                        "node_1"
+                    ]
+                },
+                "node_15": {
+                    "runeId": "enemy_hp_1",
+                    "slotPackId": null,
+                    "nodeType": "NORMAL",
+                    "mutualExclusionGroup": "global_enemy_buff",
+                    "adjacentNodeList": [
+                        "keypoint_2",
+                        "node_4"
+                    ]
+                },
+                "node_17": {
+                    "runeId": null,
+                    "slotPackId": null,
+                    "nodeType": "START",
+                    "mutualExclusionGroup": null,
+                    "adjacentNodeList": [
+                        "node_7",
+                        "node_5"
+                    ]
+                },
+                "node_18": {
+                    "runeId": null,
+                    "slotPackId": null,
+                    "nodeType": "START",
+                    "mutualExclusionGroup": null,
+                    "adjacentNodeList": [
+                        "node_24"
+                    ]
+                },
+                "node_20": {
+                    "runeId": "mmstck_def",
+                    "slotPackId": null,
+                    "nodeType": "NORMAL",
+                    "mutualExclusionGroup": null,
+                    "adjacentNodeList": [
+                        "node_24",
+                        "node_19"
+                    ]
+                },
+                "node_21": {
+                    "runeId": "char_cost_casterspecial_5",
+                    "slotPackId": null,
+                    "nodeType": "NORMAL",
+                    "mutualExclusionGroup": null,
+                    "adjacentNodeList": [
+                        "node_2",
+                        "keypoint_1"
+                    ]
+                },
+                "node_19": {
+                    "runeId": "mmstck_hp",
+                    "slotPackId": null,
+                    "nodeType": "NORMAL",
+                    "mutualExclusionGroup": null,
+                    "adjacentNodeList": [
+                        "node_20"
+                    ]
+                },
+                "node_24": {
+                    "runeId": "mmstck_repalce",
+                    "slotPackId": null,
+                    "nodeType": "NORMAL",
+                    "mutualExclusionGroup": null,
+                    "adjacentNodeList": [
+                        "node_18",
+                        "node_20"
+                    ]
+                },
+                "node_4": {
+                    "runeId": "char_respawntime_p2",
+                    "slotPackId": null,
+                    "nodeType": "NORMAL",
+                    "mutualExclusionGroup": null,
+                    "adjacentNodeList": [
+                        "node_8",
+                        "node_3",
+                        "node_15"
+                    ]
+                },
+                "keypoint_2": {
+                    "runeId": null,
+                    "slotPackId": null,
+                    "nodeType": "KEYPOINT",
+                    "mutualExclusionGroup": null,
+                    "adjacentNodeList": [
+                        "node_3",
+                        "node_15",
+                        "node_13"
+                    ]
+                },
+                "keypoint_3": {
+                    "runeId": null,
+                    "slotPackId": null,
+                    "nodeType": "KEYPOINT",
+                    "mutualExclusionGroup": null,
+                    "adjacentNodeList": [
+                        "node_6",
+                        "node_11"
+                    ]
+                },
+                "node_5": {
+                    "runeId": "mmdudu_atk",
+                    "slotPackId": null,
+                    "nodeType": "NORMAL",
+                    "mutualExclusionGroup": "mmdudu_tal",
+                    "adjacentNodeList": [
+                        "node_10",
+                        "node_17"
+                    ]
+                },
+                "node_13": {
+                    "runeId": "char_blockcnt_1",
+                    "slotPackId": null,
+                    "nodeType": "NORMAL",
+                    "mutualExclusionGroup": null,
+                    "adjacentNodeList": [
+                        "keypoint_2"
+                    ]
+                },
+                "node_16": {
+                    "runeId": "nhkodo_atk",
+                    "slotPackId": null,
+                    "nodeType": "NORMAL",
+                    "mutualExclusionGroup": null,
+                    "adjacentNodeList": [
+                        "node_2"
+                    ]
+                }
+            },
+            "runeDataMap": {
+                "gx_char_attackspeed_1": {
+                    "runeId": "gx_char_attackspeed_1",
+                    "runeGroupId": "gx_char_attackspeed",
+                    "runeIcon": "g_gx_char_attackspeed_1",
+                    "runeName": "环境：阻力I",
+                    "score": 15,
+                    "dimension": 3,
+                    "packedRune": {
+                        "id": "gx_char_attackspeed_1",
+                        "points": 0,
+                        "mutexGroupKey": "char_atk_spd",
+                        "description": "所有我方单位攻击速度<@crisisv2.nag>{attack_speed}</>（同类效果叠加）",
+                        "runes": [
+                            {
+                                "key": "char_attribute_add",
+                                "selector": {
+                                    "professionMask": 1023,
+                                    "buildableMask": 3,
+                                    "playerSideMask": 0,
+                                    "charIdFilter": null,
+                                    "enemyIdFilter": null,
+                                    "enemyIdExcludeFilter": null,
+                                    "enemyLevelTypeFilter": null,
+                                    "enemyActionHiddenGroupFilter": null,
+                                    "skillIdFilter": null,
+                                    "tileKeyFilter": null,
+                                    "groupTagFilter": null,
+                                    "filterTagFilter": null,
+                                    "filterTagExcludeFilter": null,
+                                    "subProfessionExcludeFilter": null,
+                                    "mapTagFilter": null,
+                                    "heightTypeMask": 0
+                                },
+                                "blackboard": [
+                                    {
+                                        "key": "attack_speed",
+                                        "value": -20
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "sortId": 0
+                },
+                "mmkabi_tal_1": {
+                    "runeId": "mmkabi_tal_1",
+                    "runeGroupId": "mmkabi_tal_1",
+                    "runeIcon": "g_mmkabi_tal_1",
+                    "runeName": "温顺的武装大驮兽：重砸",
+                    "score": 0,
+                    "dimension": -1,
+                    "packedRune": {
+                        "id": "mmkabi_tal_1",
+                        "points": 0,
+                        "mutexGroupKey": "enemy_mmkabi",
+                        "description": "<温顺的武装大驮兽>大摔一跤造成的伤害变为攻击力的<@crisisv2.pos>24</>倍",
+                        "runes": [
+                            {
+                                "key": "enemy_talent_blackb_mul",
+                                "selector": {
+                                    "professionMask": 0,
+                                    "buildableMask": 0,
+                                    "playerSideMask": 0,
+                                    "charIdFilter": null,
+                                    "enemyIdFilter": null,
+                                    "enemyIdExcludeFilter": null,
+                                    "enemyLevelTypeFilter": null,
+                                    "enemyActionHiddenGroupFilter": null,
+                                    "skillIdFilter": null,
+                                    "tileKeyFilter": null,
+                                    "groupTagFilter": null,
+                                    "filterTagFilter": null,
+                                    "filterTagExcludeFilter": null,
+                                    "subProfessionExcludeFilter": null,
+                                    "mapTagFilter": null,
+                                    "heightTypeMask": 0
+                                },
+                                "blackboard": [
+                                    {
+                                        "key": "RopeTriggerAbility.aoe_scale",
+                                        "value": 12
+                                    },
+                                    {
+                                        "key": "enemy",
+                                        "valueStr": "enemy_1415_mmkabi_2"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "sortId": 13
+                },
+                "enemy_def_1": {
+                    "runeId": "enemy_def_1",
+                    "runeGroupId": "enemy_def_1",
+                    "runeIcon": "g_enemy_def_1",
+                    "runeName": "反装甲I",
+                    "score": 20,
+                    "dimension": 0,
+                    "packedRune": {
+                        "id": "enemy_def_1",
+                        "points": 0,
+                        "mutexGroupKey": null,
+                        "description": "所有敌人的防御力<@crisisv2.nag>+{def}</>（同类效果叠加）",
+                        "runes": [
+                            {
+                                "key": "enemy_attribute_add",
+                                "selector": {
+                                    "professionMask": 0,
+                                    "buildableMask": 0,
+                                    "playerSideMask": 0,
+                                    "charIdFilter": null,
+                                    "enemyIdFilter": null,
+                                    "enemyIdExcludeFilter": null,
+                                    "enemyLevelTypeFilter": null,
+                                    "enemyActionHiddenGroupFilter": null,
+                                    "skillIdFilter": null,
+                                    "tileKeyFilter": null,
+                                    "groupTagFilter": null,
+                                    "filterTagFilter": null,
+                                    "filterTagExcludeFilter": null,
+                                    "subProfessionExcludeFilter": null,
+                                    "mapTagFilter": null,
+                                    "heightTypeMask": 0
+                                },
+                                "blackboard": [
+                                    {
+                                        "key": "def",
+                                        "value": 500
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "sortId": 3
+                },
+                "mmdudu_hp": {
+                    "runeId": "mmdudu_hp",
+                    "runeGroupId": "mmdudu_hp",
+                    "runeIcon": "g_mmdudu_hp",
+                    "runeName": "自由佣兵“贝斯”：保温杯",
+                    "score": 20,
+                    "dimension": 1,
+                    "packedRune": {
+                        "id": "mmdudu_hp",
+                        "points": 0,
+                        "mutexGroupKey": "enemy_mmdudu",
+                        "description": "<自由佣兵“贝斯>的生命值<@crisisv2.nag>+{max_hp:0%}</>",
+                        "runes": [
+                            {
+                                "key": "enemy_attribute_additive_mul",
+                                "selector": {
+                                    "professionMask": 0,
+                                    "buildableMask": 0,
+                                    "playerSideMask": 0,
+                                    "charIdFilter": null,
+                                    "enemyIdFilter": null,
+                                    "enemyIdExcludeFilter": null,
+                                    "enemyLevelTypeFilter": null,
+                                    "enemyActionHiddenGroupFilter": null,
+                                    "skillIdFilter": null,
+                                    "tileKeyFilter": null,
+                                    "groupTagFilter": null,
+                                    "filterTagFilter": null,
+                                    "filterTagExcludeFilter": null,
+                                    "subProfessionExcludeFilter": null,
+                                    "mapTagFilter": null,
+                                    "heightTypeMask": 0
+                                },
+                                "blackboard": [
+                                    {
+                                        "key": "max_hp",
+                                        "value": 3
+                                    },
+                                    {
+                                        "key": "enemy",
+                                        "valueStr": "enemy_1417_mmdudu"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "sortId": 18
+                },
+                "mmdudu_tal_1": {
+                    "runeId": "mmdudu_tal_1",
+                    "runeGroupId": "mmdudu_tal_1",
+                    "runeIcon": "g_mmdudu_tal_1",
+                    "runeName": "自由佣兵“贝斯”：节拍器",
+                    "score": 20,
+                    "dimension": 1,
+                    "packedRune": {
+                        "id": "mmdudu_tal_1",
+                        "points": 0,
+                        "mutexGroupKey": "enemy_mmdudu",
+                        "description": "<自由佣兵“贝斯>持续施法的技能冷却时间<@crisisv2.nag>-{scale:0%}</>",
+                        "runes": [
+                            {
+                                "key": "enemy_skill_cd_mul",
+                                "selector": {
+                                    "professionMask": 0,
+                                    "buildableMask": 0,
+                                    "playerSideMask": 0,
+                                    "charIdFilter": null,
+                                    "enemyIdFilter": null,
+                                    "enemyIdExcludeFilter": null,
+                                    "enemyLevelTypeFilter": null,
+                                    "enemyActionHiddenGroupFilter": null,
+                                    "skillIdFilter": null,
+                                    "tileKeyFilter": null,
+                                    "groupTagFilter": null,
+                                    "filterTagFilter": null,
+                                    "filterTagExcludeFilter": null,
+                                    "subProfessionExcludeFilter": null,
+                                    "mapTagFilter": null,
+                                    "heightTypeMask": 0
+                                },
+                                "blackboard": [
+                                    {
+                                        "key": "enemy",
+                                        "valueStr": "enemy_1417_mmdudu"
+                                    },
+                                    {
+                                        "key": "scale",
+                                        "value": 0.5
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "sortId": 11
+                },
+                "global_lifepoint_1": {
+                    "runeId": "global_lifepoint_1",
+                    "runeGroupId": "global_lifepoint_1",
+                    "runeIcon": "g_global_lifepoint_1",
+                    "runeName": "目标：最后防线",
+                    "score": 20,
+                    "dimension": 4,
+                    "packedRune": {
+                        "id": "global_lifepoint_1",
+                        "points": 0,
+                        "mutexGroupKey": null,
+                        "description": "我方防御点可承受的敌方数量变为<@crisisv2.nag>{value}</>",
+                        "runes": [
+                            {
+                                "key": "global_lifepoint",
+                                "selector": {
+                                    "professionMask": 0,
+                                    "buildableMask": 0,
+                                    "playerSideMask": 0,
+                                    "charIdFilter": null,
+                                    "enemyIdFilter": null,
+                                    "enemyIdExcludeFilter": null,
+                                    "enemyLevelTypeFilter": null,
+                                    "enemyActionHiddenGroupFilter": null,
+                                    "skillIdFilter": null,
+                                    "tileKeyFilter": null,
+                                    "groupTagFilter": null,
+                                    "filterTagFilter": null,
+                                    "filterTagExcludeFilter": null,
+                                    "subProfessionExcludeFilter": null,
+                                    "mapTagFilter": null,
+                                    "heightTypeMask": 0
+                                },
+                                "blackboard": [
+                                    {
+                                        "key": "value",
+                                        "value": 1
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "sortId": 2
+                },
+                "mmdudu_atkrange": {
+                    "runeId": "mmdudu_atkrange",
+                    "runeGroupId": "mmdudu_atkrange",
+                    "runeIcon": "g_mmdudu_atkrange",
+                    "runeName": "自由佣兵“贝斯”：扬声器",
+                    "score": 20,
+                    "dimension": 1,
+                    "packedRune": {
+                        "id": "mmdudu_atkrange",
+                        "points": 0,
+                        "mutexGroupKey": "enemy_mmdudu",
+                        "description": "<自由佣兵“贝斯”>的攻击范围变为<@crisisv2.nag>{scale:0.0}</>倍",
+                        "runes": [
+                            {
+                                "key": "enemy_attackradius_mul",
+                                "selector": {
+                                    "professionMask": 0,
+                                    "buildableMask": 0,
+                                    "playerSideMask": 0,
+                                    "charIdFilter": null,
+                                    "enemyIdFilter": null,
+                                    "enemyIdExcludeFilter": null,
+                                    "enemyLevelTypeFilter": null,
+                                    "enemyActionHiddenGroupFilter": null,
+                                    "skillIdFilter": null,
+                                    "tileKeyFilter": null,
+                                    "groupTagFilter": null,
+                                    "filterTagFilter": null,
+                                    "filterTagExcludeFilter": null,
+                                    "subProfessionExcludeFilter": null,
+                                    "mapTagFilter": null,
+                                    "heightTypeMask": 0
+                                },
+                                "blackboard": [
+                                    {
+                                        "key": "scale",
+                                        "value": 1.5
+                                    },
+                                    {
+                                        "key": "enemy",
+                                        "valueStr": "enemy_1417_mmdudu"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "sortId": 16
+                },
+                "mmdudu_def": {
+                    "runeId": "mmdudu_def",
+                    "runeGroupId": "mmdudu_def",
+                    "runeIcon": "g_mmdudu_def",
+                    "runeName": "自由佣兵“贝斯”：演出服",
+                    "score": 20,
+                    "dimension": 1,
+                    "packedRune": {
+                        "id": "mmdudu_def",
+                        "points": 0,
+                        "mutexGroupKey": "enemy_mmdudu",
+                        "description": "<自由佣兵“贝斯>的防御力<@crisisv2.nag>+{def:0%}</>",
+                        "runes": [
+                            {
+                                "key": "enemy_attribute_additive_mul",
+                                "selector": {
+                                    "professionMask": 0,
+                                    "buildableMask": 0,
+                                    "playerSideMask": 0,
+                                    "charIdFilter": null,
+                                    "enemyIdFilter": null,
+                                    "enemyIdExcludeFilter": null,
+                                    "enemyLevelTypeFilter": null,
+                                    "enemyActionHiddenGroupFilter": null,
+                                    "skillIdFilter": null,
+                                    "tileKeyFilter": null,
+                                    "groupTagFilter": null,
+                                    "filterTagFilter": null,
+                                    "filterTagExcludeFilter": null,
+                                    "subProfessionExcludeFilter": null,
+                                    "mapTagFilter": null,
+                                    "heightTypeMask": 0
+                                },
+                                "blackboard": [
+                                    {
+                                        "key": "def",
+                                        "value": 2
+                                    },
+                                    {
+                                        "key": "enemy",
+                                        "valueStr": "enemy_1417_mmdudu"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "sortId": 18
+                },
+                "char_atk_3": {
+                    "runeId": "char_atk_3",
+                    "runeGroupId": "char_atk_3",
+                    "runeIcon": "g_char_atk_3",
+                    "runeName": "环境：高价值目标II",
+                    "score": 10,
+                    "dimension": 3,
+                    "packedRune": {
+                        "id": "char_atk_3",
+                        "points": 0,
+                        "mutexGroupKey": "char_atk",
+                        "description": "所有我方单位的攻击力<@crisisv2.nag>-30%</>（同类效果叠加）",
+                        "runes": [
+                            {
+                                "key": "char_attribute_additive_mul",
+                                "selector": {
+                                    "professionMask": 1023,
+                                    "buildableMask": 3,
+                                    "playerSideMask": 0,
+                                    "charIdFilter": null,
+                                    "enemyIdFilter": null,
+                                    "enemyIdExcludeFilter": null,
+                                    "enemyLevelTypeFilter": null,
+                                    "enemyActionHiddenGroupFilter": null,
+                                    "skillIdFilter": null,
+                                    "tileKeyFilter": null,
+                                    "groupTagFilter": null,
+                                    "filterTagFilter": null,
+                                    "filterTagExcludeFilter": null,
+                                    "subProfessionExcludeFilter": null,
+                                    "mapTagFilter": null,
+                                    "heightTypeMask": 0
+                                },
+                                "blackboard": [
+                                    {
+                                        "key": "atk",
+                                        "value": -0.3
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "sortId": 5
+                },
+                "enemy_atk_3": {
+                    "runeId": "enemy_atk_3",
+                    "runeGroupId": "enemy_atk_3",
+                    "runeIcon": "g_enemy_atk_1",
+                    "runeName": "源石环境：刺激I",
+                    "score": 20,
+                    "dimension": 0,
+                    "packedRune": {
+                        "id": "enemy_atk_3",
+                        "points": 0,
+                        "mutexGroupKey": "enemy_atk",
+                        "description": "所有敌人的攻击力<@crisisv2.nag>+{atk:0%}</>（同类效果叠加）",
+                        "runes": [
+                            {
+                                "key": "enemy_attribute_additive_mul",
+                                "selector": {
+                                    "professionMask": 0,
+                                    "buildableMask": 0,
+                                    "playerSideMask": 0,
+                                    "charIdFilter": null,
+                                    "enemyIdFilter": null,
+                                    "enemyIdExcludeFilter": null,
+                                    "enemyLevelTypeFilter": null,
+                                    "enemyActionHiddenGroupFilter": null,
+                                    "skillIdFilter": null,
+                                    "tileKeyFilter": null,
+                                    "groupTagFilter": null,
+                                    "filterTagFilter": null,
+                                    "filterTagExcludeFilter": null,
+                                    "subProfessionExcludeFilter": null,
+                                    "mapTagFilter": null,
+                                    "heightTypeMask": 0
+                                },
+                                "blackboard": [
+                                    {
+                                        "key": "atk",
+                                        "value": 0.4
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "sortId": 9
+                },
+                "enemy_hp_1": {
+                    "runeId": "enemy_hp_1",
+                    "runeGroupId": "enemy_hp_1",
+                    "runeIcon": "g_enemy_hp_1",
+                    "runeName": "源石环境：活性I",
+                    "score": 20,
+                    "dimension": 0,
+                    "packedRune": {
+                        "id": "enemy_hp_1",
+                        "points": 0,
+                        "mutexGroupKey": "enemy_hp",
+                        "description": "所有敌人的最大生命值<@crisisv2.nag>+{max_hp:0%}</>（同类效果叠加）",
+                        "runes": [
+                            {
+                                "key": "enemy_attribute_additive_mul",
+                                "selector": {
+                                    "professionMask": 0,
+                                    "buildableMask": 0,
+                                    "playerSideMask": 0,
+                                    "charIdFilter": null,
+                                    "enemyIdFilter": null,
+                                    "enemyIdExcludeFilter": null,
+                                    "enemyLevelTypeFilter": null,
+                                    "enemyActionHiddenGroupFilter": null,
+                                    "skillIdFilter": null,
+                                    "tileKeyFilter": null,
+                                    "groupTagFilter": null,
+                                    "filterTagFilter": null,
+                                    "filterTagExcludeFilter": null,
+                                    "subProfessionExcludeFilter": null,
+                                    "mapTagFilter": null,
+                                    "heightTypeMask": 0
+                                },
+                                "blackboard": [
+                                    {
+                                        "key": "max_hp",
+                                        "value": 0.6
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "sortId": 10
+                },
+                "mmstck_def": {
+                    "runeId": "mmstck_def",
+                    "runeGroupId": "mmstck_def",
+                    "runeIcon": "g_mmstck_def",
+                    "runeName": "赏金猎人“大骑士”：场地安保",
+                    "score": 20,
+                    "dimension": 1,
+                    "packedRune": {
+                        "id": "mmstck_def",
+                        "points": 0,
+                        "mutexGroupKey": "enemy_mmstck",
+                        "description": "<赏金猎人“大骑士>防御力<@crisisv2.nag>+{def:0%}</>（同类效果叠加）",
+                        "runes": [
+                            {
+                                "key": "enemy_attribute_additive_mul",
+                                "selector": {
+                                    "professionMask": 0,
+                                    "buildableMask": 0,
+                                    "playerSideMask": 0,
+                                    "charIdFilter": null,
+                                    "enemyIdFilter": null,
+                                    "enemyIdExcludeFilter": null,
+                                    "enemyLevelTypeFilter": null,
+                                    "enemyActionHiddenGroupFilter": null,
+                                    "skillIdFilter": null,
+                                    "tileKeyFilter": null,
+                                    "groupTagFilter": null,
+                                    "filterTagFilter": null,
+                                    "filterTagExcludeFilter": null,
+                                    "subProfessionExcludeFilter": null,
+                                    "mapTagFilter": null,
+                                    "heightTypeMask": 0
+                                },
+                                "blackboard": [
+                                    {
+                                        "key": "enemy",
+                                        "valueStr": "enemy_1413_mmstck_2"
+                                    },
+                                    {
+                                        "key": "def",
+                                        "value": 1
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "sortId": 16
+                },
+                "char_cost_casterspecial_5": {
+                    "runeId": "char_cost_casterspecial_5",
+                    "runeGroupId": "char_cost_casterspecial_5",
+                    "runeIcon": "g_char_cost_casterspecial_5",
+                    "runeName": "目标：应急合约II",
+                    "score": 30,
+                    "dimension": 2,
+                    "packedRune": {
+                        "id": "char_cost_casterspecial_5",
+                        "points": 0,
+                        "mutexGroupKey": "char_exclude",
+                        "description": "辅助、狙击和术师干员的部署费用提升至<@crisisv2.nag>{scale}</>倍",
+                        "runes": [
+                            {
+                                "key": "char_cost_mul",
+                                "selector": {
+                                    "professionMask": 50,
+                                    "buildableMask": 3,
+                                    "playerSideMask": 0,
+                                    "charIdFilter": null,
+                                    "enemyIdFilter": null,
+                                    "enemyIdExcludeFilter": null,
+                                    "enemyLevelTypeFilter": null,
+                                    "enemyActionHiddenGroupFilter": null,
+                                    "skillIdFilter": null,
+                                    "tileKeyFilter": null,
+                                    "groupTagFilter": null,
+                                    "filterTagFilter": null,
+                                    "filterTagExcludeFilter": null,
+                                    "subProfessionExcludeFilter": null,
+                                    "mapTagFilter": null,
+                                    "heightTypeMask": 0
+                                },
+                                "blackboard": [
+                                    {
+                                        "key": "scale",
+                                        "value": 3
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "sortId": 8
+                },
+                "mmstck_hp": {
+                    "runeId": "mmstck_hp",
+                    "runeGroupId": "mmstck_hp",
+                    "runeIcon": "g_mmstck_hp",
+                    "runeName": "赏金猎人“大骑士”：返场演出",
+                    "score": 20,
+                    "dimension": 1,
+                    "packedRune": {
+                        "id": "mmstck_hp",
+                        "points": 0,
+                        "mutexGroupKey": "enemy_mmstck",
+                        "description": "<赏金猎人“大骑士>生命值<@crisisv2.nag>+{max_hp:0%}</>（同类效果叠加）",
+                        "runes": [
+                            {
+                                "key": "enemy_attribute_additive_mul",
+                                "selector": {
+                                    "professionMask": 0,
+                                    "buildableMask": 0,
+                                    "playerSideMask": 0,
+                                    "charIdFilter": null,
+                                    "enemyIdFilter": null,
+                                    "enemyIdExcludeFilter": null,
+                                    "enemyLevelTypeFilter": null,
+                                    "enemyActionHiddenGroupFilter": null,
+                                    "skillIdFilter": null,
+                                    "tileKeyFilter": null,
+                                    "groupTagFilter": null,
+                                    "filterTagFilter": null,
+                                    "filterTagExcludeFilter": null,
+                                    "subProfessionExcludeFilter": null,
+                                    "mapTagFilter": null,
+                                    "heightTypeMask": 0
+                                },
+                                "blackboard": [
+                                    {
+                                        "key": "enemy",
+                                        "valueStr": "enemy_1413_mmstck_2"
+                                    },
+                                    {
+                                        "key": "max_hp",
+                                        "value": 2
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "sortId": 17
+                },
+                "mmstck_repalce": {
+                    "runeId": "mmstck_repalce",
+                    "runeGroupId": "mmstck_repalce",
+                    "runeIcon": "g_mmstck_repalce",
+                    "runeName": "赏金猎人“大骑士”：助场嘉宾",
+                    "score": 20,
+                    "dimension": 4,
+                    "packedRune": {
+                        "id": "mmstck_repalce",
+                        "points": 0,
+                        "mutexGroupKey": "enemy_mmstck",
+                        "description": "部分<“飞鞋党”佣兵>被替换为<赏金猎人“大骑士”>",
+                        "runes": [
+                            {
+                                "key": "level_hidden_group_enable",
+                                "selector": {
+                                    "professionMask": 0,
+                                    "buildableMask": 0,
+                                    "playerSideMask": 0,
+                                    "charIdFilter": null,
+                                    "enemyIdFilter": null,
+                                    "enemyIdExcludeFilter": null,
+                                    "enemyLevelTypeFilter": null,
+                                    "enemyActionHiddenGroupFilter": null,
+                                    "skillIdFilter": null,
+                                    "tileKeyFilter": null,
+                                    "groupTagFilter": null,
+                                    "filterTagFilter": null,
+                                    "filterTagExcludeFilter": null,
+                                    "subProfessionExcludeFilter": null,
+                                    "mapTagFilter": null,
+                                    "heightTypeMask": 0
+                                },
+                                "blackboard": [
+                                    {
+                                        "key": "key",
+                                        "valueStr": "hiddenmmstck"
+                                    }
+                                ]
+                            },
+                            {
+                                "key": "level_hidden_group_disable",
+                                "selector": {
+                                    "professionMask": 0,
+                                    "buildableMask": 0,
+                                    "playerSideMask": 0,
+                                    "charIdFilter": null,
+                                    "enemyIdFilter": null,
+                                    "enemyIdExcludeFilter": null,
+                                    "enemyLevelTypeFilter": null,
+                                    "enemyActionHiddenGroupFilter": null,
+                                    "skillIdFilter": null,
+                                    "tileKeyFilter": null,
+                                    "groupTagFilter": null,
+                                    "filterTagFilter": null,
+                                    "filterTagExcludeFilter": null,
+                                    "subProfessionExcludeFilter": null,
+                                    "mapTagFilter": null,
+                                    "heightTypeMask": 0
+                                },
+                                "blackboard": [
+                                    {
+                                        "key": "key",
+                                        "valueStr": "normal"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "sortId": 14
+                },
+                "char_respawntime_p2": {
+                    "runeId": "char_respawntime_p2",
+                    "runeGroupId": "char_respawntime_p2",
+                    "runeIcon": "g_char_respawntime_p2",
+                    "runeName": "目标：效率低下I",
+                    "score": 20,
+                    "dimension": 2,
+                    "packedRune": {
+                        "id": "char_respawntime_p2",
+                        "points": 0,
+                        "mutexGroupKey": "squad_limit",
+                        "description": "我方所有单位再部署时间延长<@crisisv2.nag>75%</>",
+                        "runes": [
+                            {
+                                "key": "char_respawntime_mul",
+                                "selector": {
+                                    "professionMask": 1023,
+                                    "buildableMask": 3,
+                                    "playerSideMask": 0,
+                                    "charIdFilter": null,
+                                    "enemyIdFilter": null,
+                                    "enemyIdExcludeFilter": null,
+                                    "enemyLevelTypeFilter": null,
+                                    "enemyActionHiddenGroupFilter": null,
+                                    "skillIdFilter": null,
+                                    "tileKeyFilter": null,
+                                    "groupTagFilter": null,
+                                    "filterTagFilter": null,
+                                    "filterTagExcludeFilter": null,
+                                    "subProfessionExcludeFilter": null,
+                                    "mapTagFilter": null,
+                                    "heightTypeMask": 0
+                                },
+                                "blackboard": [
+                                    {
+                                        "key": "scale",
+                                        "value": 1.75
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "sortId": 24
+                },
+                "mmdudu_atk": {
+                    "runeId": "mmdudu_atk",
+                    "runeGroupId": "mmdudu_atk",
+                    "runeIcon": "g_mmdudu_atk",
+                    "runeName": "自由佣兵“贝斯”：矿石拨片",
+                    "score": 20,
+                    "dimension": 1,
+                    "packedRune": {
+                        "id": "mmdudu_atk",
+                        "points": 0,
+                        "mutexGroupKey": "enemy_mmdudu",
+                        "description": "<自由佣兵“贝斯>的攻击力<@crisisv2.nag>+{atk:0%}</>",
+                        "runes": [
+                            {
+                                "key": "enemy_attribute_additive_mul",
+                                "selector": {
+                                    "professionMask": 0,
+                                    "buildableMask": 0,
+                                    "playerSideMask": 0,
+                                    "charIdFilter": null,
+                                    "enemyIdFilter": null,
+                                    "enemyIdExcludeFilter": null,
+                                    "enemyLevelTypeFilter": null,
+                                    "enemyActionHiddenGroupFilter": null,
+                                    "skillIdFilter": null,
+                                    "tileKeyFilter": null,
+                                    "groupTagFilter": null,
+                                    "filterTagFilter": null,
+                                    "filterTagExcludeFilter": null,
+                                    "subProfessionExcludeFilter": null,
+                                    "mapTagFilter": null,
+                                    "heightTypeMask": 0
+                                },
+                                "blackboard": [
+                                    {
+                                        "key": "atk",
+                                        "value": 0.6
+                                    },
+                                    {
+                                        "key": "enemy",
+                                        "valueStr": "enemy_1417_mmdudu"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "sortId": 18
+                },
+                "char_blockcnt_1": {
+                    "runeId": "char_blockcnt_1",
+                    "runeGroupId": "char_blockcnt_1",
+                    "runeIcon": "g_char_blockcnt_1",
+                    "runeName": "环境：精神溃散",
+                    "score": 20,
+                    "dimension": 3,
+                    "packedRune": {
+                        "id": "char_blockcnt_1",
+                        "points": 0,
+                        "mutexGroupKey": null,
+                        "description": "所有我方单位阻挡数<@crisisv2.nag>{value}</>",
+                        "runes": [
+                            {
+                                "key": "char_blockcnt_add",
+                                "selector": {
+                                    "professionMask": 1023,
+                                    "buildableMask": 3,
+                                    "playerSideMask": 0,
+                                    "charIdFilter": null,
+                                    "enemyIdFilter": null,
+                                    "enemyIdExcludeFilter": null,
+                                    "enemyLevelTypeFilter": null,
+                                    "enemyActionHiddenGroupFilter": null,
+                                    "skillIdFilter": null,
+                                    "tileKeyFilter": null,
+                                    "groupTagFilter": null,
+                                    "filterTagFilter": null,
+                                    "filterTagExcludeFilter": null,
+                                    "subProfessionExcludeFilter": null,
+                                    "mapTagFilter": null,
+                                    "heightTypeMask": 0
+                                },
+                                "blackboard": [
+                                    {
+                                        "key": "value",
+                                        "value": -1
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "sortId": 3
+                },
+                "nhkodo_atk": {
+                    "runeId": "nhkodo_atk",
+                    "runeGroupId": "nhkodo_atk",
+                    "runeIcon": "g_nhkodo_atk",
+                    "runeName": "萨卡兹枯朽吞噬者：饥渴",
+                    "score": 20,
+                    "dimension": 1,
+                    "packedRune": {
+                        "id": "nhkodo_atk",
+                        "points": 0,
+                        "mutexGroupKey": "squad_limit",
+                        "description": "<萨卡兹枯朽吞噬者>的攻击力<@crisisv2.nag>+{atk:0%}</>",
+                        "runes": [
+                            {
+                                "key": "enemy_attribute_additive_mul",
+                                "selector": {
+                                    "professionMask": 0,
+                                    "buildableMask": 0,
+                                    "playerSideMask": 0,
+                                    "charIdFilter": null,
+                                    "enemyIdFilter": null,
+                                    "enemyIdExcludeFilter": null,
+                                    "enemyLevelTypeFilter": null,
+                                    "enemyActionHiddenGroupFilter": null,
+                                    "skillIdFilter": null,
+                                    "tileKeyFilter": null,
+                                    "groupTagFilter": null,
+                                    "filterTagFilter": null,
+                                    "filterTagExcludeFilter": null,
+                                    "subProfessionExcludeFilter": null,
+                                    "mapTagFilter": null,
+                                    "heightTypeMask": 0
+                                },
+                                "blackboard": [
+                                    {
+                                        "key": "enemy",
+                                        "valueStr": "enemy_1271_nhkodo"
+                                    },
+                                    {
+                                        "key": "atk",
+                                        "value": 1
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "sortId": 24
                 }
             }
         }
