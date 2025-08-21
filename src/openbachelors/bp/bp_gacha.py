@@ -479,6 +479,35 @@ class AdvancedGachaSimpleManager(AdvancedGachaBasicManager):
         else:
             self.override_avail_char_info = None
 
+        self.override_up_char_info = self.get_override_up_char_info()
+
+    def get_override_up_char_info(self):
+        if self.gacha_type not in self.player_data["gacha"]:
+            return None
+
+        if self.pool_id not in self.player_data["gacha"][self.gacha_type]:
+            return None
+
+        if "upChar" not in self.player_data["gacha"][self.gacha_type][self.pool_id]:
+            return None
+
+        override_up_char_info = {}
+
+        k_p_lst = [("5", 0.5), ("4", 0.5)]
+
+        for k, p in k_p_lst:
+            if k in self.player_data["gacha"][self.gacha_type][self.pool_id]["upChar"]:
+                char_id_lst = self.player_data["gacha"][self.gacha_type][self.pool_id][
+                    "upChar"
+                ][k].copy()
+
+                override_up_char_info[f"TIER_{int(k) + 1}"] = {
+                    "char_id_lst": char_id_lst,
+                    "percent": p / len(char_id_lst),
+                }
+
+        return ConstJson(override_up_char_info)
+
     def get_basic_tier_6_pity_key(self):
         if self.is_classic:
             return "advanced_gacha_classic_basic_tier_6_pity"
@@ -521,6 +550,8 @@ class AdvancedGachaSimpleManager(AdvancedGachaBasicManager):
         return self.get_basic_avail_char_info()
 
     def get_up_char_info(self):
+        if self.override_up_char_info is not None:
+            return self.override_up_char_info
         gacha_data = const_json_loader[GACHA_DATA]
         if self.pool_id in gacha_data["up_char_info"]:
             return gacha_data["up_char_info"][self.pool_id]
