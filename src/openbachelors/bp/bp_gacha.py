@@ -469,17 +469,20 @@ class AdvancedGachaSimpleManager(AdvancedGachaBasicManager):
     def __init__(self, player_data, request_json, response, pool_id, gacha_type):
         super().__init__(player_data, request_json, response, pool_id, gacha_type)
 
-        gacha_data = const_json_loader[GACHA_DATA]
-        if self.pool_id in gacha_data["override_avail_char_info"]:
-            avail_char_info = self.get_basic_avail_char_info().copy()
-            avail_char_info.update(
-                gacha_data["override_avail_char_info"][self.pool_id].copy()
-            )
-            self.override_avail_char_info = ConstJson(avail_char_info)
-        else:
-            self.override_avail_char_info = None
+        self.override_avail_char_info = self.get_override_avail_char_info()
 
         self.override_up_char_info = self.get_override_up_char_info()
+
+    def get_override_avail_char_info(self):
+        gacha_data = const_json_loader[GACHA_DATA]
+        if self.pool_id not in gacha_data["override_avail_char_info"]:
+            return None
+
+        override_avail_char_info = self.get_basic_avail_char_info().copy()
+        override_avail_char_info.update(
+            gacha_data["override_avail_char_info"][self.pool_id].copy()
+        )
+        return ConstJson(override_avail_char_info)
 
     def get_override_up_char_info(self):
         if self.gacha_type not in self.player_data["gacha"]:
