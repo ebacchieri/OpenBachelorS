@@ -15,4 +15,4 @@ console:
 	pipx run poetry run console -i
 
 asset-downloader:
-	pipx run poetry run asset-downloader
+	PROD_FLAG=1 pipx run poetry run asset-downloader
