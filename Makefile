@@ -18,5 +18,5 @@ asset-downloader:
 	PROD_FLAG=1 pipx run poetry run asset-downloader
 
 distclean:
-	pipx run poetry env remove python
-	git clean -dfx
+	-pipx run poetry env remove python
+	-git clean -dfx
