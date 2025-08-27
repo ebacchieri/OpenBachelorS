@@ -3,6 +3,7 @@
 setup:
 	brew install python pipx aria2
 	pipx install poetry
+	pipx run poetry install
 
 dev:
 	pipx run poetry run poe dev
