@@ -9,7 +9,7 @@ dev:
 	pipx run poetry run poe dev
 
 prod:
-	PROD_FLAG=1 python -m pipx run poetry run poe prod
+	PROD_FLAG=1 pipx run poetry run poe prod
 
 console:
 	pipx run poetry run console -i
