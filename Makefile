@@ -1,4 +1,4 @@
-.PHONY: setup dev prod console asset-downloade
+.PHONY: setup dev prod console asset-downloade distclean
 
 setup:
 	brew install python pipx aria2
@@ -16,3 +16,7 @@ console:
 
 asset-downloader:
 	PROD_FLAG=1 pipx run poetry run asset-downloader
+
+distclean:
+	pipx run poetry env remove python
+	git clean -dfx
