@@ -1031,6 +1031,8 @@ class DBSaveAggregator:
 
 
 class PlayerData(OverlayJson, SavableThing):
+    DEFAULT_TOKEN = "_"
+
     @classmethod
     async def create(cls, player_id=None, request=None):
         if request is not None:
@@ -1039,9 +1041,9 @@ class PlayerData(OverlayJson, SavableThing):
             if player_id is not None:
                 token = player_id
             else:
-                token = ""
+                token = cls.DEFAULT_TOKEN
         if not token:
-            token = "_"
+            token = cls.DEFAULT_TOKEN
         username = get_username_by_token(token)
 
         config = const_json_loader[CONFIG_JSON]
