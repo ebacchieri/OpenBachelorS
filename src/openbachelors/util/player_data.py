@@ -1036,14 +1036,13 @@ class PlayerData(OverlayJson, SavableThing):
     @classmethod
     async def create(cls, player_id=None, request=None):
         if request is not None:
-            token = request.headers.get("secret", "")
+            token = request.headers.get("secret", cls.DEFAULT_TOKEN)
         else:
             if player_id is not None:
                 token = player_id
             else:
                 token = cls.DEFAULT_TOKEN
-        if not token:
-            token = cls.DEFAULT_TOKEN
+
         username = get_username_by_token(token)
 
         config = const_json_loader[CONFIG_JSON]
