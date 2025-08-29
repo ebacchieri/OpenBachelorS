@@ -1,7 +1,8 @@
 .PHONY: setup dev prod console asset-downloade distclean
 
 setup:
-	brew install python pipx aria2
+	-brew install python pipx aria2
+	-sudo apt install pipx aria2
 	pipx install poetry
 	pipx run poetry install
 
