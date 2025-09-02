@@ -130,6 +130,22 @@ async def save_delta_json_obj(path: str, modified: dict, deleted: dict):
         return await f.write(json.dumps(json_obj, indent=4, ensure_ascii=False))
 
 
+def remove_aria2_tmpfile(tmp_filename):
+    tmp_filepath = os.path.join(TMP_DIRPATH, tmp_filename)
+
+    try:
+        os.remove(tmp_filepath)
+    except Exception:
+        pass
+
+    aria2_tmp_filepath = f"{tmp_filepath}.aria2"
+
+    try:
+        os.remove(aria2_tmp_filepath)
+    except Exception:
+        pass
+
+
 async def download_file(url: str, filename: str, dirpath: str):
     os.makedirs(TMP_DIRPATH, exist_ok=True)
 
@@ -150,6 +166,7 @@ async def download_file(url: str, filename: str, dirpath: str):
     )
 
     if proc.returncode:
+        remove_aria2_tmpfile(tmp_filename)
         raise ConnectionError(f"download_file: file {filename} failed")
 
     os.makedirs(dirpath, exist_ok=True)
