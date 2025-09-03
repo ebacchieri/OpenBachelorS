@@ -5989,7 +5989,7 @@
       "iconId": "MTL_SL_KETONE1",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100053,
+      "sortId": 100056,
       "usage": "A very small amount of industrial organic compound. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -5997,7 +5997,7 @@
       "itemType": "MATERIAL",
       "stageDropList": [
         {
-          "stageId": "act26side_02",
+          "stageId": "act26side_01",
           "occPer": "OFTEN"
         },
         {
@@ -6045,11 +6045,11 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act11mini_02",
-          "occPer": "USUAL"
+          "stageId": "act13mini_01",
+          "occPer": "OFTEN"
         },
         {
-          "stageId": "act13mini_01",
+          "stageId": "act22side_02",
           "occPer": "OFTEN"
         },
         {
@@ -6097,15 +6097,19 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act22side_02",
+          "stageId": "act26side_03",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act11mini_02",
+          "occPer": "USUAL"
+        },
+        {
+          "stageId": "act26side_02",
           "occPer": "OFTEN"
         },
         {
           "stageId": "act18side_01",
-          "occPer": "OFTEN"
-        },
-        {
-          "stageId": "act18side_02",
           "occPer": "OFTEN"
         },
         {
@@ -6213,7 +6217,7 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act26side_03",
+          "stageId": "act18side_02",
           "occPer": "OFTEN"
         },
         {
@@ -6225,15 +6229,7 @@
           "occPer": "ALWAYS"
         },
         {
-          "stageId": "act27side_03",
-          "occPer": "OFTEN"
-        },
-        {
-          "stageId": "act35side_03",
-          "occPer": "OFTEN"
-        },
-        {
-          "stageId": "act35side_02",
+          "stageId": "act27side_02",
           "occPer": "OFTEN"
         },
         {
@@ -6273,19 +6269,19 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act34side_01",
-          "occPer": "OFTEN"
-        },
-        {
           "stageId": "act37side_01",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act38side_02",
+          "stageId": "act38side_03",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act38side_01",
+          "stageId": "act35side_02",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act38side_02",
           "occPer": "OFTEN"
         },
         {
@@ -6325,23 +6321,27 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act38side_03",
+          "stageId": "act41side_02",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act26side_01",
+          "stageId": "act41side_01",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act38side_01",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act27side_03",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act35side_03",
           "occPer": "OFTEN"
         },
         {
           "stageId": "act34side_02",
-          "occPer": "OFTEN"
-        },
-        {
-          "stageId": "act33side_02",
-          "occPer": "OFTEN"
-        },
-        {
-          "stageId": "act27side_02",
           "occPer": "OFTEN"
         },
         {
@@ -6385,15 +6385,15 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act33side_01",
-          "occPer": "OFTEN"
-        },
-        {
           "stageId": "act29side_01",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act30side_02",
+          "stageId": "act34side_01",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act30side_03",
           "occPer": "OFTEN"
         },
         {
@@ -6437,7 +6437,15 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act30side_03",
+          "stageId": "act33side_02",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act33side_01",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act30side_02",
           "occPer": "OFTEN"
         },
         {
@@ -6460,7 +6468,7 @@
       "iconId": "MTL_SL_KETONE2",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100052,
+      "sortId": 100055,
       "usage": "A small amount of industrial organic compound. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -6470,6 +6478,10 @@
         {
           "stageId": "act29side_05",
           "occPer": "ALWAYS"
+        },
+        {
+          "stageId": "act26side_04",
+          "occPer": "OFTEN"
         },
         {
           "stageId": "act25side_05",
@@ -6504,11 +6516,11 @@
           "occPer": "ALMOST"
         },
         {
-          "stageId": "act26side_04",
-          "occPer": "OFTEN"
+          "stageId": "act14side_04",
+          "occPer": "ALMOST"
         },
         {
-          "stageId": "act14side_04",
+          "stageId": "act13side_05",
           "occPer": "ALMOST"
         },
         {
@@ -6544,11 +6556,11 @@
           "occPer": "ALMOST"
         },
         {
-          "stageId": "act13side_05",
+          "stageId": "act27side_05",
           "occPer": "ALMOST"
         },
         {
-          "stageId": "act27side_05",
+          "stageId": "act4d0_03",
           "occPer": "ALMOST"
         },
         {
@@ -6556,12 +6568,16 @@
           "occPer": "ALMOST"
         },
         {
+          "stageId": "act31side_04",
+          "occPer": "OFTEN"
+        },
+        {
           "stageId": "act30side_05",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act4d0_03",
-          "occPer": "ALMOST"
+          "stageId": "act40side_05",
+          "occPer": "OFTEN"
         },
         {
           "stageId": "act39side_03",
@@ -6576,11 +6592,11 @@
           "occPer": "ALMOST"
         },
         {
-          "stageId": "act36side_05",
-          "occPer": "ALMOST"
+          "stageId": "act41side_04",
+          "occPer": "OFTEN"
         },
         {
-          "stageId": "act40side_05",
+          "stageId": "act35side_05",
           "occPer": "OFTEN"
         },
         {
@@ -6596,12 +6612,8 @@
           "occPer": "ALMOST"
         },
         {
-          "stageId": "act31side_04",
-          "occPer": "OFTEN"
-        },
-        {
-          "stageId": "act35side_05",
-          "occPer": "OFTEN"
+          "stageId": "act36side_05",
+          "occPer": "ALMOST"
         },
         {
           "stageId": "sub_02-01",
@@ -6660,7 +6672,7 @@
       "iconId": "MTL_SL_KETONE3",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100051,
+      "sortId": 100054,
       "usage": "A modest amount of industrial organic compound. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -6809,7 +6821,7 @@
       "iconId": "MTL_SL_KETONE4",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100050,
+      "sortId": 100053,
       "usage": "A large amount of industrial organic compound. Can be used for a variety of upgrades and the synthesis of Polymerization Preparation.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -6886,7 +6898,7 @@
       "iconId": "MTL_SL_IRON1",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100049,
+      "sortId": 100052,
       "usage": "A common industrial material. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -6894,7 +6906,7 @@
       "itemType": "MATERIAL",
       "stageDropList": [
         {
-          "stageId": "act26side_02",
+          "stageId": "act26side_01",
           "occPer": "OFTEN"
         },
         {
@@ -6942,11 +6954,11 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act11mini_04",
-          "occPer": "ALMOST"
+          "stageId": "act13mini_02",
+          "occPer": "OFTEN"
         },
         {
-          "stageId": "act13mini_02",
+          "stageId": "act13mini_01",
           "occPer": "OFTEN"
         },
         {
@@ -6994,15 +7006,19 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act13mini_01",
+          "stageId": "act25side_01",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act11mini_04",
+          "occPer": "ALMOST"
+        },
+        {
+          "stageId": "act26side_03",
           "occPer": "OFTEN"
         },
         {
           "stageId": "act18side_01",
-          "occPer": "OFTEN"
-        },
-        {
-          "stageId": "act18side_02",
           "occPer": "OFTEN"
         },
         {
@@ -7110,11 +7126,11 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act25side_01",
+          "stageId": "act18side_02",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act26side_03",
+          "stageId": "act26side_02",
           "occPer": "OFTEN"
         },
         {
@@ -7122,11 +7138,7 @@
           "occPer": "ALWAYS"
         },
         {
-          "stageId": "act26side_01",
-          "occPer": "OFTEN"
-        },
-        {
-          "stageId": "act35side_03",
+          "stageId": "act27side_03",
           "occPer": "OFTEN"
         },
         {
@@ -7170,11 +7182,11 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act34side_01",
+          "stageId": "act37side_01",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act37side_01",
+          "stageId": "act38side_03",
           "occPer": "OFTEN"
         },
         {
@@ -7222,7 +7234,15 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act38side_03",
+          "stageId": "act41side_02",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act41side_01",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act35side_03",
           "occPer": "OFTEN"
         },
         {
@@ -7230,15 +7250,11 @@
           "occPer": "ALWAYS"
         },
         {
-          "stageId": "act34side_02",
+          "stageId": "act34side_01",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act33side_02",
-          "occPer": "OFTEN"
-        },
-        {
-          "stageId": "act27side_03",
+          "stageId": "act33side_01",
           "occPer": "OFTEN"
         },
         {
@@ -7282,15 +7298,15 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act33side_01",
-          "occPer": "OFTEN"
-        },
-        {
           "stageId": "act29side_02",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act30side_03",
+          "stageId": "act34side_02",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act29side_01",
           "occPer": "OFTEN"
         },
         {
@@ -7338,7 +7354,11 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act29side_01",
+          "stageId": "act33side_02",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act30side_03",
           "occPer": "OFTEN"
         },
         {
@@ -7361,7 +7381,7 @@
       "iconId": "MTL_SL_IRON2",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100048,
+      "sortId": 100051,
       "usage": "A rare industrial material. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -7369,8 +7389,12 @@
       "itemType": "MATERIAL",
       "stageDropList": [
         {
-          "stageId": "act29side_04",
-          "occPer": "USUAL"
+          "stageId": "act31side_04",
+          "occPer": "ALMOST"
+        },
+        {
+          "stageId": "act27side_05",
+          "occPer": "OFTEN"
         },
         {
           "stageId": "act25side_05",
@@ -7409,11 +7433,11 @@
           "occPer": "ALMOST"
         },
         {
-          "stageId": "act27side_05",
-          "occPer": "OFTEN"
+          "stageId": "act10mini_05",
+          "occPer": "ALWAYS"
         },
         {
-          "stageId": "act10mini_05",
+          "stageId": "act13side_06",
           "occPer": "ALWAYS"
         },
         {
@@ -7453,24 +7477,32 @@
           "occPer": "ALWAYS"
         },
         {
-          "stageId": "act13side_06",
-          "occPer": "ALWAYS"
-        },
-        {
           "stageId": "act28side_05",
           "occPer": "ALMOST"
+        },
+        {
+          "stageId": "act29side_04",
+          "occPer": "USUAL"
         },
         {
           "stageId": "a001_03",
           "occPer": "ALMOST"
         },
         {
-          "stageId": "act31side_04",
-          "occPer": "ALMOST"
+          "stageId": "act32side_05",
+          "occPer": "OFTEN"
         },
         {
           "stageId": "act4d0_04",
           "occPer": "ALWAYS"
+        },
+        {
+          "stageId": "act41side_05",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act40side_04",
+          "occPer": "ALMOST"
         },
         {
           "stageId": "act18mini_05",
@@ -7485,11 +7517,11 @@
           "occPer": "ALWAYS"
         },
         {
-          "stageId": "act37side_05",
+          "stageId": "act41side_04",
           "occPer": "ALMOST"
         },
         {
-          "stageId": "act40side_04",
+          "stageId": "act36side_04",
           "occPer": "ALMOST"
         },
         {
@@ -7509,11 +7541,7 @@
           "occPer": "ALMOST"
         },
         {
-          "stageId": "act32side_05",
-          "occPer": "OFTEN"
-        },
-        {
-          "stageId": "act36side_04",
+          "stageId": "act37side_05",
           "occPer": "ALMOST"
         },
         {
@@ -7577,7 +7605,7 @@
       "iconId": "MTL_SL_IRON3",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100047,
+      "sortId": 100050,
       "usage": "A precious industrial material. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -7710,7 +7738,7 @@
       "iconId": "MTL_SL_IRON4",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100046,
+      "sortId": 100049,
       "usage": "An expensive industrial material. Can be used for a variety of upgrades and the synthesis of Polymerization Preparation.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -7779,7 +7807,7 @@
       "iconId": "MTL_SL_STRG1",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100045,
+      "sortId": 100048,
       "usage": "Cheap sugar substitute produced by assembly line. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -7787,7 +7815,7 @@
       "itemType": "MATERIAL",
       "stageDropList": [
         {
-          "stageId": "act25side_01",
+          "stageId": "act26side_03",
           "occPer": "OFTEN"
         },
         {
@@ -7839,11 +7867,11 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act13mini_04",
-          "occPer": "USUAL"
+          "stageId": "act16side_02",
+          "occPer": "OFTEN"
         },
         {
-          "stageId": "act13mini_03",
+          "stageId": "act13mini_04",
           "occPer": "USUAL"
         },
         {
@@ -7891,15 +7919,19 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act16side_02",
+          "stageId": "act25side_03",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act13mini_03",
+          "occPer": "USUAL"
+        },
+        {
+          "stageId": "act25side_02",
           "occPer": "OFTEN"
         },
         {
           "stageId": "act16side_03",
-          "occPer": "OFTEN"
-        },
-        {
-          "stageId": "act10mini_01",
           "occPer": "OFTEN"
         },
         {
@@ -7955,7 +7987,7 @@
           "occPer": "USUAL"
         },
         {
-          "stageId": "act25side_03",
+          "stageId": "act10mini_01",
           "occPer": "OFTEN"
         },
         {
@@ -8015,7 +8047,7 @@
           "occPer": "ALWAYS"
         },
         {
-          "stageId": "act25side_02",
+          "stageId": "act25side_01",
           "occPer": "OFTEN"
         },
         {
@@ -8023,11 +8055,7 @@
           "occPer": "ALWAYS"
         },
         {
-          "stageId": "act26side_03",
-          "occPer": "OFTEN"
-        },
-        {
-          "stageId": "act34side_01",
+          "stageId": "act26side_02",
           "occPer": "OFTEN"
         },
         {
@@ -8079,11 +8107,11 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act38side_03",
+          "stageId": "act34side_01",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act38side_02",
+          "stageId": "act38side_03",
           "occPer": "OFTEN"
         },
         {
@@ -8127,7 +8155,15 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act34side_02",
+          "stageId": "act41side_02",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act41side_01",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act38side_02",
           "occPer": "OFTEN"
         },
         {
@@ -8135,15 +8171,11 @@
           "occPer": "ALWAYS"
         },
         {
-          "stageId": "act33side_01",
+          "stageId": "act34side_02",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act32side_01",
-          "occPer": "OFTEN"
-        },
-        {
-          "stageId": "act26side_02",
+          "stageId": "act33side_02",
           "occPer": "OFTEN"
         },
         {
@@ -8191,15 +8223,15 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act33side_02",
-          "occPer": "OFTEN"
-        },
-        {
           "stageId": "act29side_03",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act29side_01",
+          "stageId": "act33side_01",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act29side_02",
           "occPer": "OFTEN"
         },
         {
@@ -8247,7 +8279,11 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act29side_02",
+          "stageId": "act32side_01",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act29side_01",
           "occPer": "OFTEN"
         },
         {
@@ -8270,7 +8306,7 @@
       "iconId": "MTL_SL_STRG2",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100044,
+      "sortId": 100047,
       "usage": "A small amount of sugar produced by assembly line. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -8278,7 +8314,11 @@
       "itemType": "MATERIAL",
       "stageDropList": [
         {
-          "stageId": "act23side_04",
+          "stageId": "act25side_06",
+          "occPer": "ALWAYS"
+        },
+        {
+          "stageId": "act23side_06",
           "occPer": "USUAL"
         },
         {
@@ -8318,12 +8358,12 @@
           "occPer": "USUAL"
         },
         {
-          "stageId": "act9mini_04",
-          "occPer": "ALWAYS"
+          "stageId": "act23side_04",
+          "occPer": "USUAL"
         },
         {
-          "stageId": "act8mini_04",
-          "occPer": "ALMOST"
+          "stageId": "act9mini_04",
+          "occPer": "ALWAYS"
         },
         {
           "stageId": "act7mini_02",
@@ -8366,8 +8406,8 @@
           "occPer": "ALWAYS"
         },
         {
-          "stageId": "act23side_06",
-          "occPer": "USUAL"
+          "stageId": "act8mini_04",
+          "occPer": "ALMOST"
         },
         {
           "stageId": "act6d5_04",
@@ -8378,20 +8418,28 @@
           "occPer": "USUAL"
         },
         {
-          "stageId": "act26side_05",
+          "stageId": "act27side_04",
+          "occPer": "USUAL"
+        },
+        {
+          "stageId": "act41side_03",
+          "occPer": "USUAL"
+        },
+        {
+          "stageId": "act41side_05",
           "occPer": "ALWAYS"
         },
         {
-          "stageId": "act40side_06",
-          "occPer": "USUAL"
+          "stageId": "act26side_05",
+          "occPer": "ALWAYS"
         },
         {
           "stageId": "act18mini_06",
           "occPer": "ALWAYS"
         },
         {
-          "stageId": "act25side_06",
-          "occPer": "ALWAYS"
+          "stageId": "act39side_03",
+          "occPer": "USUAL"
         },
         {
           "stageId": "act39side_05",
@@ -8402,11 +8450,11 @@
           "occPer": "ALWAYS"
         },
         {
-          "stageId": "act37side_06",
+          "stageId": "act40side_06",
           "occPer": "USUAL"
         },
         {
-          "stageId": "act39side_03",
+          "stageId": "act36side_04",
           "occPer": "USUAL"
         },
         {
@@ -8430,11 +8478,7 @@
           "occPer": "USUAL"
         },
         {
-          "stageId": "act27side_04",
-          "occPer": "USUAL"
-        },
-        {
-          "stageId": "act36side_04",
+          "stageId": "act37side_06",
           "occPer": "USUAL"
         },
         {
@@ -8490,7 +8534,7 @@
       "iconId": "MTL_SL_STRG3",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100043,
+      "sortId": 100046,
       "usage": "A decent amount of sugar produced by assembly line. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -8631,7 +8675,7 @@
       "iconId": "MTL_SL_STRG4",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100042,
+      "sortId": 100045,
       "usage": "A large amount of sugar produced by assembly line. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -8708,7 +8752,7 @@
       "iconId": "MTL_SL_RUSH1",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100041,
+      "sortId": 100044,
       "usage": "Ester used in industrial production. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -8716,12 +8760,8 @@
       "itemType": "MATERIAL",
       "stageDropList": [
         {
-          "stageId": "act26side_03",
+          "stageId": "act26side_02",
           "occPer": "OFTEN"
-        },
-        {
-          "stageId": "act11mini_03",
-          "occPer": "ALWAYS"
         },
         {
           "stageId": "act11mini_01",
@@ -8820,11 +8860,15 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act18side_01",
+          "stageId": "act25side_01",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act25side_01",
+          "stageId": "act11mini_03",
+          "occPer": "ALWAYS"
+        },
+        {
+          "stageId": "act18side_01",
           "occPer": "OFTEN"
         },
         {
@@ -8832,7 +8876,7 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act16side_02",
+          "stageId": "act16side_01",
           "occPer": "OFTEN"
         },
         {
@@ -8884,11 +8928,11 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act13side_02",
+          "stageId": "act26side_03",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act13side_01",
+          "stageId": "act13side_02",
           "occPer": "OFTEN"
         },
         {
@@ -8936,7 +8980,11 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act16side_01",
+          "stageId": "act16side_02",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act13side_01",
           "occPer": "OFTEN"
         },
         {
@@ -8948,11 +8996,7 @@
           "occPer": "ALWAYS"
         },
         {
-          "stageId": "act26side_01",
-          "occPer": "OFTEN"
-        },
-        {
-          "stageId": "act35side_03",
+          "stageId": "act27side_03",
           "occPer": "OFTEN"
         },
         {
@@ -8996,11 +9040,11 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act34side_01",
+          "stageId": "act37side_01",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act37side_01",
+          "stageId": "act38side_03",
           "occPer": "OFTEN"
         },
         {
@@ -9048,23 +9092,27 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act38side_03",
+          "stageId": "act41side_02",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act26side_02",
+          "stageId": "act41side_01",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act34side_02",
+          "stageId": "act35side_03",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act33side_02",
+          "stageId": "act26side_01",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act27side_03",
+          "stageId": "act34side_01",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act33side_01",
           "occPer": "OFTEN"
         },
         {
@@ -9108,15 +9156,15 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act33side_01",
-          "occPer": "OFTEN"
-        },
-        {
           "stageId": "act29side_02",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act30side_03",
+          "stageId": "act34side_02",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act29side_01",
           "occPer": "OFTEN"
         },
         {
@@ -9164,7 +9212,11 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act29side_01",
+          "stageId": "act33side_02",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act30side_03",
           "occPer": "OFTEN"
         },
         {
@@ -9187,7 +9239,7 @@
       "iconId": "MTL_SL_RUSH2",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100040,
+      "sortId": 100043,
       "usage": "A small amount of polyester used in industrial production. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -9379,7 +9431,7 @@
       "iconId": "MTL_SL_RUSH3",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100039,
+      "sortId": 100042,
       "usage": "A pack of polyester used in industrial production. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -9528,7 +9580,7 @@
       "iconId": "MTL_SL_RUSH4",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100038,
+      "sortId": 100041,
       "usage": "A lump of polyester used in industrial production. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -9597,7 +9649,7 @@
       "iconId": "MTL_SL_BOSS1",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100037,
+      "sortId": 100040,
       "usage": "A damaged mechanical device captured from Reunion. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -9605,7 +9657,7 @@
       "itemType": "MATERIAL",
       "stageDropList": [
         {
-          "stageId": "act25side_01",
+          "stageId": "act26side_03",
           "occPer": "OFTEN"
         },
         {
@@ -9657,11 +9709,11 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act13mini_04",
+          "stageId": "act16side_02",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act13mini_03",
+          "stageId": "act13mini_04",
           "occPer": "OFTEN"
         },
         {
@@ -9709,15 +9761,19 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act16side_02",
+          "stageId": "act25side_03",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act13mini_03",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act25side_02",
           "occPer": "OFTEN"
         },
         {
           "stageId": "act16side_03",
-          "occPer": "OFTEN"
-        },
-        {
-          "stageId": "act10mini_01",
           "occPer": "OFTEN"
         },
         {
@@ -9773,7 +9829,7 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act25side_03",
+          "stageId": "act10mini_01",
           "occPer": "OFTEN"
         },
         {
@@ -9833,7 +9889,7 @@
           "occPer": "USUAL"
         },
         {
-          "stageId": "act25side_02",
+          "stageId": "act25side_01",
           "occPer": "OFTEN"
         },
         {
@@ -9841,11 +9897,7 @@
           "occPer": "USUAL"
         },
         {
-          "stageId": "act26side_03",
-          "occPer": "OFTEN"
-        },
-        {
-          "stageId": "act34side_01",
+          "stageId": "act26side_02",
           "occPer": "OFTEN"
         },
         {
@@ -9897,11 +9949,11 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act38side_03",
+          "stageId": "act34side_01",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act38side_02",
+          "stageId": "act38side_03",
           "occPer": "OFTEN"
         },
         {
@@ -9945,7 +9997,15 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act34side_02",
+          "stageId": "act41side_02",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act41side_01",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act38side_02",
           "occPer": "OFTEN"
         },
         {
@@ -9953,15 +10013,11 @@
           "occPer": "USUAL"
         },
         {
-          "stageId": "act33side_01",
+          "stageId": "act34side_02",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act32side_01",
-          "occPer": "OFTEN"
-        },
-        {
-          "stageId": "act26side_02",
+          "stageId": "act33side_02",
           "occPer": "OFTEN"
         },
         {
@@ -10009,15 +10065,15 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act33side_02",
-          "occPer": "OFTEN"
-        },
-        {
           "stageId": "act29side_03",
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act29side_01",
+          "stageId": "act33side_01",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act29side_02",
           "occPer": "OFTEN"
         },
         {
@@ -10065,7 +10121,11 @@
           "occPer": "OFTEN"
         },
         {
-          "stageId": "act29side_02",
+          "stageId": "act32side_01",
+          "occPer": "OFTEN"
+        },
+        {
+          "stageId": "act29side_01",
           "occPer": "OFTEN"
         },
         {
@@ -10088,7 +10148,7 @@
       "iconId": "MTL_SL_BOSS2",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100036,
+      "sortId": 100039,
       "usage": "An ordinary mechanical device captured from Reunion. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -10316,7 +10376,7 @@
       "iconId": "MTL_SL_BOSS3",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100035,
+      "sortId": 100038,
       "usage": "A brand new mechanical device captured from Reunion. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -10437,7 +10497,7 @@
       "iconId": "MTL_SL_BOSS4",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100034,
+      "sortId": 100037,
       "usage": "An advanced mechanical device captured from Reunion. Can be used for a variety of upgrades and the synthesis of Bipolar Nanoflake.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -10494,7 +10554,7 @@
       "iconId": "MTL_SL_G1",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100033,
+      "sortId": 100036,
       "usage": "A rock mined from the ground. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -10502,11 +10562,7 @@
       "itemType": "MATERIAL",
       "stageDropList": [
         {
-          "stageId": "act25side_02",
-          "occPer": "USUAL"
-        },
-        {
-          "stageId": "act16side_02",
+          "stageId": "act25side_01",
           "occPer": "USUAL"
         },
         {
@@ -10554,15 +10610,15 @@
           "occPer": "USUAL"
         },
         {
-          "stageId": "act16side_03",
-          "occPer": "USUAL"
-        },
-        {
           "stageId": "act12mini_01",
           "occPer": "USUAL"
         },
         {
-          "stageId": "act13mini_03",
+          "stageId": "act16side_02",
+          "occPer": "USUAL"
+        },
+        {
+          "stageId": "act13mini_04",
           "occPer": "ALMOST"
         },
         {
@@ -10610,11 +10666,15 @@
           "occPer": "USUAL"
         },
         {
-          "stageId": "act13mini_04",
+          "stageId": "act25side_03",
+          "occPer": "USUAL"
+        },
+        {
+          "stageId": "act13mini_03",
           "occPer": "ALMOST"
         },
         {
-          "stageId": "act25side_03",
+          "stageId": "act16side_03",
           "occPer": "USUAL"
         },
         {
@@ -10622,8 +10682,8 @@
           "occPer": "USUAL"
         },
         {
-          "stageId": "act10mini_03",
-          "occPer": "ALMOST"
+          "stageId": "act10mini_02",
+          "occPer": "USUAL"
         },
         {
           "stageId": "act10d5_02",
@@ -10674,12 +10734,12 @@
           "occPer": "ALMOST"
         },
         {
-          "stageId": "act10mini_02",
-          "occPer": "USUAL"
-        },
-        {
           "stageId": "act18d3_03",
           "occPer": "ALWAYS"
+        },
+        {
+          "stageId": "act18d3_02",
+          "occPer": "ALMOST"
         },
         {
           "stageId": "act18d3_01",
@@ -10730,8 +10790,12 @@
           "occPer": "ALMOST"
         },
         {
-          "stageId": "act18d3_02",
+          "stageId": "act10mini_03",
           "occPer": "ALMOST"
+        },
+        {
+          "stageId": "act25side_02",
+          "occPer": "USUAL"
         },
         {
           "stageId": "act4d0_02",
@@ -10742,11 +10806,7 @@
           "occPer": "ALWAYS"
         },
         {
-          "stageId": "act26side_03",
-          "occPer": "USUAL"
-        },
-        {
-          "stageId": "act34side_01",
+          "stageId": "act26side_02",
           "occPer": "USUAL"
         },
         {
@@ -10798,11 +10858,11 @@
           "occPer": "USUAL"
         },
         {
-          "stageId": "act38side_03",
+          "stageId": "act34side_01",
           "occPer": "USUAL"
         },
         {
-          "stageId": "act38side_02",
+          "stageId": "act38side_03",
           "occPer": "USUAL"
         },
         {
@@ -10846,23 +10906,27 @@
           "occPer": "USUAL"
         },
         {
+          "stageId": "act41side_02",
+          "occPer": "USUAL"
+        },
+        {
+          "stageId": "act41side_01",
+          "occPer": "USUAL"
+        },
+        {
+          "stageId": "act38side_02",
+          "occPer": "USUAL"
+        },
+        {
+          "stageId": "act26side_03",
+          "occPer": "USUAL"
+        },
+        {
           "stageId": "act34side_02",
           "occPer": "USUAL"
         },
         {
-          "stageId": "act25side_01",
-          "occPer": "USUAL"
-        },
-        {
-          "stageId": "act33side_01",
-          "occPer": "USUAL"
-        },
-        {
-          "stageId": "act32side_01",
-          "occPer": "USUAL"
-        },
-        {
-          "stageId": "act26side_02",
+          "stageId": "act33side_02",
           "occPer": "USUAL"
         },
         {
@@ -10910,15 +10974,15 @@
           "occPer": "USUAL"
         },
         {
-          "stageId": "act33side_02",
-          "occPer": "USUAL"
-        },
-        {
           "stageId": "act29side_03",
           "occPer": "USUAL"
         },
         {
-          "stageId": "act29side_01",
+          "stageId": "act33side_01",
+          "occPer": "USUAL"
+        },
+        {
+          "stageId": "act29side_02",
           "occPer": "USUAL"
         },
         {
@@ -10966,7 +11030,11 @@
           "occPer": "USUAL"
         },
         {
-          "stageId": "act29side_02",
+          "stageId": "act32side_01",
+          "occPer": "USUAL"
+        },
+        {
+          "stageId": "act29side_01",
           "occPer": "USUAL"
         },
         {
@@ -10989,7 +11057,7 @@
       "iconId": "MTL_SL_G2",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100032,
+      "sortId": 100035,
       "usage": "A rock cube mined from the ground. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -10998,6 +11066,10 @@
       "stageDropList": [
         {
           "stageId": "act28side_04",
+          "occPer": "ALWAYS"
+        },
+        {
+          "stageId": "act25side_06",
           "occPer": "ALWAYS"
         },
         {
@@ -11037,12 +11109,12 @@
           "occPer": "ALMOST"
         },
         {
-          "stageId": "act13side_06",
+          "stageId": "act15mini_05",
           "occPer": "ALWAYS"
         },
         {
-          "stageId": "act18d3_04",
-          "occPer": "ALMOST"
+          "stageId": "act13side_06",
+          "occPer": "ALWAYS"
         },
         {
           "stageId": "act18d3_06",
@@ -11085,19 +11157,23 @@
           "occPer": "ALWAYS"
         },
         {
-          "stageId": "act25side_06",
-          "occPer": "ALWAYS"
+          "stageId": "act18d3_04",
+          "occPer": "ALMOST"
         },
         {
-          "stageId": "act15mini_05",
-          "occPer": "ALWAYS"
+          "stageId": "act11d0_04",
+          "occPer": "ALMOST"
         },
         {
           "stageId": "act6d5_03",
           "occPer": "ALWAYS"
         },
         {
-          "stageId": "act29side_04",
+          "stageId": "act30side_05",
+          "occPer": "ALWAYS"
+        },
+        {
+          "stageId": "act41side_03",
           "occPer": "ALWAYS"
         },
         {
@@ -11105,11 +11181,11 @@
           "occPer": "ALMOST"
         },
         {
-          "stageId": "act39side_04",
+          "stageId": "act29side_04",
           "occPer": "ALWAYS"
         },
         {
-          "stageId": "act11d0_04",
+          "stageId": "act39side_05",
           "occPer": "ALMOST"
         },
         {
@@ -11125,11 +11201,11 @@
           "occPer": "ALMOST"
         },
         {
-          "stageId": "act17mini_05",
+          "stageId": "act39side_04",
           "occPer": "ALWAYS"
         },
         {
-          "stageId": "act39side_05",
+          "stageId": "act35side_06",
           "occPer": "ALMOST"
         },
         {
@@ -11153,12 +11229,8 @@
           "occPer": "ALWAYS"
         },
         {
-          "stageId": "act30side_05",
+          "stageId": "act17mini_05",
           "occPer": "ALWAYS"
-        },
-        {
-          "stageId": "act35side_06",
-          "occPer": "ALMOST"
         },
         {
           "stageId": "main_01-07",
@@ -11213,7 +11285,7 @@
       "iconId": "MTL_SL_G3",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100031,
+      "sortId": 100034,
       "usage": "A conglomerate rock mined from the ground. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -11350,7 +11422,7 @@
       "iconId": "MTL_SL_G4",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100030,
+      "sortId": 100033,
       "usage": "A refined matter produced with Orirock Cluster. Can be used for a variety of upgrades and the synthesis of Polymerization Preparation.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -11423,7 +11495,7 @@
       "iconId": "MTL_SL_RMA7012",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100029,
+      "sortId": 100032,
       "usage": "A sensitive mineral with high conductivity. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -11543,7 +11615,7 @@
       "iconId": "MTL_SL_RMA7024",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100028,
+      "sortId": 100031,
       "usage": "A highly sensitive mineral with outstanding conductivity. Can be used for a variety of upgrades and the synthesis of D32 Steel.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -11608,7 +11680,7 @@
       "iconId": "MTL_SL_PG1",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100027,
+      "sortId": 100030,
       "usage": "A grindstone used to process weapon parts. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -11653,6 +11725,10 @@
         },
         {
           "stageId": "act39side_08",
+          "occPer": "USUAL"
+        },
+        {
+          "stageId": "act41side_06",
           "occPer": "USUAL"
         },
         {
@@ -11736,7 +11812,7 @@
       "iconId": "MTL_SL_PG2",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100026,
+      "sortId": 100029,
       "usage": "An advanced grindstone used in the finish machining of weapon parts. Can be used for a variety of upgrades and the synthesis of D32 Steel.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -11801,7 +11877,7 @@
       "iconId": "MTL_SL_MANGANESE1",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100025,
+      "sortId": 100028,
       "usage": "A metal ore used for metallurgy. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -11921,7 +11997,7 @@
       "iconId": "MTL_SL_MANGANESE2",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100024,
+      "sortId": 100027,
       "usage": "A metal ore used for metallurgy. Can be used for a variety of upgrades and the synthesis of D32 Steel.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -12002,7 +12078,7 @@
       "iconId": "MTL_SL_ALCOHOL1",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100023,
+      "sortId": 100026,
       "usage": "A flaky organic compound. Can be used for a variety of upgrades and for production in the Factory.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -12158,7 +12234,7 @@
       "iconId": "MTL_SL_ALCOHOL2",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100022,
+      "sortId": 100025,
       "usage": "A flaky organic compound. Can be used for a variety of upgrades and the synthesis of Bipolar Nanoflake.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -12247,7 +12323,7 @@
       "iconId": "MTL_SL_PGEL3",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100021,
+      "sortId": 100024,
       "usage": "A high-strength plastic material suitable. Can be used for a variety of upgrades and for synthesis projects in Factories.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -12363,7 +12439,7 @@
       "iconId": "MTL_SL_PGEL4",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100020,
+      "sortId": 100023,
       "usage": "An extremely high-strength plastic material. Can be used for a variety of upgrades.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -12432,7 +12508,7 @@
       "iconId": "MTL_SL_IAM3",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100019,
+      "sortId": 100022,
       "usage": "A special alloy with a high melting point, commonly used in the electronics industry. Can be used for a variety of upgrades and for synthesis projects in Factories.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -12564,7 +12640,7 @@
       "iconId": "MTL_SL_IAM4",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100018,
+      "sortId": 100021,
       "usage": "A rarely-produced alloy with a high melting point, commonly used in the electronics industry. Can be used for a variety of upgrades.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -12653,7 +12729,7 @@
       "iconId": "MTL_SL_OC3",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100017,
+      "sortId": 100020,
       "usage": "An important Originium industry material. Can be used for a variety of upgrades. Can be manufactured and assembled into more advanced Originium electric components.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -12769,7 +12845,7 @@
       "iconId": "MTL_SL_OC4",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100016,
+      "sortId": 100019,
       "usage": "An important Originium industry material. Can be used for a variety of upgrades. A fundamental part of manufacturing Originium crystal assemblies.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -12842,13 +12918,17 @@
       "iconId": "MTL_SL_SS",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100015,
+      "sortId": 100018,
       "usage": "An active solvent with excellent physical characteristics, and good resistance to acids and bases. Can be used in a variety of upgrades.",
       "obtainApproach": null,
       "hideInItemGet": false,
       "classifyType": "MATERIAL",
       "itemType": "MATERIAL",
       "stageDropList": [
+        {
+          "stageId": "act41side_07",
+          "occPer": "USUAL"
+        },
         {
           "stageId": "act37side_09",
           "occPer": "USUAL"
@@ -12918,7 +12998,7 @@
       "iconId": "MTL_SL_RS",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100014,
+      "sortId": 100017,
       "usage": "A special coating made from a specific formulation process. Can be used for high level upgrades.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -12983,7 +13063,7 @@
       "iconId": "MTL_SL_CCF",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100013,
+      "sortId": 100016,
       "usage": "An industrial agent necessary for metal processing. Can be used for a variety of upgrades.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -13059,7 +13139,7 @@
       "iconId": "MTL_SL_PLCF",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100012,
+      "sortId": 100015,
       "usage": "A stock solution prepared from a variety of active solvents. Can be used for high level upgrades.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -13120,7 +13200,7 @@
       "iconId": "MTL_SL_ZY",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100011,
+      "sortId": 100014,
       "usage": "A compound crystallization that has undergone low-tolerance refinement. Can be used in a variety of strengthening projects.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -13200,7 +13280,7 @@
       "iconId": "MTL_SL_ZYK",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100010,
+      "sortId": 100013,
       "usage": "A compound crystal mass that has undergone high-tolerance refinement. Used in a variety of strengthening projects, and is a common material in synthetic items at factories.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -13265,13 +13345,17 @@
       "iconId": "MTL_SL_XW",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100009,
+      "sortId": 100012,
       "usage": "A specialized fiber bundle, possessing high tensile strength and elastic modulus. Used in a variety of strengthening projects.",
       "obtainApproach": null,
       "hideInItemGet": false,
       "classifyType": "MATERIAL",
       "itemType": "MATERIAL",
       "stageDropList": [
+        {
+          "stageId": "act41side_08",
+          "occPer": "USUAL"
+        },
         {
           "stageId": "act36side_08",
           "occPer": "USUAL"
@@ -13309,7 +13393,7 @@
       "iconId": "MTL_SL_XWB",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100008,
+      "sortId": 100011,
       "usage": "A specialized fiber board, solidified in a mold. Used in a variety of strengthening projects.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -13350,7 +13434,7 @@
       "iconId": "MTL_SL_HT",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100007,
+      "sortId": 100010,
       "usage": "A superlatively heat- and chemical-resistant industrial material. Used in a variety of strengthening projects.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -13402,7 +13486,7 @@
       "iconId": "MTL_SL_HTT",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100006,
+      "sortId": 100009,
       "usage": "A prefabricated industrial intermediate composed of multiple first-rate materials. Used in a variety of strengthening projects.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -13451,7 +13535,7 @@
       "iconId": "MTL_SL_PP",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100005,
+      "sortId": 100006,
       "usage": "A complicated liquid industrial product. Can be used for high level upgrades.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -13474,7 +13558,7 @@
       "iconId": "MTL_SL_BN",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100004,
+      "sortId": 100005,
       "usage": "The brainchild of modern science and industry. Can be used for high level upgrades.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -13497,7 +13581,7 @@
       "iconId": "MTL_SL_DS",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100003,
+      "sortId": 100004,
       "usage": "An artificial metal that doesn't exist in nature. Can be used for high level upgrades.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -13520,7 +13604,7 @@
       "iconId": "MTL_SL_OEU",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100002,
+      "sortId": 100003,
       "usage": "An expensive Originium industry product. Can be used for major upgrades.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -13543,7 +13627,7 @@
       "iconId": "MTL_SL_SHJ",
       "overrideBkg": null,
       "stackIconId": null,
-      "sortId": 100001,
+      "sortId": 100002,
       "usage": "A product of modern technology that requires the ultimate in industrial craft. Used in advanced strengthening projects.",
       "obtainApproach": null,
       "hideInItemGet": false,
@@ -13568,7 +13652,7 @@
       "stackIconId": null,
       "sortId": 200001,
       "usage": "A delicate artificial component used as the core material of Base construction.",
-      "obtainApproach": "Dropped from the first clear of 1-1, 1-8, 3-4 and 4-7",
+      "obtainApproach": "Dropped from the first clear of Main Theme 1-1, 1-8, 3-4, 4-7",
       "hideInItemGet": false,
       "classifyType": "NORMAL",
       "itemType": "MATERIAL",
@@ -13614,7 +13698,7 @@
       "stackIconId": null,
       "sortId": 200005,
       "usage": "A basic construction material used for the facility development of Rhodes Island.",
-      "obtainApproach": "Dropped from the first clear of 0-11, 1-1",
+      "obtainApproach": "Dropped from the first clear of Main Theme 0-11, 1-1",
       "hideInItemGet": false,
       "classifyType": "NORMAL",
       "itemType": "MATERIAL",
@@ -19864,6 +19948,42 @@
       "buildingProductList": [],
       "voucherRelateList": null
     },
+    "p_char_4171_wulfen": {
+      "itemId": "p_char_4171_wulfen",
+      "name": "Wulfenite's Token",
+      "description": "A beautiful chunk of ore. According to Wulfenite, it can change color. May as well have a look whenever you have some spare time. You might be pleasantly surprised.",
+      "rarity": "TIER_5",
+      "iconId": "p_char_4171_wulfen",
+      "overrideBkg": null,
+      "stackIconId": null,
+      "sortId": 700164,
+      "usage": "Used to improve the Potential of Wulfenite.",
+      "obtainApproach": "New Operator's gift",
+      "hideInItemGet": false,
+      "classifyType": "MATERIAL",
+      "itemType": "MATERIAL",
+      "stageDropList": [],
+      "buildingProductList": [],
+      "voucherRelateList": null
+    },
+    "p_char_4177_brigid": {
+      "itemId": "p_char_4177_brigid",
+      "name": "Brigid's Token",
+      "description": "An intricate knot woven from straw, its meaning unwritten in any book. It's not often that straw ropes are coated in beastoil. Maybe she just doesn't want you cutting yourself on the sharp blades of grass.",
+      "rarity": "TIER_5",
+      "iconId": "p_char_4177_brigid",
+      "overrideBkg": null,
+      "stackIconId": null,
+      "sortId": 700165,
+      "usage": "Used to improve the Potential of Brigid.",
+      "obtainApproach": "New Operator's gift",
+      "hideInItemGet": false,
+      "classifyType": "MATERIAL",
+      "itemType": "MATERIAL",
+      "stageDropList": [],
+      "buildingProductList": [],
+      "voucherRelateList": null
+    },
     "p_char_103_angel": {
       "itemId": "p_char_103_angel",
       "name": "Exusiai's Token",
@@ -21648,14 +21768,14 @@
     },
     "p_char_1502_crosly": {
       "itemId": "p_char_1502_crosly",
-      "name": "CrownSlayer's Token",
+      "name": "Crownslayer's Token",
       "description": "An airtight black tactical mask. 'My face is concealed, but my anger is for all to see.'",
       "rarity": "TIER_6",
       "iconId": "p_char_1502_crosly",
       "overrideBkg": null,
       "stackIconId": null,
       "sortId": 600100,
-      "usage": "Used to improve the Potential of CrownSlayer.",
+      "usage": "Used to improve the Potential of Crownslayer.",
       "obtainApproach": "New Operator's gift",
       "hideInItemGet": false,
       "classifyType": "MATERIAL",
@@ -21764,6 +21884,24 @@
       "stackIconId": null,
       "sortId": 600106,
       "usage": "Used to improve the Potential of Entelechia.",
+      "obtainApproach": "New Operator's gift",
+      "hideInItemGet": false,
+      "classifyType": "MATERIAL",
+      "itemType": "MATERIAL",
+      "stageDropList": [],
+      "buildingProductList": [],
+      "voucherRelateList": null
+    },
+    "p_char_450_necras": {
+      "itemId": "p_char_450_necras",
+      "name": "Necrass's Token",
+      "description": "A collection of stories that was never published, all of them missing an ending. Closer inspection reveals that these incomplete tales all point towards someone still among the living. You're part of one of them yourself.",
+      "rarity": "TIER_6",
+      "iconId": "p_char_450_necras",
+      "overrideBkg": null,
+      "stackIconId": null,
+      "sortId": 600107,
+      "usage": "Used to improve the Potential of Necrass.",
       "obtainApproach": "New Operator's gift",
       "hideInItemGet": false,
       "classifyType": "MATERIAL",
@@ -23842,6 +23980,42 @@
       "buildingProductList": [],
       "voucherRelateList": null
     },
+    "class_p_char_475_akafyu": {
+      "itemId": "class_p_char_475_akafyu",
+      "name": "Akafuyu's Kernel Token",
+      "description": "A helping of raw, worked meat. Only those who eat heartily and leave an empty plate can be called good buddies.",
+      "rarity": "TIER_5",
+      "iconId": "class_p_char_475_akafyu",
+      "overrideBkg": null,
+      "stackIconId": null,
+      "sortId": 1300065,
+      "usage": "Used to improve the Potential of Akafuyu.",
+      "obtainApproach": "New Operator's gift",
+      "hideInItemGet": false,
+      "classifyType": "MATERIAL",
+      "itemType": "MATERIAL",
+      "stageDropList": [],
+      "buildingProductList": [],
+      "voucherRelateList": null
+    },
+    "class_p_char_478_kirara": {
+      "itemId": "class_p_char_478_kirara",
+      "name": "Kirara's Kernel Token",
+      "description": "[Shinobi Ex Machina 2] Collector's Edition. The launch collector's edition of a classic Higashi game. She's dying to share all her favorites with you.",
+      "rarity": "TIER_5",
+      "iconId": "class_p_char_478_kirara",
+      "overrideBkg": null,
+      "stackIconId": null,
+      "sortId": 1300066,
+      "usage": "Used to improve the Potential of Kirara.",
+      "obtainApproach": "New Operator's gift",
+      "hideInItemGet": false,
+      "classifyType": "MATERIAL",
+      "itemType": "MATERIAL",
+      "stageDropList": [],
+      "buildingProductList": [],
+      "voucherRelateList": null
+    },
     "class_p_char_103_angel": {
       "itemId": "class_p_char_103_angel",
       "name": "Exusiai's Kernel Token",
@@ -24482,42 +24656,6 @@
       "stackIconId": null,
       "sortId": 1200037,
       "usage": "Used to improve the Potential of Pallas.",
-      "obtainApproach": "New Operator's gift",
-      "hideInItemGet": false,
-      "classifyType": "MATERIAL",
-      "itemType": "MATERIAL",
-      "stageDropList": [],
-      "buildingProductList": [],
-      "voucherRelateList": null
-    },
-    "class_p_char_475_akafyu": {
-      "itemId": "class_p_char_475_akafyu",
-      "name": "Akafuyu's Kernel Token",
-      "description": "A helping of raw, worked meat. Only those who eat heartily and leave an empty plate can be called good buddies.",
-      "rarity": "TIER_5",
-      "iconId": "class_p_char_475_akafyu",
-      "overrideBkg": null,
-      "stackIconId": null,
-      "sortId": 1200038,
-      "usage": "Used to improve the Potential of Akafuyu.",
-      "obtainApproach": "New Operator's gift",
-      "hideInItemGet": false,
-      "classifyType": "MATERIAL",
-      "itemType": "MATERIAL",
-      "stageDropList": [],
-      "buildingProductList": [],
-      "voucherRelateList": null
-    },
-    "class_p_char_478_kirara": {
-      "itemId": "class_p_char_478_kirara",
-      "name": "Kirara's Kernel Token",
-      "description": "[Shinobi Ex Machina 2] Collector's Edition. The launch collector's edition of a classic Higashi game. She's dying to share all her favorites with you.",
-      "rarity": "TIER_5",
-      "iconId": "class_p_char_478_kirara",
-      "overrideBkg": null,
-      "stackIconId": null,
-      "sortId": 1200039,
-      "usage": "Used to improve the Potential of Kirara.",
       "obtainApproach": "New Operator's gift",
       "hideInItemGet": false,
       "classifyType": "MATERIAL",
@@ -27728,7 +27866,7 @@
       "overrideBkg": null,
       "stackIconId": null,
       "sortId": -10000,
-      "usage": "A sacred stone blessed by a member of the Vine-Bear Court. Collect a certain amount to exchange with the people for goods.",
+      "usage": "A sacred stone blessed by a member of the Vine-Bead Court. Collect a certain amount to exchange with the people for goods.",
       "obtainApproach": "Limited Event Drop",
       "hideInItemGet": false,
       "classifyType": "NONE",
@@ -27746,7 +27884,7 @@
       "overrideBkg": null,
       "stackIconId": null,
       "sortId": -10000,
-      "usage": "A sacred stone blessed by a member of the Vine-Bear Court. Collect a certain amount to exchange with the people for goods.",
+      "usage": "A sacred stone blessed by a member of the Vine-Bead Court. Collect a certain amount to exchange with the people for goods.",
       "obtainApproach": "Limited Event Drop",
       "hideInItemGet": false,
       "classifyType": "NONE",
@@ -30932,7 +31070,7 @@
       "obtainApproach": "Store",
       "hideInItemGet": false,
       "classifyType": "NORMAL",
-      "itemType": "EXCLUSIVE_TKT_GACHA",
+      "itemType": "EXCLUSIVE_TKT_GACHA_10",
       "stageDropList": [],
       "buildingProductList": [],
       "voucherRelateList": null
@@ -30950,7 +31088,7 @@
       "obtainApproach": "Store",
       "hideInItemGet": false,
       "classifyType": "NORMAL",
-      "itemType": "EXCLUSIVE_TKT_GACHA_10",
+      "itemType": 84,
       "stageDropList": [],
       "buildingProductList": [],
       "voucherRelateList": null
@@ -31403,7 +31541,7 @@
       "obtainApproach": "Store",
       "hideInItemGet": false,
       "classifyType": "NORMAL",
-      "itemType": "EXCLUSIVE_TKT_GACHA",
+      "itemType": "EXCLUSIVE_TKT_GACHA_10",
       "stageDropList": [],
       "buildingProductList": [],
       "voucherRelateList": null
@@ -31421,7 +31559,7 @@
       "obtainApproach": "Store",
       "hideInItemGet": false,
       "classifyType": "NORMAL",
-      "itemType": "EXCLUSIVE_TKT_GACHA_10",
+      "itemType": 84,
       "stageDropList": [],
       "buildingProductList": [],
       "voucherRelateList": null
@@ -32001,6 +32139,57 @@
       "stageDropList": [],
       "buildingProductList": [],
       "voucherRelateList": null
+    },
+    "act41side_token_light": {
+      "itemId": "act41side_token_light",
+      "name": "Broken Originium Lamp",
+      "description": "One tradition Tarans brought back is wearing an Originium lamp at their hips. Once, people would take them into the Dark Woods, but now those bodies have been scattered by the wind. Not even shadows are left, only shattered lamps.",
+      "rarity": "TIER_5",
+      "iconId": "act41side_token_light",
+      "overrideBkg": null,
+      "stackIconId": null,
+      "sortId": -10000,
+      "usage": "A damaged Originium lamp found in the Dark Woods. Once Na Saoirsí's supply issues were resolved, the citizens spontaneously decided to organize, taking out the only supplies they had on hand to recover these relics of the war.",
+      "obtainApproach": "Event Stage drop, Event mission reward",
+      "hideInItemGet": false,
+      "classifyType": "NONE",
+      "itemType": "ACTIVITY_ITEM",
+      "stageDropList": [
+        {
+          "stageId": "act41side_01",
+          "occPer": "ALWAYS"
+        },
+        {
+          "stageId": "act41side_02",
+          "occPer": "ALWAYS"
+        },
+        {
+          "stageId": "act41side_03",
+          "occPer": "ALWAYS"
+        },
+        {
+          "stageId": "act41side_04",
+          "occPer": "ALWAYS"
+        },
+        {
+          "stageId": "act41side_05",
+          "occPer": "ALWAYS"
+        },
+        {
+          "stageId": "act41side_06",
+          "occPer": "ALWAYS"
+        },
+        {
+          "stageId": "act41side_07",
+          "occPer": "ALWAYS"
+        },
+        {
+          "stageId": "act41side_08",
+          "occPer": "ALWAYS"
+        }
+      ],
+      "buildingProductList": [],
+      "voucherRelateList": null
     }
   },
   "expItems": {
@@ -32224,16 +32413,6 @@
       "ap": 100,
       "hasTs": true
     },
-    "ap_supply_lt_100_2024_6": {
-      "id": "ap_supply_lt_100_2024_6",
-      "ap": 100,
-      "hasTs": true
-    },
-    "ap_supply_lt_120_2024_1": {
-      "id": "ap_supply_lt_120_2024_1",
-      "ap": 120,
-      "hasTs": true
-    },
     "ap_supply_lt_120_2024_2": {
       "id": "ap_supply_lt_120_2024_2",
       "ap": 120,
@@ -32259,11 +32438,6 @@
       "ap": 120,
       "hasTs": true
     },
-    "ap_supply_lt_80_2025_1": {
-      "id": "ap_supply_lt_80_2025_1",
-      "ap": 80,
-      "hasTs": true
-    },
     "ap_supply_lt_100_2025_1": {
       "id": "ap_supply_lt_100_2025_1",
       "ap": 100,
@@ -32287,11 +32461,6 @@
     "ap_supply_lt_100_2025_5": {
       "id": "ap_supply_lt_100_2025_5",
       "ap": 100,
-      "hasTs": true
-    },
-    "ap_supply_lt_120_2025_1": {
-      "id": "ap_supply_lt_120_2025_1",
-      "ap": 120,
       "hasTs": true
     }
   },
@@ -33389,6 +33558,44 @@
     "furni_villagemanor_plantshelf_01": 1,
     "furni_villagemanor_wallpaper_01": 1,
     "furni_villagemanor_floor_01": 1,
+    "furni_tarahouse_hangingcarpet_01": 1,
+    "furni_tarahouse_candletray_01": 1,
+    "furni_tarahouse_column_01": 1,
+    "furni_tarahouse_table_01": 1,
+    "furni_tarahouse_chair_01": 1,
+    "furni_tarahouse_chair_02": 1,
+    "furni_tarahouse_shield_01": 1,
+    "furni_tarahouse_wallhanger_01": 1,
+    "furni_tarahouse_stove_01": 1,
+    "furni_tarahouse_pot_01": 1,
+    "furni_tarahouse_stool_01": 2,
+    "furni_tarahouse_stonecutoff_01": 1,
+    "furni_tarahouse_ceilinglight_01": 1,
+    "furni_tarahouse_wallshelf_01": 1,
+    "furni_tarahouse_bartable_01": 1,
+    "furni_tarahouse_bookcase_01": 1,
+    "furni_tarahouse_carpet_01": 1,
+    "furni_tarahouse_carpet_02": 1,
+    "furni_tarahouse_wallpaper_01": 1,
+    "furni_tarahouse_floor_01": 1,
+    "furni_kaltsroom_ceilinglight_01": 1,
+    "furni_kaltsroom_sample_01": 1,
+    "furni_kaltsroom_cabinet_01": 1,
+    "furni_kaltsroom_clock_01": 1,
+    "furni_kaltsroom_display_01": 1,
+    "furni_kaltsroom_sofa_01": 1,
+    "furni_kaltsroom_carpet_01": 1,
+    "furni_kaltsroom_ceilinglight_02": 1,
+    "furni_kaltsroom_shelf_01": 1,
+    "furni_kaltsroom_carpet_02": 1,
+    "furni_kaltsroom_cart_01": 1,
+    "furni_kaltsroom_table_01": 1,
+    "furni_kaltsroom_light_01": 1,
+    "furni_kaltsroom_chair_01": 1,
+    "furni_kaltsroom_cabinet_02": 1,
+    "furni_kaltsroom_sample_02": 1,
+    "furni_kaltsroom_wallpaper_01": 1,
+    "furni_kaltsroom_floor_01": 1,
     "furni_oct1st_deckChair_01": 1,
     "furni_animation_projector_01": 1,
     "furni_animation_trophy_01": 1,
@@ -33585,6 +33792,7 @@
     "furni_terracommericials_CondensedSuppressant_01": 1,
     "furni_terracommericials_ForteEnergyDrink_01": 1,
     "furni_terracommericials_SpinachPack_01": 1,
+    "furni_terracommericials_BarrensTequila_01": 1,
     "furni_contract_s0_01": 1,
     "furni_contract_s1_01": 1,
     "furni_contract_s2_01": 1,
@@ -33663,6 +33871,7 @@
     "furniM_basicRoom_desk_01": 1,
     "furniM_basicRoom_messageboard_01": 1,
     "furniM_basicRoom_musicplayer_01": 1,
+    "tm_mainline_1": 1,
     "char_002_amiya@winter#1": 1,
     "char_181_flower@daily#1": 1,
     "char_002_amiya@epoque#4": 1,
@@ -33769,6 +33978,9 @@
     "char_222_bpipe@epoque#40": 1,
     "char_289_gyuki@epoque#40": 1,
     "char_4119_wanqin@epoque#41": 1,
+    "char_4146_nymph@epoque#42": 1,
+    "char_4102_threye@epoque#42": 1,
+    "char_260_durnar@epoque#42": 1,
     "char_120_hibisc@nian#1": 1,
     "char_010_chen@nian#2": 1,
     "char_308_swire@nian#2": 1,
@@ -34012,6 +34224,7 @@
     "char_4009_irene@game#3": 1,
     "char_1021_kroos2@game#3": 1,
     "char_240_wyvern@game#4": 1,
+    "char_379_sesa@game#5": 1,
     "char_2023_ling@ncg#1": 1,
     "char_4082_qiubai@ncg#1": 1,
     "char_106_franka@ncg#1": 1,
@@ -36570,11 +36783,11 @@
     },
     "char_4017_puzzle": {
       "itemId": "voucher_full_puzzle",
-      "ts": 1751043600
+      "ts": 1751065200
     },
     "char_4078_bdhkgt": {
       "itemId": "voucher_full_bdhkgt",
-      "ts": 1751562000
+      "ts": 1751583600
     }
   },
   "activityPotentialCharacters": {
