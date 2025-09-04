@@ -1516,6 +1516,9 @@ class AdvancedGachaLinkageManager(AdvancedGachaSimpleManager):
             self.player_data["gacha"]["linkage"][self.pool_id]["LINKAGE_R6_01"][
                 "next5"
             ] = false
+            self.player_data["gacha"]["linkage"][self.pool_id]["LINKAGE_R6_01"][
+                "next5Char"
+            ] = ""
 
         gacha_num = self.get_gacha_num()
 
