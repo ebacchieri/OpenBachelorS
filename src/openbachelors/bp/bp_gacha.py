@@ -1423,14 +1423,14 @@ class AdvancedGachaLinkageManager(AdvancedGachaSimpleManager):
         return f"advanced_gacha_linkage_tier_5_pity_{self.pool_id}"
 
     def get_linkage_tier_5_pity(self):
-        linkage_tier_5_pity = self.get_linkage_tier_5_pity_key()
+        linkage_tier_5_pity_key = self.get_linkage_tier_5_pity_key()
 
-        return self.player_data.extra_save.save_obj.get(linkage_tier_5_pity, False)
+        return self.player_data.extra_save.save_obj.get(linkage_tier_5_pity_key, False)
 
     def set_linkage_tier_5_pity(self):
-        linkage_tier_5_pity = self.get_linkage_tier_5_pity_key()
+        linkage_tier_5_pity_key = self.get_linkage_tier_5_pity_key()
 
-        self.player_data.extra_save.save_obj[linkage_tier_5_pity] = True
+        self.player_data.extra_save.save_obj[linkage_tier_5_pity_key] = True
 
     def try_get_linkage_tier_5_char_id(self):
         if self.pool_id not in self.player_data["gacha"]["linkage"]:
