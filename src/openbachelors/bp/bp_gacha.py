@@ -1424,6 +1424,7 @@ class AdvancedGachaLinkageManager(AdvancedGachaSimpleManager):
         gacha_num = self.get_gacha_num()
 
         if not linkage_pity and gacha_num + 1 == 120:
+            char_rarity_rank = CharRarityRank.TIER_6
             char_id = self.linkage_char_id
 
         return char_rarity_rank, char_id
