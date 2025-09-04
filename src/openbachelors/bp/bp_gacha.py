@@ -1396,6 +1396,13 @@ class AdvancedGachaLinkageManager(AdvancedGachaSimpleManager):
                 "char_id_lst"
             ][0]
 
+            if CharRarityRank.TIER_5.name in up_char_info:
+                self.linkage_tier_5_char_id_lst = up_char_info[
+                    CharRarityRank.TIER_5.name
+                ]["char_id_lst"].copy()
+            else:
+                self.linkage_tier_5_char_id_lst = []
+
     def get_basic_tier_6_pity_key(self):
         return f"advanced_gacha_linkage_basic_tier_6_pity_{self.pool_id}"
 
@@ -1412,6 +1419,32 @@ class AdvancedGachaLinkageManager(AdvancedGachaSimpleManager):
 
         self.player_data.extra_save.save_obj[linkage_pity_key] = True
 
+    def get_linkage_tier_5_pity_key(self):
+        return f"advanced_gacha_linkage_tier_5_pity_{self.pool_id}"
+
+    def get_linkage_tier_5_pity(self):
+        linkage_tier_5_pity = self.get_linkage_tier_5_pity_key()
+
+        return self.player_data.extra_save.save_obj.get(linkage_tier_5_pity, False)
+
+    def set_linkage_tier_5_pity(self):
+        linkage_tier_5_pity = self.get_linkage_tier_5_pity_key()
+
+        self.player_data.extra_save.save_obj[linkage_tier_5_pity] = True
+
+    def try_get_linkage_tier_5_char_id(self):
+        if self.pool_id not in self.player_data["gacha"]["linkage"]:
+            return None
+
+        if not self.player_data["gacha"]["linkage"][self.pool_id]["LINKAGE_R6_01"][
+            "next5"
+        ]:
+            return None
+
+        return self.player_data["gacha"]["linkage"][self.pool_id]["LINKAGE_R6_01"][
+            "next5Char"
+        ]
+
     def post_gacha_override(self, char_rarity_rank, char_id):
         char_rarity_rank, char_id = super().post_gacha_override(
             char_rarity_rank, char_id
@@ -1426,6 +1459,13 @@ class AdvancedGachaLinkageManager(AdvancedGachaSimpleManager):
         if not linkage_pity and gacha_num + 1 == 120:
             char_rarity_rank = CharRarityRank.TIER_6
             char_id = self.linkage_char_id
+            return char_rarity_rank, char_id
+
+        if char_rarity_rank == CharRarityRank.TIER_5:
+            linkage_tier_5_char_id = self.try_get_linkage_tier_5_char_id()
+            if linkage_tier_5_char_id:
+                char_id = linkage_tier_5_char_id
+                return char_rarity_rank, char_id
 
         return char_rarity_rank, char_id
 
@@ -1452,6 +1492,29 @@ class AdvancedGachaLinkageManager(AdvancedGachaSimpleManager):
 
             self.player_data["gacha"]["linkage"][self.pool_id]["LINKAGE_R6_01"][
                 "must6"
+            ] = false
+
+        if (
+            not self.get_linkage_tier_5_pity()
+            and char_id in self.linkage_tier_5_char_id_lst
+            and len(self.linkage_tier_5_char_id_lst) > 1
+        ):
+            self.set_linkage_tier_5_pity()
+
+            for next_char_id in self.linkage_tier_5_char_id_lst:
+                if next_char_id != char_id:
+                    break
+            self.player_data["gacha"]["linkage"][self.pool_id]["LINKAGE_R6_01"][
+                "next5"
+            ] = true
+            self.player_data["gacha"]["linkage"][self.pool_id]["LINKAGE_R6_01"][
+                "next5Char"
+            ] = next_char_id
+
+        linkage_tier_5_char_id = self.try_get_linkage_tier_5_char_id()
+        if char_id == linkage_tier_5_char_id:
+            self.player_data["gacha"]["linkage"][self.pool_id]["LINKAGE_R6_01"][
+                "next5"
             ] = false
 
         gacha_num = self.get_gacha_num()
