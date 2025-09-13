@@ -201,7 +201,7 @@ async def activity_enemyDuel_singleBattleStart(player_data, request: Request):
 async def activity_enemyDuel_singleBattleFinish(player_data, request: Request):
     request_json = await request.json()
 
-    log_battle_log_if_necessary(player_data, request_json["activityId"])
+    log_battle_log_if_necessary(player_data, request_json["data"])
 
     activity_id = request_json["activityId"]
     activity_table = const_json_loader[ACTIVITY_TABLE]
@@ -499,6 +499,8 @@ async def activity_enemyDuel_multiBattleStart(player_data, request: Request):
 @player_data_decorator
 async def activity_enemyDuel_multiBattleFinish(player_data, request: Request):
     request_json = await request.json()
+
+    print(request_json)
 
     response = {
         "result": 0,
