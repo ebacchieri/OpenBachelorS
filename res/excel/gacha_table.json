@@ -5608,6 +5608,27 @@
       "limitParam": null
     },
     {
+      "gachaPoolId": "DOUBLE_65_0_2",
+      "gachaIndex": 326,
+      "openTime": 1757534400,
+      "endTime": 1758743999,
+      "gachaPoolName": "适合多种场合的强力干员",
+      "gachaPoolSummary": "结束于9月25日 03:59",
+      "gachaPoolDetail": "-",
+      "guaranteeName": "标准选调",
+      "guarantee5Avail": 1,
+      "guarantee5Count": 10,
+      "LMTGSID": null,
+      "CDPrimColor": null,
+      "CDSecColor": null,
+      "freeBackColor": null,
+      "gachaRuleType": "DOUBLE",
+      "dynMeta": null,
+      "linkageRuleId": null,
+      "linkageParam": null,
+      "limitParam": null
+    },
+    {
       "gachaPoolId": "LIMITED_9_0_3",
       "gachaIndex": 10,
       "openTime": 1588316400,
@@ -6278,6 +6299,29 @@
       "endTime": 1726430399,
       "gachaPoolName": "泰拉饭，呜呼，泰拉饭",
       "gachaPoolSummary": "结束于9月16日03:59",
+      "gachaPoolDetail": null,
+      "guaranteeName": null,
+      "guarantee5Avail": 1,
+      "guarantee5Count": 10,
+      "LMTGSID": null,
+      "CDPrimColor": null,
+      "CDSecColor": null,
+      "freeBackColor": null,
+      "gachaRuleType": "LINKAGE",
+      "dynMeta": null,
+      "linkageRuleId": "LINKAGE_R6_01",
+      "linkageParam": {
+        "guaranteeTarget6Count": 120
+      },
+      "limitParam": null
+    },
+    {
+      "gachaPoolId": "LINKAGE_65_0_1",
+      "gachaIndex": 20,
+      "openTime": 1756958400,
+      "endTime": 1758139199,
+      "gachaPoolName": "人偶的歌谣",
+      "gachaPoolSummary": "结束于9月18日03:59",
       "gachaPoolDetail": null,
       "guaranteeName": null,
       "guarantee5Avail": 1,
@@ -8919,6 +8963,36 @@
         ],
         "scrollIndex": 8,
         "sub6RarityCharId": "char_430_fartth"
+      },
+      "linkageRuleId": null,
+      "linkageParam": null,
+      "limitParam": null
+    },
+    {
+      "gachaPoolId": "CLASSIC_DOUBLE_65_0_1",
+      "gachaIndex": 9935,
+      "openTime": 1758139200,
+      "endTime": 1759348799,
+      "gachaPoolName": "适合多种场合的强力干员",
+      "gachaPoolSummary": "结束于10月2日 03:59",
+      "gachaPoolDetail": null,
+      "guaranteeName": "中坚选调",
+      "guarantee5Avail": 1,
+      "guarantee5Count": 10,
+      "LMTGSID": null,
+      "CDPrimColor": null,
+      "CDSecColor": null,
+      "freeBackColor": null,
+      "gachaRuleType": "CLASSIC_DOUBLE",
+      "dynMeta": {
+        "main6RarityCharId": "char_172_svrash",
+        "rare5CharList": [
+          "char_308_swire",
+          "char_145_prove",
+          "char_356_broca"
+        ],
+        "scrollIndex": 8,
+        "sub6RarityCharId": "char_291_aglina"
       },
       "linkageRuleId": null,
       "linkageParam": null,
@@ -11881,6 +11955,20 @@
       "spriteId": "picDouble_64_0_4"
     },
     {
+      "poolId": "LINKAGE_65_0_1",
+      "index": 322,
+      "startTime": 1756958400,
+      "endTime": 1758139199,
+      "spriteId": "picLinkage_65_0_1"
+    },
+    {
+      "poolId": "DOUBLE_65_0_2",
+      "index": 326,
+      "startTime": 1757534400,
+      "endTime": 1758743999,
+      "spriteId": "picDouble_65_0_2"
+    },
+    {
       "poolId": "CLASSIC_ATTAIN_45_0_2",
       "index": 996,
       "startTime": 1703750400,
@@ -12140,6 +12228,11 @@
       "itemId": "LINKAGE_TKT_GACHA_10_5401",
       "endTime": 1726430399,
       "gachaPoolId": "LINKAGE_54_0_1"
+    },
+    {
+      "itemId": "LINKAGE_TKT_GACHA_10_6501",
+      "endTime": 1758139199,
+      "gachaPoolId": "LINKAGE_65_0_1"
     }
   ],
   "normalGachaItem": [
