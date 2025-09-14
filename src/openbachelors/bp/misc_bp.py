@@ -500,8 +500,6 @@ async def activity_enemyDuel_multiBattleStart(player_data, request: Request):
 async def activity_enemyDuel_multiBattleFinish(player_data, request: Request):
     request_json = await request.json()
 
-    print(request_json)
-
     response = {
         "result": 0,
         "choiceCnt": {"skip": 0, "normal": 5, "allIn": 5},
