@@ -38,7 +38,7 @@ MAX_USERNAME_LENGTH = 64
 
 
 def get_username_by_token(token: str) -> str:
-    return urllib.parse.quote(token)[:MAX_USERNAME_LENGTH]
+    return urllib.parse.quote(token, safe="")[:MAX_USERNAME_LENGTH]
 
 
 def encode_stage_id(stage_id: str) -> str:
@@ -149,7 +149,7 @@ def remove_aria2_tmpfile(tmp_filename):
 
 
 def get_url_lock_filepth(url: str) -> Path:
-    return Path(TMP_DIRPATH) / f"url_lock_{urllib.parse.quote(url)}"
+    return Path(TMP_DIRPATH) / f"url_lock_{urllib.parse.quote(url, safe='')}"
 
 
 URL_LOCK_EXPIRE_SEC = 60
