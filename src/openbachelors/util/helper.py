@@ -171,7 +171,13 @@ async def download_file(url: str, filename: str, dirpath: str):
 
     os.makedirs(dirpath, exist_ok=True)
 
-    os.replace(os.path.join(TMP_DIRPATH, tmp_filename), os.path.join(dirpath, filename))
+    try:
+        os.replace(
+            os.path.join(TMP_DIRPATH, tmp_filename), os.path.join(dirpath, filename)
+        )
+    except Exception:
+        remove_aria2_tmpfile(tmp_filename)
+        raise
 
 
 def is_valid_res_version(res_version: str) -> bool:
