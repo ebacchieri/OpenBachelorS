@@ -116,9 +116,9 @@ async def quest_battleContinue(player_data, request: Request):
 NUM_ASSIST_PER_PAGE = 9
 
 
-def get_num_assist_page(friend_uid_lst):
+def get_num_assist_page(assist_lst):
     # simple math
-    return (len(friend_uid_lst) + NUM_ASSIST_PER_PAGE - 1) // NUM_ASSIST_PER_PAGE
+    return (len(assist_lst) + NUM_ASSIST_PER_PAGE - 1) // NUM_ASSIST_PER_PAGE
 
 
 def get_assist_page_key(request_json):
