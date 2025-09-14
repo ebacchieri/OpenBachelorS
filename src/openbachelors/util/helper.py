@@ -11,6 +11,8 @@ from hashlib import md5
 import random
 import asyncio
 import urllib.parse
+from pathlib import Path
+import time
 
 from pathvalidate import is_valid_filename
 from Crypto.Cipher import AES
@@ -36,7 +38,7 @@ MAX_USERNAME_LENGTH = 64
 
 
 def get_username_by_token(token: str) -> str:
-    return urllib.parse.quote(token)[:MAX_USERNAME_LENGTH]
+    return urllib.parse.quote(token, safe="")[:MAX_USERNAME_LENGTH]
 
 
 def encode_stage_id(stage_id: str) -> str:
@@ -146,32 +148,80 @@ def remove_aria2_tmpfile(tmp_filename):
         pass
 
 
+def get_url_lock_filepth(url: str) -> Path:
+    return Path(TMP_DIRPATH) / f"url_lock_{urllib.parse.quote(url, safe='')}"
+
+
+URL_LOCK_EXPIRE_SEC = 60
+
+
+def is_url_locked(url: str) -> bool:
+    url_lock_filepth = get_url_lock_filepth(url)
+
+    cur_time = time.time()
+
+    try:
+        mtime = url_lock_filepth.stat().st_mtime
+        if cur_time - URL_LOCK_EXPIRE_SEC < mtime < cur_time + URL_LOCK_EXPIRE_SEC:
+            return True
+
+    except Exception:
+        pass
+
+    return False
+
+
+def lock_url(url: str):
+    os.makedirs(TMP_DIRPATH, exist_ok=True)
+
+    url_lock_filepth = get_url_lock_filepth(url)
+
+    url_lock_filepth.touch()
+
+
+def unlock_url(url: str):
+    url_lock_filepth = get_url_lock_filepth(url)
+
+    url_lock_filepth.unlink(missing_ok=True)
+
+
 async def download_file(url: str, filename: str, dirpath: str):
     os.makedirs(TMP_DIRPATH, exist_ok=True)
 
     tmp_filename = str(uuid4())
-    proc = await asyncio.to_thread(
-        lambda: subprocess.run(
-            [
-                "aria2c",
-                "-q",
-                "-d",
-                TMP_DIRPATH,
-                "-o",
-                tmp_filename,
-                "--auto-file-renaming=false",
-                url,
-            ]
+
+    lock_url(url)
+
+    try:
+        proc = await asyncio.to_thread(
+            lambda: subprocess.run(
+                [
+                    "aria2c",
+                    "-q",
+                    "-d",
+                    TMP_DIRPATH,
+                    "-o",
+                    tmp_filename,
+                    "--auto-file-renaming=false",
+                    url,
+                ]
+            )
         )
-    )
 
-    if proc.returncode:
+        if proc.returncode:
+            raise ConnectionError(f"download_file: file {filename} failed")
+
+        os.makedirs(dirpath, exist_ok=True)
+
+        try:
+            os.replace(
+                os.path.join(TMP_DIRPATH, tmp_filename), os.path.join(dirpath, filename)
+            )
+        except Exception:
+            raise
+    finally:
         remove_aria2_tmpfile(tmp_filename)
-        raise ConnectionError(f"download_file: file {filename} failed")
-
-    os.makedirs(dirpath, exist_ok=True)
-
-    os.replace(os.path.join(TMP_DIRPATH, tmp_filename), os.path.join(dirpath, filename))
+        unlock_url(url)
 
 
 def is_valid_res_version(res_version: str) -> bool:

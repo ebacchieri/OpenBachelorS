@@ -2,6 +2,7 @@ import os
 import json
 from typing import Any
 from dataclasses import dataclass
+import asyncio
 
 from fastapi import APIRouter
 from fastapi import Request, Response
@@ -20,7 +21,12 @@ from ..const.filepath import (
 )
 from ..util.const_json_loader import const_json_loader
 from ..util.mod_loader import mod_loader
-from ..util.helper import is_valid_res_version, is_valid_asset_filename, download_file
+from ..util.helper import (
+    is_valid_res_version,
+    is_valid_asset_filename,
+    download_file,
+    is_url_locked,
+)
 from ..util.log_helper import IS_DEBUG
 
 router = APIRouter()
@@ -124,7 +130,10 @@ async def download_asset(res_version, asset_filename):
         if req.status_code != 200:
             return DownloadAssetResult.HttpStatusCode(status_code=404)
 
-        await download_file(url, asset_filename, asset_dirpath)
+        if not is_url_locked(url):
+            await download_file(url, asset_filename, asset_dirpath)
+        else:
+            await asyncio.sleep(120)
 
     return DownloadAssetResult.SendFile(file_path=asset_abs_filepath)
 
