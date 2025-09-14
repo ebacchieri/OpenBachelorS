@@ -160,7 +160,7 @@ async def quest_getAssistList(player_data, request: Request):
 
     num_assist_page = get_num_assist_page(assist_lst)
 
-    assist_page_idx = get_assist_page_idx(player_data, request_json)
+    assist_page_idx = get_assist_page_idx(player_data, request_json) % num_assist_page
 
     if request_json["askRefresh"]:
         assist_page_idx = (assist_page_idx + 1) % num_assist_page
