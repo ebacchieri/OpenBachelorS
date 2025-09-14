@@ -150,34 +150,36 @@ async def download_file(url: str, filename: str, dirpath: str):
     os.makedirs(TMP_DIRPATH, exist_ok=True)
 
     tmp_filename = str(uuid4())
-    proc = await asyncio.to_thread(
-        lambda: subprocess.run(
-            [
-                "aria2c",
-                "-q",
-                "-d",
-                TMP_DIRPATH,
-                "-o",
-                tmp_filename,
-                "--auto-file-renaming=false",
-                url,
-            ]
-        )
-    )
-
-    if proc.returncode:
-        remove_aria2_tmpfile(tmp_filename)
-        raise ConnectionError(f"download_file: file {filename} failed")
-
-    os.makedirs(dirpath, exist_ok=True)
 
     try:
-        os.replace(
-            os.path.join(TMP_DIRPATH, tmp_filename), os.path.join(dirpath, filename)
+        proc = await asyncio.to_thread(
+            lambda: subprocess.run(
+                [
+                    "aria2c",
+                    "-q",
+                    "-d",
+                    TMP_DIRPATH,
+                    "-o",
+                    tmp_filename,
+                    "--auto-file-renaming=false",
+                    url,
+                ]
+            )
         )
-    except Exception:
+
+        if proc.returncode:
+            raise ConnectionError(f"download_file: file {filename} failed")
+
+        os.makedirs(dirpath, exist_ok=True)
+
+        try:
+            os.replace(
+                os.path.join(TMP_DIRPATH, tmp_filename), os.path.join(dirpath, filename)
+            )
+        except Exception:
+            raise
+    finally:
         remove_aria2_tmpfile(tmp_filename)
-        raise
 
 
 def is_valid_res_version(res_version: str) -> bool:
