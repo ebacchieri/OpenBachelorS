@@ -42,7 +42,7 @@ def get_username_by_token(token: str) -> str:
 
 
 def encode_stage_id(stage_id: str) -> str:
-    return urllib.parse.unquote(stage_id)
+    return urllib.parse.quote(stage_id, safe="")
 
 
 def decode_stage_id(stage_id: str) -> str:
