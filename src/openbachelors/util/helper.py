@@ -196,19 +196,15 @@ async def download_file(url: str, filename: str, dirpath: str):
     tmp_filename = str(uuid4())
 
     try:
-        proc = await asyncio.to_thread(
-            lambda: subprocess.run(
-                [
-                    "aria2c",
-                    "-q",
-                    "-d",
-                    TMP_DIRPATH,
-                    "-o",
-                    tmp_filename,
-                    "--auto-file-renaming=false",
-                    url,
-                ]
-            )
+        proc = await asyncio.create_subprocess_exec(
+            "aria2c",
+            "-q",
+            "-d",
+            TMP_DIRPATH,
+            "-o",
+            tmp_filename,
+            "--auto-file-renaming=false",
+            url,
         )
 
         if proc.returncode:
