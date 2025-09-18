@@ -8,7 +8,6 @@ from fastapi import APIRouter
 from fastapi import Request, Response
 from fastapi.responses import FileResponse
 from fastapi.responses import RedirectResponse
-import httpx
 import aiofiles
 
 from ..const.json_const import true, false, null
@@ -27,6 +26,7 @@ from ..util.helper import (
     download_file,
     try_get_filelock,
     release_filelock,
+    get_httpx_client,
 )
 from ..util.log_helper import IS_DEBUG
 
@@ -127,8 +127,8 @@ async def download_asset(res_version, asset_filename):
             ):
                 return DownloadAssetResult.Redirect(url=url)
 
-            async with httpx.AsyncClient() as client:
-                req = await client.head(url)
+            client = get_httpx_client()
+            req = await client.head(url)
 
             if req.status_code != 200:
                 return DownloadAssetResult.HttpStatusCode(status_code=404)

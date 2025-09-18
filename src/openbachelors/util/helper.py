@@ -13,11 +13,13 @@ import asyncio
 import urllib.parse
 from pathlib import Path
 import time
+import functools
 
 from pathvalidate import is_valid_filename
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 import aiofiles
+import httpx
 
 from ..const.filepath import TMP_DIRPATH
 
@@ -319,3 +321,8 @@ def get_char_str_tag_lst(char_obj):
         char_str_tag_lst += char_obj["tagList"].copy()
 
     return char_str_tag_lst
+
+
+@functools.lru_cache
+def get_httpx_client():
+    return httpx.AsyncClient()
