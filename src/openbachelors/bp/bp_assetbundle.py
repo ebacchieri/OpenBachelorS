@@ -25,7 +25,8 @@ from ..util.helper import (
     is_valid_res_version,
     is_valid_asset_filename,
     download_file,
-    is_url_locked,
+    try_get_filelock,
+    release_filelock,
 )
 from ..util.log_helper import IS_DEBUG
 
@@ -113,29 +114,30 @@ async def download_asset(res_version, asset_filename):
     asset_filepath = os.path.join(asset_dirpath, asset_filename)
     asset_abs_filepath = os.path.abspath(asset_filepath)
 
-    if not os.path.isfile(asset_filepath):
-        url = f"{ORIG_ASSET_URL_PREFIX}/{res_version}/{asset_filename}"
+    url = f"{ORIG_ASSET_URL_PREFIX}/{res_version}/{asset_filename}"
 
-        if (
-            const_json_loader[CONFIG_JSON]["redirect_asset"]
-            and asset_filename != HOT_UPDATE_LIST_JSON
-        ):
-            return DownloadAssetResult.Redirect(
-                url=f"{ORIG_ASSET_URL_PREFIX}/{res_version}/{asset_filename}"
-            )
+    while not try_get_filelock(url):
+        await asyncio.sleep(10)
 
-        async with httpx.AsyncClient() as client:
-            req = await client.head(url)
+    try:
+        if not os.path.isfile(asset_filepath):
+            if (
+                const_json_loader[CONFIG_JSON]["redirect_asset"]
+                and asset_filename != HOT_UPDATE_LIST_JSON
+            ):
+                return DownloadAssetResult.Redirect(url=url)
 
-        if req.status_code != 200:
-            return DownloadAssetResult.HttpStatusCode(status_code=404)
+            async with httpx.AsyncClient() as client:
+                req = await client.head(url)
 
-        if not is_url_locked(url):
+            if req.status_code != 200:
+                return DownloadAssetResult.HttpStatusCode(status_code=404)
+
             await download_file(url, asset_filename, asset_dirpath)
-        else:
-            await asyncio.sleep(120)
 
-    return DownloadAssetResult.SendFile(file_path=asset_abs_filepath)
+        return DownloadAssetResult.SendFile(file_path=asset_abs_filepath)
+    finally:
+        release_filelock(url)
 
 
 @router.get("/assetbundle/official/Android/assets/{res_version}/{asset_filename}")
